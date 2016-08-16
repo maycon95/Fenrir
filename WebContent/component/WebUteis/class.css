@@ -1,5 +1,10 @@
 @CHARSET "UTF-8";
 
+/*****************   CUSTOM  *****************************/
+.hide_custom{display: none;}
+.uppercase{text-transform: uppercase !important;}
+.center{text-align: center;}
+
 /*****************  BOTOES  ******************************/
 .button{width: 128px; height: 128px;}
 .button.lampada{background-image: url(../../component/img/lampada.png);}
@@ -9,12 +14,21 @@
 .button.camera{background-image: url(../../component/img/camera.png);}
 .button.sensores{background-image: url(../../component/img/sensores.png);}
 .button.relatorio{background-image: url(../../component/img/relatorio.png);}
+.search{min-width: 10px; float: left; height: 30px; line-height: 25px; background-color: #fff; border: 1px solid #ccc;
+							 margin: 0 5px 0 0; padding: 0 5px; width: 130px;}
 
 
-.bt{width: 30px; height: 30px; float: left; border-radius: 4px; background-size: 28px; background-position: center center; background-repeat: no-repeat; 
+
+/*botoes pequenos*/
+
+.bt{width: 30px; height: 30px; float: left; border-radius: 15px; background-size: 28px; background-position: center center; background-repeat: no-repeat; 
 				background-color: transparent; cursor: pointer; margin-right: 1px !important;}
+.bt.busca{background-image: url(../../component/img/busca.png);}
+.bt.insere{background-image: url(../../component/img/insere.png);}
+.bt.deleta{background-image: url(../../component/img/deleta.png);}
+.bt.grava{background-image: url(../../component/img/grava.png);}
+.bt.cancela{background-image: url(../../component/img/cancela.png);}
 
-.busca{background-image: url(../../component/img/relatorio.png);}
 
 /*****************  HEADER  ******************************/
 .header{height: 70px;}
@@ -31,6 +45,12 @@ tbody {height: 120px; overflow-y: auto;}
 thead, tbody, tr, td, th {display: block;}
 tr:after {content: ' '; display: block; visibility: hidden; clear: both;}
 tbody td, thead td {float: left;} 
+.table thead tr td{border-bottom: 1px solid #c1c1c1;}
+.table tbody tr td{border-top: none;}
+.container div{width: 100%;}
+div.panel-table{padding-left: 4px; padding-right: 2px;}
+.table tbody td input {width: 100%; border: none; float: left; margin: 0; padding: 0 3px; font-size: 12px; font-family: Tahoma, Arial, Helvetica, sans-serif;
+						 outline: none; height: 20px; line-height: 20px; background-color: transparent; -webkit-transition: all 0s; transition: all 0s; border-bottom: 1px solid #ddd;}
 
 /*****************  WIDTH  ******************************/
 .w10{width: 10px !important;}

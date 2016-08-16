@@ -31,7 +31,8 @@ public abstract class Uteis{
    // -------------------------------------------------------------------------------------------------------------------------------------------------
 	public static void trataErro(JSONObject jsonObj, String mensagem){
 		try{
-			jsonObj.put("error", mensagem);
+			jsonObj.put("error", true);
+			jsonObj.put("mensagem", mensagem);
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

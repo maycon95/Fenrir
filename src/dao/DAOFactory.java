@@ -9,6 +9,7 @@ public abstract class DAOFactory {
 
 	// quais DAOs vão estar disponiveis
 	public abstract UsuarioDAO getUsuarioDAO();
+	public abstract ComodoDAO getComodoDAO();
 
 
 	// recebe o id do banco quer quer utilizar
@@ -21,4 +22,5 @@ public abstract class DAOFactory {
 			return null;
 		}
 	}
+
 }

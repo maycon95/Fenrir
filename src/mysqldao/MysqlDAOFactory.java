@@ -1,6 +1,7 @@
 package mysqldao;
 
 
+import dao.ComodoDAO;
 import dao.DAOFactory;
 import dao.UsuarioDAO;
 
@@ -15,6 +16,10 @@ public class MysqlDAOFactory  extends DAOFactory{
 		return new MysqlUsuarioDAO();
 	}
 	
-
+	// MysqlComodoDAO implementa a interface ComodoDAO
+	// portanto isso permite que eu retorne esse tipo.	
+	public ComodoDAO getComodoDAO(){
+		return new MysqlComodoDAO();
+	}
 	
 }

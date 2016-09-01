@@ -35,17 +35,22 @@ var SERVLET = "Login"; //SERVLET USADO NESTA PAGINA
 	//CHAMADA DA FUNCAO AJAX
 	AJAX(SERVLET,funcao, function(retorno){
 		retorno = JSon(retorno);
-		
+	
 		//CASO OCORRA ALGUM ERRO
-		if (!empty(retorno.error)) {
-			alert("Ocorreu um erro interno ao servidor!\n" + retorno.error);
+		if (empty(retorno)) {
+			alert("Ocorreu um erro interno ao servidor!");
 		    return //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
 		}
 		
-		if(retorno.login != 'true') {//usuario invalido
+		//CASO OCORRA ALGUM ERRO
+		if (!empty(retorno.error)) {
+			alert("Ocorreu um erro ao validar login!\n" + retorno.mensagem);
+		    return //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
+		}
+		
+		if(retorno != 'success') {//usuario invalido
 			alert("usuario e/ou senha invalido");
-			$("#user").val("");
-			$("#senha").val("");
+			$("#user, #senha").val("");
 
 			$("#user").focus();
 			return;
@@ -88,7 +93,7 @@ $(document).ready(function(){
 	//***********************************************************************
 	//FUCAO AO PRECIONAR UMA TECLA
 	//***********************************************************************
-	$("#user , #senha").on("keypress", function(e) {
+	$("#user, #senha").on("keypress", function(e) {
 		if(e.which == 13){//AO PRECIONAR ENTER
 			logar();
 		}

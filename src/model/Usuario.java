@@ -1,30 +1,31 @@
 package model;
 
 public class Usuario {
-	private String usuario, senha;
+	private String us_nome, us_senha;
 	
 	public Usuario(){	
 		this.setUsuario(null);
-		this.setSenha(null);		
-		
+		this.setSenha(null);			
 	}
+	
 	public Usuario(String usuario, String senha){
 		this.setUsuario(usuario);
 		this.setSenha(senha);		
 	}
 		
-	
+	//GETTER'S
 	public String getUsuario() {
-		return usuario;
-	}
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+		return us_nome;
 	}
 	public String getSenha() {
-		return senha;
+		return us_senha;
+	}
+	
+	//SETTER'S
+	public void setUsuario(String usuario) {
+		this.us_nome = usuario;
 	}
 	public void setSenha(String senha) {
-		this.senha = senha;
+		this.us_senha = senha;
 	}
-
 }

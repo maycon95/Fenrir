@@ -51,6 +51,18 @@ tbody td, thead td {float: left;}
 div.panel-table{padding-left: 4px; padding-right: 2px;}
 .table tbody td input {width: 100%; border: none; float: left; margin: 0; padding: 0 3px; font-size: 12px; font-family: Tahoma, Arial, Helvetica, sans-serif;
 						 outline: none; height: 20px; line-height: 20px; background-color: transparent; -webkit-transition: all 0s; transition: all 0s; border-bottom: 1px solid #ddd;}
+.table tbody td input:disabled{cursor:not-allowed;opacity: 0.6;}
+.table tbody td select:disabled{cursor:not-allowed;}
+
+
+
+.footer{ width:100%; float:left; padding:0;  overflow:hidden; margin:3px 0 0 0;}
+.footer .registros{ float:right; margin-left:5px; padding:0 5px;}
+.footer .registros label{ font-family:Tahoma, Arial; font-size:11px; float:left; height:20px; line-height:20px; margin:0 2px; color:#333;}
+.footer .registros input{ font-family:Tahoma, Arial; font-size:12px; background-color:transparent; max-width:43px; border:none; height:20px; line-height:20px; padding:0; margin:0; color:#333; text-align:right;}
+
+
+
 
 /*****************  WIDTH  ******************************/
 .w10{width: 10px !important;}

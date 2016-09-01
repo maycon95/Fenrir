@@ -6,12 +6,10 @@ import model.Usuario;
 
 public class UsuarioTO {
 	
-private ArrayList<Usuario> lista;
-private String error;
+	private ArrayList<Usuario> lista;
 	
 	public UsuarioTO(){
 		lista = new ArrayList<Usuario>();
-		setError(null);
 	}
 	
 	public void add(Usuario login){
@@ -24,14 +22,6 @@ private String error;
 	
 	public ArrayList<Usuario> getLista(){
 		return lista;
-	}
-	
-	public String getError(){
-		return error;
-	}
-	
-	public void setError(String error){
-		this.error = error;
 	}
 	
 }

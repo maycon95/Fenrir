@@ -1,41 +1,51 @@
 package Uteis;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import dao.ComodoDAO;
+import dao.DAOFactory;
+import dao.UsuarioDAO;
 
 public abstract class Uteis{
-	public static Connection conn = null;
-   
-   //construtor sem parametro
+
+   public static final int MYSQL = 1;
 
 
-   // -------------------------------------------------------------------------------------------------------------------------------------------------
-   //Obtem Conexão com o banco de dados
-   // -------------------------------------------------------------------------------------------------------------------------------------------------
-   public static void obtemConexao() throws SQLException
-   {
-      conn = DriverManager.getConnection
-         (
-         "jdbc:mysql://localhost/Projeto?user=alunos&password=alunos"
-         );
-   }
+
+	// --------------------------------------------------------------------------------------------------------------
+    //TRATA ERRO 
+    // --------------------------------------------------------------------------------------------------------------
+	public static String trataErro(String mensagem){
+		return "{\"error\":\"true\",\"mensagem\":\""+mensagem+"\"}";
+	}
 	
-
-
-   // -------------------------------------------------------------------------------------------------------------------------------------------------
-   //TRATA ERRO 
-   // -------------------------------------------------------------------------------------------------------------------------------------------------
-	public static void trataErro(JSONObject jsonObj, String mensagem){
-		try{
-			jsonObj.put("error", true);
-			jsonObj.put("mensagem", mensagem);
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
+	// --------------------------------------------------------------------------------------------------------------
+    //TRATA ERRO - EXCPETION
+    // --------------------------------------------------------------------------------------------------------------
+	public static String trataErro(Exception e){
+		String mensagem = e.toString().substring(e.toString().indexOf(":")+2, e.toString().length());
+		return "{\"error\":\"true\",\"mensagem\":\""+addSlashes(mensagem)+"\"}";
 	}
 
+   // --------------------------------------------------------------------------------------------------------------
+   //CONEXÃO COM O BANCO - USUARIO
+   // --------------------------------------------------------------------------------------------------------------
+	public static UsuarioDAO connection_user(){
+		return DAOFactory.getDAOFactory(MYSQL).getUsuarioDAO();
+	}
+
+   // --------------------------------------------------------------------------------------------------------------
+   //CONEXÃO COM O BANCO - COMODO
+   // --------------------------------------------------------------------------------------------------------------
+	public static ComodoDAO connection_comodo(){
+		return DAOFactory.getDAOFactory(MYSQL).getComodoDAO();
+	}
+			
+	
+	public static String addSlashes(String s) {
+	    s = s.replaceAll("\\n", "\\\\n");
+//	    s = s.replaceAll("\\\\", "\\\\\\\\");
+//	    s = s.replaceAll("\\r", "\\\\r");
+//	    s = s.replaceAll("\\00", "\\\\0");
+//	    s = s.replaceAll("'", "\\\\'");
+	    return s;
+	}
 }

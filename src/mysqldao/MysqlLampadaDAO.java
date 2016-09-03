@@ -6,33 +6,37 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import dao.ComodoDAO;
-import model.Comodo;
-import to.ComodoTO;
+import dao.LampadaDAO;
+import model.Lampada;
+import to.LampadaTO;
 
-public class MysqlComodoDAO implements ComodoDAO{
-	//BUSCA UM COMODO NO BANCO
-	public ComodoTO busca(String cd_nome) throws Exception{
+public class MysqlLampadaDAO implements LampadaDAO {
+	//BUSCA UMA LAMPADA NO BANCO - TELA DE ADMIN
+	public LampadaTO busca(String lp_nome) throws Exception{ 
 		Connection conn = null;
-	    String sqlSelect = "SELECT cd_id, cd_nome FROM tb_comodo WHERE cd_nome like ? ";
+	    String sqlSelect = "SELECT lp_id, lp_nome, lp_tensao, lp_consumo, lp_constotal, cd_id FROM tb_lampada WHERE lp_nome like ? ";
 	    PreparedStatement stm = null;
 	    ResultSet rs = null;
-	    ComodoTO comodoTO = new ComodoTO();
+	    LampadaTO lampadaTO = new LampadaTO();
 
 	    try{
 	    	Class.forName(MysqlDAOFactory.DRIVER); 
 			conn = DriverManager.getConnection(MysqlDAOFactory.DBURL);
 			stm = conn.prepareStatement(sqlSelect);
-			stm.setString(1, cd_nome+"%");
+			stm.setString(1, lp_nome+"%");
 			rs = stm.executeQuery();
 		
 			while(rs.next()) {
-				Comodo comodo = new Comodo();
-				comodo.setCd_id(rs.getInt("cd_id"));
-				comodo.setCd_nome(rs.getString("cd_nome"));
-				comodoTO.add(comodo);
+				Lampada lampada = new Lampada();
+				lampada.setLp_id(rs.getInt("lp_id"));
+				lampada.setLp_nome(rs.getString("lp_nome"));
+				lampada.setLp_tensao(rs.getInt("lp_tensao"));
+				lampada.setLp_consumo(rs.getDouble("lp_consumo"));
+				lampada.setLp_constotal(rs.getDouble("lp_constotal"));
+				lampada.setCd_id(rs.getInt("cd_id"));
+				lampadaTO.add(lampada);
 			}
-			return comodoTO;
+			return lampadaTO;
 	    }
 	    catch (Exception e){
 	    	throw e;
@@ -50,20 +54,24 @@ public class MysqlComodoDAO implements ComodoDAO{
 	}
 	
 	
-	//INSERE NOVO COMODO
-	public ComodoTO insere(String cd_nome) throws Exception{
+	//INSERE NOVA LAMPADA
+	public LampadaTO insere(String lp_nome, int lp_tensao, double lp_consumo, double lp_constotal, int cd_id) throws Exception{
 		Connection conn = null;
-	    String sqlInsert = "INSERT INTO tb_comodo(cd_nome) VALUES(?) ";
+	    String sqlInsert = "INSERT INTO tb_lampada(lp_nome, lp_tensao, lp_consumo, lp_constotal, cd_id) VALUES(?, ?, ?, ?, ?) ";
 	    PreparedStatement stm = null;
 
 	    try{
 	    	Class.forName(MysqlDAOFactory.DRIVER); 
 			conn = DriverManager.getConnection(MysqlDAOFactory.DBURL);
 			stm = conn.prepareStatement(sqlInsert);
-			stm.setString(1, cd_nome);
+			stm.setString(1, lp_nome);
+			stm.setInt(2, lp_tensao);
+			stm.setDouble(3, lp_consumo);
+			stm.setDouble(4, lp_constotal);
+			stm.setInt(5, cd_id);
 			stm.executeUpdate();
 	
-			return busca(cd_nome);//CHAMA A BUSCA DE USUARIO PARA RETORNAR OS DADOS DO USUARIO INSERIDO
+			return busca(lp_nome);//CHAMA A BUSCA DE USUARIO PARA RETORNAR OS DADOS INSERIDO
 	    }
 	    catch (Exception e){
 	    	throw e;
@@ -81,20 +89,24 @@ public class MysqlComodoDAO implements ComodoDAO{
 	}
 
 	//ALTERA DADOS DO COMODO
-	public ComodoTO altera(String cd_id, String cd_nome) throws Exception{
+	public LampadaTO altera(int lp_id, String lp_nome, int lp_tensao, double lp_consumo, double lp_constotal, int cd_id) throws Exception{
 		Connection conn = null;
-	    String sqlUpdate = "UPDATE tb_comodo SET cd_nome = ? WHERE cd_id= ?";
+	    String sqlUpdate = "UPDATE tb_lampada SET lp_nome = ?, lp_tensao = ?, lp_consumo = ?, lp_constotal = ?, cd_id = ? WHERE lp_id= ?";
 	    PreparedStatement stm = null;
 
 	    try{
 	    	Class.forName(MysqlDAOFactory.DRIVER); 
 			conn = DriverManager.getConnection(MysqlDAOFactory.DBURL);
 			stm = conn.prepareStatement(sqlUpdate);
-			stm.setString(1, cd_nome);
-			stm.setString(2, cd_id);
+			stm.setString(1, lp_nome);
+			stm.setInt(2, lp_tensao);
+			stm.setDouble(3, lp_consumo);
+			stm.setDouble(4, lp_constotal);
+			stm.setInt(5, cd_id);
+			stm.setInt(6, lp_id);
 			stm.executeUpdate();
 	
-			return busca(cd_nome);//CHAMA A BUSCA DE COMODO PARA RETORNAR OS DADOS DO COMODO ALTERADO
+			return busca(lp_nome);//CHAMA A BUSCA DE COMODO PARA RETORNAR OS DADOS ALTERADO
 	    }
 	    catch (Exception e){
 	    	throw e;
@@ -112,16 +124,16 @@ public class MysqlComodoDAO implements ComodoDAO{
 	}
 	
 	//EXCLUI COMODO
-	public String exclui(String cd_id) throws Exception{
+	public String exclui(String lp_id) throws Exception{
 		Connection conn = null;
-	    String sqlDelete = "DELETE FROM tb_comodo WHERE cd_id = ?";
+	    String sqlDelete = "DELETE FROM tb_lampada WHERE lp_id = ?";
 	    PreparedStatement stm = null;
 
 	    try{
 	    	Class.forName(MysqlDAOFactory.DRIVER); 
 			conn = DriverManager.getConnection(MysqlDAOFactory.DBURL);
 			stm = conn.prepareStatement(sqlDelete);
-			stm.setString(1, cd_id);
+			stm.setString(1, lp_id);
 			stm.executeUpdate();
 	
 			return "[]";//RETORNA UM ARRAY VAZIO APENAS SE EXCLUIR COM SUCESSO
@@ -140,5 +152,4 @@ public class MysqlComodoDAO implements ComodoDAO{
 	       }
 	    }
 	}
-
 }

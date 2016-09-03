@@ -147,6 +147,141 @@ function Desbloqueia_Linhas(actpos,div){
 
 
 
+//***********************************************************************
+//VALIDA E TRANSFORMA STRING EM NUMBER
+//***********************************************************************
+function tonumber(valor, format){
+	if (format === undefined){
+		format = "double";
+	}
+	switch(format){
+		case "integer":
+			var validaNumero = /^(\-)?([0-9]+)$/;
+			if (!validaNumero.test(valor)){
+				return false;
+			}
+			valor = parseInt(valor);
+		return valor;
+		default:
+			var validaNumero = /^(\-)?([0-9.,]+)$/;
+			if (!validaNumero.test(valor)){
+				return false;
+			}
+			var posVirgula = valor.lastIndexOf(',');
+			var posPonto = valor.lastIndexOf('.');
+			var pontoSeparacao = 0;
+			var separador = "";
+			var tamanhoNumero = valor.length;
+			if (posVirgula == -1 && posPonto == -1){
+				return valor + ",00";
+			}
+			if (posVirgula > posPonto){
+				separador = ",";
+				pontoSeparacao = posVirgula;
+			}else{
+				separador = ".";
+				pontoSeparacao = posPonto;
+			}
+			var valorNaoDecimal = valor.substring(0, pontoSeparacao);
+			var valorDecimal = valor.substring((pontoSeparacao+1));
+			valorNaoDecimal = valorNaoDecimal.replace(/[.,]/g, "");
+			valorDecimal = valorDecimal.replace(/[.,]/g, ".");
+			if (valorDecimal === ""){
+				valorDecimal = "0";
+			}
+			valor = valorNaoDecimal + "." + valorDecimal;
+			valor = valor.replace(".", ",");
+		return valor;
+	}
+}
+
+
+//***********************************************************************
+//NUMBER_FORMAT
+//***********************************************************************
+function number_format (number, decimals, decPoint, thousandsSep) {
+  number = (number + '').replace(/[^0-9+\-Ee.]/g, '')
+  var n = !isFinite(+number) ? 0 : +number
+  var prec = !isFinite(+decimals) ? 0 : Math.abs(decimals)
+  var sep = (typeof thousandsSep === 'undefined') ? ',' : thousandsSep
+  var dec = (typeof decPoint === 'undefined') ? '.' : decPoint
+  var s = ''
+
+  var toFixedFix = function (n, prec) {
+    var k = Math.pow(10, prec)
+    return '' + (Math.round(n * k) / k)
+      .toFixed(prec)
+  }
+
+  // @todo: for IE parseFloat(0.55).toFixed(0) = 0;
+  s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.')
+  if (s[0].length > 3) {
+    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep)
+  }
+  if ((s[1] || '').length < prec) {
+	  s[1] = s[1] || ''
+	  s[1] += new Array(prec - s[1].length + 1).join('0')
+  }
+
+  return s.join(dec)
+}
+
+
+
+
+//***********************************************************************
+//DEIXA QUE SÓ SEJA DIGITADO NUMEROS NOS INPUTS
+//MODO DE USAR: onkeypress='return somenteNumero(event,true,true,this);'
+//***********************************************************************
+function somenteNumero(evt,ponto,calculo,ref) {
+	if(!empty(ponto)){
+	  ponto = true;
+	}
+	if(empty(calculo)){
+	  calculo = false;
+	}
+
+	var theEvent = evt || window.event;
+	var key = theEvent.keyCode || theEvent.which;
+	key = String.fromCharCode( key );
+	
+	if(key == ',' && ref.value.indexOf(',') != -1){
+		theEvent.returnValue = false;
+		if(theEvent.preventDefault) theEvent.preventDefault();
+		return;
+	}
+	
+	var regex = "[0-9]";
+	if (ponto){
+		regex += "|[.,]";
+		if(key == ',' && ref.value.indexOf(',') != -1){
+			theEvent.returnValue = false;
+			if(theEvent.preventDefault) theEvent.preventDefault();
+			return;
+		}
+	}
+	if (calculo){
+	  regex += "|[+-]";
+	}
+
+	regex = new RegExp(regex,"gi");
+
+	if( !regex.test(key) ) {
+	  theEvent.returnValue = false;
+	  if(theEvent.preventDefault) theEvent.preventDefault();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

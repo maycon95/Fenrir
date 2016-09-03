@@ -10,8 +10,11 @@ public abstract class DAOFactory {
 	// quais DAOs vão estar disponiveis
 	public abstract UsuarioDAO getUsuarioDAO();
 	public abstract ComodoDAO getComodoDAO();
-
-
+	public abstract LampadaDAO getLampadaDAO();
+	public abstract TemperaturaDAO getTemperaturaDAO();
+	public abstract CameraDAO getCameraDAO();
+	public abstract PortaoDAO getPortaoDAO();
+	
 	// recebe o id do banco quer quer utilizar
 	// e retorna a respectiva DAOFactory
 	public static DAOFactory getDAOFactory(int qualFactory) {

@@ -6,33 +6,35 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import dao.ComodoDAO;
-import model.Comodo;
-import to.ComodoTO;
+import dao.CameraDAO;
+import model.Camera;
+import to.CameraTO;
 
-public class MysqlComodoDAO implements ComodoDAO{
-	//BUSCA UM COMODO NO BANCO
-	public ComodoTO busca(String cd_nome) throws Exception{
+public class MysqlCameraDAO implements CameraDAO{
+	//BUSCA CAMERA NO BANCO - TELA DE ADMIN
+	public CameraTO busca(String cm_nome) throws Exception{ 
 		Connection conn = null;
-	    String sqlSelect = "SELECT cd_id, cd_nome FROM tb_comodo WHERE cd_nome like ? ";
+	    String sqlSelect = "SELECT cm_id, cm_nome, cm_ip, cd_id FROM tb_camera WHERE cm_nome like ? ";
 	    PreparedStatement stm = null;
 	    ResultSet rs = null;
-	    ComodoTO comodoTO = new ComodoTO();
+	    CameraTO cameraTO = new CameraTO();
 
 	    try{
 	    	Class.forName(MysqlDAOFactory.DRIVER); 
 			conn = DriverManager.getConnection(MysqlDAOFactory.DBURL);
 			stm = conn.prepareStatement(sqlSelect);
-			stm.setString(1, cd_nome+"%");
+			stm.setString(1, cm_nome+"%");
 			rs = stm.executeQuery();
 		
 			while(rs.next()) {
-				Comodo comodo = new Comodo();
-				comodo.setCd_id(rs.getInt("cd_id"));
-				comodo.setCd_nome(rs.getString("cd_nome"));
-				comodoTO.add(comodo);
+				Camera camera = new Camera();
+				camera.setCm_id(rs.getInt("cm_id"));
+				camera.setCm_nome(rs.getString("cm_nome"));
+				camera.setCm_ip(rs.getString("cm_ip"));
+				camera.setCd_id(rs.getInt("cd_id"));
+				cameraTO.add(camera);
 			}
-			return comodoTO;
+			return cameraTO;
 	    }
 	    catch (Exception e){
 	    	throw e;
@@ -50,20 +52,22 @@ public class MysqlComodoDAO implements ComodoDAO{
 	}
 	
 	
-	//INSERE NOVO COMODO
-	public ComodoTO insere(String cd_nome) throws Exception{
+	//INSERE NOVA CAMERA
+	public CameraTO insere(String cm_nome, String cm_ip, int cd_id) throws Exception{
 		Connection conn = null;
-	    String sqlInsert = "INSERT INTO tb_comodo(cd_nome) VALUES(?) ";
+	    String sqlInsert = "INSERT INTO tb_camera(cm_nome, cm_ip, cd_id) VALUES(?, ?, ?) ";
 	    PreparedStatement stm = null;
 
 	    try{
 	    	Class.forName(MysqlDAOFactory.DRIVER); 
 			conn = DriverManager.getConnection(MysqlDAOFactory.DBURL);
 			stm = conn.prepareStatement(sqlInsert);
-			stm.setString(1, cd_nome);
+			stm.setString(1, cm_nome);
+			stm.setString(2, cm_ip);
+			stm.setInt(3, cd_id);
 			stm.executeUpdate();
 	
-			return busca(cd_nome);//CHAMA A BUSCA DE USUARIO PARA RETORNAR OS DADOS DO USUARIO INSERIDO
+			return busca(cm_nome);//CHAMA A BUSCA PARA RETORNAR OS DADOS INSERIDO
 	    }
 	    catch (Exception e){
 	    	throw e;
@@ -80,21 +84,23 @@ public class MysqlComodoDAO implements ComodoDAO{
 	    }
 	}
 
-	//ALTERA DADOS DO COMODO
-	public ComodoTO altera(String cd_id, String cd_nome) throws Exception{
+	//ALTERA DADOS DA CAMERA
+	public CameraTO altera(int cm_id, String cm_nome, String cm_ip, int cd_id) throws Exception{
 		Connection conn = null;
-	    String sqlUpdate = "UPDATE tb_comodo SET cd_nome = ? WHERE cd_id= ?";
+	    String sqlUpdate = "UPDATE tb_camera SET cm_nome = ?, cm_ip= ?, cd_id = ?  WHERE cm_id = ?";
 	    PreparedStatement stm = null;
 
 	    try{
 	    	Class.forName(MysqlDAOFactory.DRIVER); 
 			conn = DriverManager.getConnection(MysqlDAOFactory.DBURL);
 			stm = conn.prepareStatement(sqlUpdate);
-			stm.setString(1, cd_nome);
-			stm.setString(2, cd_id);
+			stm.setString(1, cm_nome);
+			stm.setString(2, cm_ip);
+			stm.setInt(3, cd_id);
+			stm.setInt(4, cm_id);
 			stm.executeUpdate();
 	
-			return busca(cd_nome);//CHAMA A BUSCA DE COMODO PARA RETORNAR OS DADOS DO COMODO ALTERADO
+			return busca(cm_nome);//CHAMA A BUSCA PARA RETORNAR OS DADOS ALTERADO
 	    }
 	    catch (Exception e){
 	    	throw e;
@@ -111,17 +117,17 @@ public class MysqlComodoDAO implements ComodoDAO{
 	    }
 	}
 	
-	//EXCLUI COMODO
-	public String exclui(String cd_id) throws Exception{
+	//EXCLUI CAMERA
+	public String exclui(String cm_id) throws Exception{
 		Connection conn = null;
-	    String sqlDelete = "DELETE FROM tb_comodo WHERE cd_id = ?";
+	    String sqlDelete = "DELETE FROM tb_camera WHERE cm_id = ?";
 	    PreparedStatement stm = null;
 
 	    try{
 	    	Class.forName(MysqlDAOFactory.DRIVER); 
 			conn = DriverManager.getConnection(MysqlDAOFactory.DBURL);
 			stm = conn.prepareStatement(sqlDelete);
-			stm.setString(1, cd_id);
+			stm.setString(1, cm_id);
 			stm.executeUpdate();
 	
 			return "[]";//RETORNA UM ARRAY VAZIO APENAS SE EXCLUIR COM SUCESSO

@@ -1,5 +1,6 @@
 package Uteis;
 
+import dao.AcessoDAO;
 import dao.CameraDAO;
 import dao.ComodoDAO;
 import dao.DAOFactory;
@@ -63,13 +64,18 @@ public abstract class Uteis{
 	}
 
 	// --------------------------------------------------------------------------------------------------------------
-    //CONEXÃO COM O BANCO - SENSOR DE PORTAO
+    //CONEXÃO COM O BANCO - PORTAO
     // --------------------------------------------------------------------------------------------------------------
 	public static PortaoDAO connection_portao(){
 		return DAOFactory.getDAOFactory(MYSQL).getPortaoDAO();
 	}
 	
-	
+	// --------------------------------------------------------------------------------------------------------------
+    //CONEXÃO COM O BANCO - ACESSO
+    // --------------------------------------------------------------------------------------------------------------
+	public static AcessoDAO connection_acesso(){
+		return DAOFactory.getDAOFactory(MYSQL).getAcessoDAO();
+	}
 	
 	
 	

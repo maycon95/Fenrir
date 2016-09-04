@@ -1,5 +1,6 @@
 package mysqldao;
 
+import dao.AcessoDAO;
 import dao.CameraDAO;
 import dao.ComodoDAO;
 import dao.DAOFactory;
@@ -47,5 +48,11 @@ public class MysqlDAOFactory  extends DAOFactory{
 	// portanto isso permite que eu retorne esse tipo.	
 	public PortaoDAO getPortaoDAO(){
 		return new MysqlPortaoDAO();
+	}
+	
+	// MysqlAcessoDAO implementa a interface AcessoDAO
+	// portanto isso permite que eu retorne esse tipo.	
+	public AcessoDAO getAcessoDAO(){
+		return new MysqlAcessoDAO();
 	}
 }

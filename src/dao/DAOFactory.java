@@ -14,6 +14,7 @@ public abstract class DAOFactory {
 	public abstract TemperaturaDAO getTemperaturaDAO();
 	public abstract CameraDAO getCameraDAO();
 	public abstract PortaoDAO getPortaoDAO();
+	public abstract AcessoDAO getAcessoDAO();
 	
 	// recebe o id do banco quer quer utilizar
 	// e retorna a respectiva DAOFactory

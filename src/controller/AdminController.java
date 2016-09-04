@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import Uteis.Uteis;
+import to.AcessoTO;
 import to.CameraTO;
 import to.ComodoTO;
 import to.LampadaTO;
@@ -49,6 +50,21 @@ public class AdminController extends HttpServlet {
 				}
 				if(comando.equals("exclui")){
 					response.getWriter().write(excluiUsuario(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
+					return;
+				}
+			break;
+
+			case "acesso":
+				if(comando.equals("buscaAcessoUsuario")){
+					response.getWriter().write(buscaAcessoUsuario(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
+					return;
+				}
+				if(comando.equals("liberaAcesso")){
+					response.getWriter().write(liberaAcesso(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
+					return;
+				}
+				if(comando.equals("bloqueiaAcesso")){
+					response.getWriter().write(bloqueiaAcesso(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
 					return;
 				}
 			break;
@@ -272,6 +288,78 @@ public class AdminController extends HttpServlet {
 	//FIM FUNCOES DE USUARIO
 	//--------------------------------------------
 
+
+	
+
+	//------------------------------------------
+	//FUNCOES DA TABELA DE ACESSO
+	//------------------------------------------
+	
+	//BUSCA ACESSOS DE UM USUARIO
+	public String buscaAcessoUsuario(HttpServletRequest request, HttpServletResponse response){
+		//pega o comando enviado pela pagina
+		String busca = request.getParameter("busca");
+		
+        //PEGA O AcessoTO
+		AcessoTO acessoTO = null;
+		try{
+			acessoTO = Uteis.connection_acesso().buscaPorUser(busca);
+		}catch(Exception e){
+			return Uteis.addSlashes(Uteis.trataErro(e));
+		}
+        
+        //CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+    	Gson gson = new Gson();
+    	String retorno = gson.toJson(acessoTO);
+    	
+		return retorno;
+	}
+	
+	//GRAVA LIBERA ACESSO PARA UM COMODO
+	public String liberaAcesso(HttpServletRequest request, HttpServletResponse response){
+		String us_nome = request.getParameter("us_nome");
+		int cd_id= Integer.parseInt(request.getParameter("cd_id"));
+		char ac_libera = request.getParameter("ac_libera").charAt(0);
+		
+		//PEGA O AcessoTO
+		AcessoTO acessoTO = null;
+		try{
+			acessoTO = Uteis.connection_acesso().gravaAcesso(us_nome, cd_id, ac_libera);
+		}catch(Exception e){
+			return Uteis.addSlashes(Uteis.trataErro(e));
+		}
+		
+		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+    	Gson gson = new Gson();
+    	String retorno = gson.toJson(acessoTO);
+    	
+		return retorno;
+	}
+	
+	//REMOVE UM ACESSO DE UM USUARIO
+	public String bloqueiaAcesso(HttpServletRequest request, HttpServletResponse response){
+		String us_nome = request.getParameter("us_nome");
+		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
+		
+		//PEGA O AcessoTO
+		AcessoTO acessoTO = null;
+		try{
+			acessoTO = Uteis.connection_acesso().bloqueiaAcesso(us_nome, cd_id);
+		}catch(Exception e){
+			return Uteis.addSlashes(Uteis.trataErro(e));
+		}
+		
+		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+    	Gson gson = new Gson();
+    	String retorno = gson.toJson(acessoTO);
+    	
+		return retorno;
+	}
+	
+	//--------------------------------------------
+	//FIM FUNCOES DE ACESSO
+	//--------------------------------------------
+	
 	
 
 	//------------------------------------------

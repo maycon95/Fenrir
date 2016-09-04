@@ -22,13 +22,13 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `TB_ACESSO` (
   `US_NOME` VARCHAR(20) NOT NULL,
   `CD_ID` INT NOT NULL,
-  `AC_LIBERA` CHAR NOT NULL DEFAULT 'F',
+  `AC_LIBERA` CHAR NOT NULL DEFAULT 'B',
   PRIMARY KEY (`US_NOME`, `CD_ID`),
   INDEX `fk_USUARIO_has_TB_COMODO_TB_COMODO1_idx` (`CD_ID` ASC),
   INDEX `fk_USUARIO_has_TB_COMODO_USUARIO_idx` (`US_NOME` ASC),
   CONSTRAINT `fk_USUARIO_has_TB_COMODO_USUARIO`
     FOREIGN KEY (`US_NOME`)
-    REFERENCES `USUARIO` (`US_NOME`)
+    REFERENCES `TB_USUARIO` (`US_NOME`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_USUARIO_has_TB_COMODO_TB_COMODO1`
@@ -151,6 +151,8 @@ INSERT INTO tb_portao(pt_nome, cd_id) values('teste pt', 1);
 
 
 
+-- ACESSO
+INSERT INTO tb_acesso(us_nome,cd_id,ac_libera) values('CAIO',2,'A');
 
 
 
@@ -165,6 +167,20 @@ select * from tb_lampada;
 select * from tb_temperaturax;
 select * from tb_camera;
 select * from tb_portao;
+select * from tb_acesso;
+
+-- BUSCA TODOS OS ACESSOS DE UM USUARIO
+SELECT c.cd_id, c.cd_nome,
+	ifnull((SELECT ac_libera FROM tb_acesso WHERE cd_id = c.cd_id AND us_nome = 'CAIO'), 'B') AS ac_libera
+	FROM tb_comodo c;
+
+
+-- BUSCA O ACESSO DE UM COMODO DE UM USUARIO
+SELECT c.cd_id, c.cd_nome,
+	ifnull((SELECT ac_libera FROM tb_acesso WHERE cd_id = c.cd_id AND us_nome = 'MAYCON'), 'B') AS ac_libera
+	FROM tb_comodo c where cd_id = 1;
+
+
 
 
 

@@ -56,7 +56,41 @@
 					</div>
 				</div>
 			</div>
-
+			
+			<!-- TABELA DE ACESSOS -->
+			<div class='container panel panel-default w460' name="table_acesso" style='padding-top: 15px'>
+				<div class='h40'>
+					<input class='bt grava' type="button" id="ac_grava" onclick='grava_acesso();'>
+					<input class='bt cancela' type="button" id="ac_cancela" onclick='cancela_acesso();'>
+				</div>
+				
+				<div class='panel panel-default panel-table'>
+					<table class='table table-hover'>
+						<thead>
+							<tr class='title'>
+								<td class="w40">#</td>
+								<td class="w300">Comodo</td>
+								<td class="w70">Acesso</td>
+							</tr>
+						</thead>
+						<tbody id="dados_acesso" class='h200'>
+							
+						</tbody>
+					</table>
+				</div>
+				
+				<div class='footer'>
+					<div class='registros w120'>
+						<label>Posicao:</label> 
+						<input type='text' class='w40' id='position_acesso' value="0" readonly />
+					</div>
+					<div class='registros w120'>
+						<label>Registros:</label>
+						<input type="text" class='w40' id="record_acesso" value="0" readonly />				
+					</div>
+				</div>
+			</div>
+			
 
 			<!-- TABELA DE COMODO-->
 			<div class='container panel panel-default w390 hide_custom' name="table_comodo" style='padding-top: 15px'>

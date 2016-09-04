@@ -10,6 +10,7 @@ var objTabelaLampada = {}; //OBJETO DA TABELA DE LAMPADA
 var objTabelaTemperatura = {}; //OBJETO DA TABELA DE TEMPERATURA
 var objTabelaCamera = {}; //OBJETO DA TABELA DE CAMERA
 var objTabelaPortao = {}; //OBJETO DA TABELA DE PORTAO
+var objTabelaAcesso = {}; //OBJETO DA TABELA DE ACESSO
 
 
 //DIV'S DAS TABELAS
@@ -19,6 +20,7 @@ var DIV_TABELA_LAMPADA = "#dados_lampada";
 var DIV_TABELA_TEMPERATURA = "#dados_temperatura";
 var DIV_TABELA_CAMERA = "#dados_camera";
 var DIV_TABELA_PORTAO = "#dados_portao";
+var DIV_TABELA_ACESSO = "#dados_acesso";
 
 
 //COMBO DE COMODOS
@@ -457,6 +459,249 @@ function pintaLinha_usuario(elemento){
 
 	$('#position_user').val(actpos);
 	$(DIV_TABELA_USUARIO + ' .active').removeClass('active');
+	$(elemento).addClass('active');
+
+	//BUSCA OS ACESSOS DESSE USUARIO
+	montaQuery_acesso();
+}
+
+
+
+
+//******************************************************************************
+//				TABELA DE ACESSOS 
+//******************************************************************************
+
+
+//*******************************************************
+//					BUSCA ACESSOS
+//*******************************************************
+function montaQuery_acesso(){
+	//PEGA A POSICAO DO USUARIO SELECIONADO
+	var actpos_usuario = $("#position_user").val();
+	if(empty(actpos_usuario)) return; //SE N SELECIONAR UM USUARIO NAO FAZ NADA
+	if(!Verifica_Alteracao(DIV_TABELA_USUARIO)) return; //SE ESTIVER INSERINDO OU ALTERANDO USUARIO N FAZ NADA
+
+	us_nome = objTabelaUsuario.lista[actpos_usuario].us_nome;
+
+	var funcao = "funcao=acesso"+
+				 "&comando=buscaAcessoUsuario" +
+				 "&busca="+us_nome;
+
+	 AJAX(SERVLET, funcao, function(retorno){
+		retorno = JSon(retorno);
+	
+		//CASO OCORRA ALGUM ERRO
+		if(!retorno){
+			alert("Ocorreu um erro interno ao servidor");
+		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
+		}
+		if (!empty(retorno.error)) {
+			alert("Ocorreu um erro ao buscar acessos\n"+
+				  "Erro: " + retorno.mensagem);
+		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
+		}
+
+		objTabelaAcesso = retorno;
+		objTabelaAcesso.total = objTabelaAcesso.lista.length;
+		montaTabela_acesso();
+	 });
+}
+
+
+//*******************************************************
+//MONTA TABELA - ACESSO
+//*******************************************************
+function montaTabela_acesso(fCustom){
+	//LIMPA A TABELA DO ACESSO
+	LimpaTabela(DIV_TABELA_ACESSO);
+
+	//MONTA AS LINHAS DA TABELA
+	var tabela = "";
+	for(var i = 0; i < objTabelaAcesso.total; i++){
+		tabela += "<tr posicao='"+i+"'>";
+		tabela += montaLinha_acesso(i);
+		tabela += "</tr>";  
+	}
+
+	//COLOCA AS LINHAS NA TABELA
+	$(DIV_TABELA_ACESSO).append(tabela);
+
+	if(objTabelaAcesso.total > 0 && empty(fCustom)){
+		selecionaLinha(DIV_TABELA_ACESSO,0,1);
+		$(DIV_TABELA_ACESSO).animate({ scrollTop: "=0" }, "fast"); //VOLTA O SCROLL PRA CIMA
+	}
+	$("#record_acesso").val(objTabelaAcesso.total);
+	//FUNCAO CUSTOM
+	if(!empty(fCustom)){
+		fCustom();
+	}
+}
+
+
+//*******************************************************
+//				MONTA LINHA - ACESSO
+//*******************************************************
+function montaLinha_acesso(i){
+	var aux = objTabelaAcesso.lista[i];
+	var linha = "<td class='w40 center' ><input value='' readonly></td>"+
+				"<td class='w290'><input class='uppercase' value='"+aux.cd_nome+"' name='cd_nome' cd_nome='"+aux.cd_nome+"' readonly></td>"+
+				"<td class='w50 number'>"+
+					"<input value='"+aux.ac_libera+"' name='ac_libera'/>"+
+					"<select name='ac_libera'></select>"+
+				"</td>";
+	return linha;
+}
+
+
+//*******************************************************
+//MUDA O STATUS DA LINHA EDITADA DA TABELA 
+//*******************************************************
+function edicao_acesso(elemento){
+	var posicao = $(elemento.parent().parent()).attr('posicao');
+	var campo = $(elemento).attr('name');
+	var original = objTabelaAcesso.lista[posicao][campo];
+
+	//NAO HOUVE ALTERACAO
+	if($(elemento).val() == original || getStatus(posicao,DIV_TABELA_ACESSO) !== ''){
+		return;
+	}
+
+	setStatus(posicao, 'a', DIV_TABELA_ACESSO);
+	Bloqueia_Linhas(posicao, DIV_TABELA_ACESSO);
+}
+
+
+//*******************************************************
+//CANCELA AS MUDANCAS FEITAS NA TABELA - ACESSO
+//*******************************************************
+function cancela_acesso(cell){
+	var actpos = $("#position_acesso").val();
+	if(empty(actpos)){
+		return;
+	}
+
+	if(empty(cell)){
+		cell = 2;
+	}
+
+	if(getStatus(actpos,DIV_TABELA_ACESSO) === 'a'){
+		var tr = montaLinha_acesso(actpos);
+
+		$(DIV_TABELA_ACESSO + " tr[posicao="+actpos+"]").html(tr);
+
+		Desbloqueia_Linhas(actpos,DIV_TABELA_ACESSO);
+
+	}else if(getStatus(actpos,DIV_TABELA_ACESSO) === '+'){
+		objTabelaAcesso.lista.splice(actpos,1);
+		objTabelaAcesso.total -= 1;
+
+		montaTabela_acesso(function(){
+			$('#record_acesso').val(objTabelaAcesso.total);
+			if(objTabelaAcesso.total > 0){
+				if(actpos > 0){
+					--actpos;
+				}
+			}
+		});
+	}
+	selecionaLinha(DIV_TABELA_ACESSO,actpos,cell);
+}
+
+
+//*******************************************************
+//GRAVA OS DADOS EDITADOS DA TABELA - ACESSO
+//*******************************************************
+function grava_acesso(cell, fcustom_grava){
+	if(!Verifica_Alteracao(DIV_TABELA_USUARIO)){
+		alert("grave as alterações do usuario antes de proseguir");
+		return;
+	}
+	var actpos = $("#position_acesso").val();
+	var actpos_usuario = $("#position_user").val();
+	if(empty(actpos)){
+		alert("Selecione uma linha");
+    //	swal('Aten��o','� necess�rio selecionar uma linha','warning');
+		return;
+	}
+
+	if(empty(cell)){
+		cell = 1;
+	}
+
+	var status = getStatus(actpos, DIV_TABELA_ACESSO);
+
+	if(empty(status)){
+		selecionaLinha(DIV_TABELA_ACESSO, actpos, cell);
+		return;
+	}
+
+	var linha = DIV_TABELA_ACESSO + " tr[posicao="+actpos+"] input";
+	var comando = ($(linha+"[name=ac_libera]").val() == 'A' ? 'liberaAcesso' : 'bloqueiaAcesso');
+
+	var funcao = "funcao=acesso&comando="+comando+
+				"&us_nome=" + objTabelaUsuario.lista[actpos_usuario].us_nome+
+				"&cd_id="+ objTabelaAcesso.lista[actpos].cd_id +
+				"&ac_libera="+ $(linha+"[name=ac_libera]").val().toUpperCase();
+
+	//swal.loading();
+	AJAX(SERVLET, funcao, function(retorno){
+		retorno = JSon(retorno);
+
+      if(!retorno){
+			var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
+
+			LimpaTabela(DIV_TABELA_ACESSO);
+
+			$(DIV_TABELA_ACESSO).html(erro);
+			alert('Erro ao gravar alterações da tabela\n' + erro);
+			return;
+		}
+
+		if(!empty(retorno.error)){
+//			swal({
+//				title: 'Erro ao gravar',
+//				text: retorno.mensagem,
+//				type: 'error'
+//			}, function(){
+//					selecionaLinha(DIV_TABELA_ACESSO, actpos, cell);
+//				}
+//			);
+			
+			alert('Erro ao gravar\n'+retorno.mensagem);
+
+			return;
+		}
+
+		//JOGA O RETORNO DO ACESSO NO OBJETO
+		objTabelaAcesso.lista[actpos] = retorno.lista[0];
+		
+		if(status === '+'){
+          setStatus(actpos, 'a', DIV_TABELA_ACESSO);
+		}
+		cancela_acesso(cell);
+
+		if(!empty(fcustom_grava)){
+			fcustom_grava();
+			return;
+		}
+		if(status == '+'){
+			alert('Usuario cadastrado com sucesso\nSenha:fenrir');
+		}
+		//swal.close();
+	});
+}
+
+
+//*******************************************************
+//PINTA AS LINHAS - ACESSO
+//*******************************************************
+function pintaLinha_acesso(elemento){
+	var actpos = $(elemento).attr('posicao');
+	if(actpos == $('#position_acesso').val()) return; // SE FOR A LINHA ATUAL N FAZ NADA
+
+	$('#position_acesso').val(actpos);
+	$(DIV_TABELA_ACESSO + ' .active').removeClass('active');
 	$(elemento).addClass('active');
 }
 
@@ -2788,6 +3033,11 @@ function ComboLinha(campo, actpos, div){
 				$(comboMor).append('<option value="A">ATIVADO</option>'+
 								   '<option value="D">DESATIVADO</option>');	
 			break;
+			case "ac_libera":
+				$(comboMor).append('<option value="A">ATIVADO</option>'+
+								   '<option value="B">BLOQUEADO</option>');	
+			break;
+	
 		}
 	}
 
@@ -2946,6 +3196,86 @@ $(document).ready(function(){
 	//				FIM EVENTOS DA TABELA DE USUARIO
 	//***********************************************************************
 	
+
+	//***********************************************************************
+	//				EVENTOS DA TABELA DE ACESSO
+	//***********************************************************************
+	
+	
+	//*******************************************************
+	//KEYUP DOS INPUTS DA DIV_TABELA
+	//*******************************************************
+	$(DIV_TABELA_ACESSO).on("keyup", 'input',function(e){
+		var actpos = $("#position_acesso").val();
+		var cell = $(this).parent().index();
+		switch (e.which) {
+			case 38: //PARA CIMA
+				if(actpos > 0){
+					selecionaLinha(DIV_TABELA_ACESSO,--actpos,cell);
+				}
+			break;
+
+			case 40://PARA BAIXO
+				if (Number(actpos)+1 < $("#record_acesso").val()){
+					selecionaLinha(DIV_TABELA_ACESSO,++actpos,cell);
+				}
+			break;
+
+			case 27://ESC
+				$(this).blur();
+				cancela_acesso(cell);
+			break;;
+
+			case 13://ENTER
+				$(this).blur();
+				grava_acesso(cell);
+			break;
+		}
+	});
+
+	//***********************************************************************
+	//PINTA  ALINHA SELECIONADA
+	//***********************************************************************
+	$(DIV_TABELA_ACESSO).on("focus","input",function(){
+		pintaLinha_acesso($(this).parent().parent());
+
+		if(!$(this).parent().hasClass("inativo")){
+			switch ($(this).attr("name")) {
+				case "ac_libera": 
+					ComboLinha($(this), $("#position_acesso").val(), DIV_TABELA_ACESSO);
+				break;
+			}
+		}
+	});
+
+
+
+	//***********************************************************************
+	//MUDA O COMBO PARA INPUT AO PERDER O FOCO DO COMBO
+	//***********************************************************************
+	$(DIV_TABELA_ACESSO).on('blur', 'select[name=ac_libera]', function(){
+		TiraComboLinha($(this), $("#position_acesso").val(), DIV_TABELA_ACESSO);
+		edicao_acesso($(this));
+	});
+	
+	//***********************************************************************
+	//SELECIONA O TEXTO INTEIRO NO CLICK TABELA
+	//***********************************************************************
+	$(DIV_TABELA_ACESSO).on("click", 'td:not(.inativo) input', function(){
+		$(this).select();
+	});
+
+	//*******************************************************
+	//EDICAO DOS DADOS - ACESSO
+	//*******************************************************
+	$(DIV_TABELA_ACESSO).on('change', 'input', function(){
+		edicao_acesso($(this));
+	});
+	
+
+	//***********************************************************************
+	//				FIM EVENTOS DA TABELA DE ACESSO
+	//***********************************************************************
 
 
 

@@ -19,6 +19,7 @@ public class loginController extends HttpServlet {
     public loginController() {
         super();
     }
+    
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");  

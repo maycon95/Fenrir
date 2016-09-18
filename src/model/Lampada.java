@@ -8,10 +8,10 @@ public class Lampada {
 	private double lp_constotal;
 	private char lp_status;
 	private int lp_dimmer;
+	private int lp_porta;
 	private int cd_id;
-	
-	//outros parametros
 
+	
 	public Lampada(){
 		this.setLp_id(0);
 		this.setLp_nome(null);
@@ -51,6 +51,10 @@ public class Lampada {
 		return lp_dimmer;
 	}
 
+	public int getLp_porta() {
+		return lp_porta;
+	}
+
 	public int getCd_id() {
 		return cd_id;
 	}
@@ -84,6 +88,10 @@ public class Lampada {
 
 	public void setLp_dimmer(int lp_dimmer) {
 		this.lp_dimmer = lp_dimmer;
+	}
+
+	public void setLp_porta(int lp_porta) {
+		this.lp_porta = lp_porta;
 	}
 
 	public void setCd_id(int cd_id) {

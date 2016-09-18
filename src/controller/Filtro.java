@@ -26,15 +26,22 @@ public class Filtro implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-		String uri = req.getRequestURI();
 		
-		System.out.println(uri);
+		String uri = req.getRequestURI();
 		
 		HttpSession session = req.getSession();
 		String usuarioLogado = (String) session.getAttribute("usuarioLogado");
 		
-		if(usuarioLogado == null) System.out.println("offline");
-		else System.out.println("online user: " + usuarioLogado);
+		String controller = uri.substring(uri.lastIndexOf("/"), uri.length());
+		
+		if(!controller.equals("/Login")){
+			//VERIFICO SE O USUARIO ESTA LOGADO
+			if(usuarioLogado == null){
+				//SE NAO ESTIVER LOGADO RETORNA UM ERRO PARA VOLTAR A TELA DE LOGIN
+				response.getWriter().write("connection_lost");
+				return;
+			}
+		}
 		
 		chain.doFilter(request, response);
 	}

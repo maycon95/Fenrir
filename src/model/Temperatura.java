@@ -7,6 +7,7 @@ public class Temperatura {
 	private double tp_temp;
 	private double tp_tempmax;
 	private double tp_tempmin;
+	private int tp_porta;
 	private int cd_id;
 	
 	
@@ -28,6 +29,9 @@ public class Temperatura {
 	}
 	public double getTp_tempmin() {
 		return tp_tempmin;
+	}
+	public int getTp_porta() {
+		return tp_porta;
 	}
 	public int getCd_id() {
 		return cd_id;
@@ -52,6 +56,9 @@ public class Temperatura {
 	}
 	public void setTp_tempmin(double tp_tempmin) {
 		this.tp_tempmin = tp_tempmin;
+	}
+	public void setTp_porta(int tp_porta) {
+		this.tp_porta = tp_porta;
 	}
 	public void setCd_id(int cd_id) {
 		this.cd_id = cd_id;

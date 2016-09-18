@@ -3,6 +3,7 @@
 var req;
 var isIE;
 var funcao; //FUNCAO DE RETORNO DO AJAX
+var SERVLET_IMAGEM = "Imagem"; //SERVLET RESPONSAVEL PELA BUSCA DE IMAGEM
 //***********************************************************************
 
 //***********************************************************************
@@ -57,6 +58,11 @@ function callback() {
    if (req.readyState == 4) 
        if (req.status == 200) {
     	   var retorno = req.responseText;
+    	   if(retorno == 'connection_lost'){
+    		   alert('A conexão foi perdida!\nVoce sera redirecionado para tela de login');
+    		   window.open('../login/login.jsp','_self');
+    	   }
+    	   
     	   funcao(retorno);
        }
 }

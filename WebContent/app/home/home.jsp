@@ -15,7 +15,7 @@
 
 			<div class="col-xs-12 col-md-4 text-center">
 				<div class="btn-group">
-					<input type='button' id='lampada' class='btn btn-default button lampada' comando='4_LIGA_LAMPADA' onclick="acionarLampada();">				
+					<input type='button' class='btn btn-default button lampada' onclick="acionarDispositivos('iluminacao');">				
 				</div>
 				<div>
 					<h4>Iluminação</h4>
@@ -24,10 +24,10 @@
 			
 			<div class="col-xs-12 col-md-4 text-center">
 				<div class="btn-group">
-					<input type='button' class='btn btn-default button arcondicionado' onclick=''>
+					<input type='button' class='btn btn-default button arcondicionado' onclick="acionarComodos('sala');">
 				</div>
 				<div>
-					<h4>Ar-Condicionado</h4>
+					<h4>Salas</h4>
 				</div>
 			</div>
 			

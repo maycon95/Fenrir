@@ -3,7 +3,6 @@ package Uteis;
 import dao.AcessoDAO;
 import dao.CameraDAO;
 import dao.ComodoDAO;
-import dao.DAOFactory;
 import dao.LampadaDAO;
 import dao.PortaoDAO;
 import dao.TemperaturaDAO;
@@ -11,7 +10,8 @@ import dao.UsuarioDAO;
 
 public abstract class Uteis{
 
-   public static final int MYSQL = 1;
+	public static String DRIVER = "com.mysql.jdbc.Driver";
+	public static String DBURL = "jdbc:mysql://localhost/fenrir?user=maycon&password=1234";
 
 	// --------------------------------------------------------------------------------------------------------------
     //TRATA ERRO 
@@ -27,54 +27,55 @@ public abstract class Uteis{
 		String mensagem = e.toString().substring(e.toString().indexOf(":")+2, e.toString().length());
 		return "{\"error\":\"true\",\"mensagem\":\""+addSlashes(mensagem)+"\"}";
 	}
-
+	
+	
     // --------------------------------------------------------------------------------------------------------------
     //CONEXÃO COM O BANCO - USUARIO
     // --------------------------------------------------------------------------------------------------------------
 	public static UsuarioDAO connection_user(){
-		return DAOFactory.getDAOFactory(MYSQL).getUsuarioDAO();
+		return new UsuarioDAO();
 	}
 
     // --------------------------------------------------------------------------------------------------------------
     //CONEXÃO COM O BANCO - COMODO
     // --------------------------------------------------------------------------------------------------------------
 	public static ComodoDAO connection_comodo(){
-		return DAOFactory.getDAOFactory(MYSQL).getComodoDAO();
+		return new ComodoDAO();
 	}
 			
     // --------------------------------------------------------------------------------------------------------------
     //CONEXÃO COM O BANCO - LAMPADA
     // --------------------------------------------------------------------------------------------------------------
 	public static LampadaDAO connection_lampada(){
-		return DAOFactory.getDAOFactory(MYSQL).getLampadaDAO();
+		return new LampadaDAO();
 	}
 	
 	// --------------------------------------------------------------------------------------------------------------
     //CONEXÃO COM O BANCO - SENSOR DE TEMPERATURA
     // --------------------------------------------------------------------------------------------------------------
 	public static TemperaturaDAO connection_temperatura(){
-		return DAOFactory.getDAOFactory(MYSQL).getTemperaturaDAO();
+		return new TemperaturaDAO();
 	}
 	
 	// --------------------------------------------------------------------------------------------------------------
     //CONEXÃO COM O BANCO - SENSOR DE CAMERA
     // --------------------------------------------------------------------------------------------------------------
 	public static CameraDAO connection_camera(){
-		return DAOFactory.getDAOFactory(MYSQL).getCameraDAO();
+		return new CameraDAO();
 	}
 
 	// --------------------------------------------------------------------------------------------------------------
     //CONEXÃO COM O BANCO - PORTAO
     // --------------------------------------------------------------------------------------------------------------
 	public static PortaoDAO connection_portao(){
-		return DAOFactory.getDAOFactory(MYSQL).getPortaoDAO();
+		return new PortaoDAO();
 	}
 	
 	// --------------------------------------------------------------------------------------------------------------
     //CONEXÃO COM O BANCO - ACESSO
     // --------------------------------------------------------------------------------------------------------------
 	public static AcessoDAO connection_acesso(){
-		return DAOFactory.getDAOFactory(MYSQL).getAcessoDAO();
+		return new AcessoDAO();
 	}
 	
 	

@@ -32,7 +32,7 @@ public class AdminController extends HttpServlet {
         
         //PEGA A FUNCAO A SER EXECUTADA
         String funcao = request.getParameter("funcao");
-        String comando = request.getParameter("comando");;
+        String comando = request.getParameter("comando");
         
 		switch(funcao){
 			case "usuario":
@@ -86,6 +86,10 @@ public class AdminController extends HttpServlet {
 					response.getWriter().write(excluiComodo(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
 					return;
 				}
+				if(comando.equals("upload_planta")){
+					response.getWriter().write(uploadPlanta(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
+					return;
+				}								
 			break;
 			
 			case "lampada":
@@ -389,10 +393,11 @@ public class AdminController extends HttpServlet {
 	//GRAVA NOVO COMODO
 	public String insereComodo(HttpServletRequest request, HttpServletResponse response){
 		String cd_nome = request.getParameter("cd_nome");
+		String cd_tipo = request.getParameter("cd_tipo");
 		//PEGA O ComodoTO
 		ComodoTO comodoTO = null;
 		try{
-			comodoTO = Uteis.connection_comodo().insere(cd_nome);
+			comodoTO = Uteis.connection_comodo().insere(cd_nome, cd_tipo);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -408,10 +413,11 @@ public class AdminController extends HttpServlet {
 	public String alteraComodo(HttpServletRequest request, HttpServletResponse response){
 		String cd_id= request.getParameter("cd_id");
 		String cd_nome = request.getParameter("cd_nome");
+		String cd_tipo = request.getParameter("cd_tipo");
 		//PEGA O ComodoTO
 		ComodoTO comodoTO = null;
 		try{
-			comodoTO = Uteis.connection_comodo().altera(cd_id, cd_nome);
+			comodoTO = Uteis.connection_comodo().altera(cd_id, cd_nome, cd_tipo);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -436,6 +442,26 @@ public class AdminController extends HttpServlet {
 		
 		return retorno;
 	}
+
+	
+	//ALTERA DADOS DO COMODO
+	public String uploadPlanta(HttpServletRequest request, HttpServletResponse response){
+		int  cd_id = Integer.parseInt(request.getParameter("cd_id"));
+		String cd_planta = request.getParameter("cd_planta");
+
+		
+		String retorno = "";
+		try{
+			retorno = Uteis.connection_comodo().uploadPlanta(cd_id, cd_planta);
+		}catch(Exception e){
+			return Uteis.addSlashes(Uteis.trataErro(e));
+		}
+		
+		return retorno;
+	}
+	
+	
+	
 	//--------------------------------------------
 	//FIM FUNCOES DE COMODO
 	//--------------------------------------------
@@ -474,12 +500,13 @@ public class AdminController extends HttpServlet {
 		int lp_tensao = Integer.parseInt(request.getParameter("lp_tensao"));
 		double lp_consumo = Double.parseDouble(request.getParameter("lp_consumo"));
 		double lp_constotal = Double.parseDouble(request.getParameter("lp_constotal"));
+		int lp_porta = Integer.parseInt(request.getParameter("lp_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		
 		//PEGA O LampadaTO
 		LampadaTO lampadaTO = null;
 		try{
-			lampadaTO = Uteis.connection_lampada().insere(lp_nome, lp_tensao, lp_consumo, lp_constotal, cd_id);
+			lampadaTO = Uteis.connection_lampada().insere(lp_nome, lp_tensao, lp_consumo, lp_constotal, lp_porta, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -498,12 +525,13 @@ public class AdminController extends HttpServlet {
 		int lp_tensao = Integer.parseInt(request.getParameter("lp_tensao"));
 		double lp_consumo = Double.parseDouble(request.getParameter("lp_consumo"));
 		double lp_constotal = Double.parseDouble(request.getParameter("lp_constotal"));
+		int lp_porta = Integer.parseInt(request.getParameter("lp_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		
 		//PEGA O ComodoTO
 		LampadaTO lampadaTO = null;
 		try{
-			lampadaTO = Uteis.connection_lampada().altera(lp_id, lp_nome, lp_tensao, lp_consumo, lp_constotal, cd_id);
+			lampadaTO = Uteis.connection_lampada().altera(lp_id, lp_nome, lp_tensao, lp_consumo, lp_constotal, lp_porta, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -566,12 +594,13 @@ public class AdminController extends HttpServlet {
 		double tp_tempmax = Double.parseDouble(request.getParameter("tp_tempmax"));
 		double tp_tempmin = Double.parseDouble(request.getParameter("tp_tempmin"));
 		char tp_status = request.getParameter("tp_status").charAt(0);
+		int tp_porta = Integer.parseInt(request.getParameter("tp_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		
 		//PEGA O TemperaturaTO
 		TemperaturaTO temperaturaTO = null;
 		try{
-			temperaturaTO = Uteis.connection_temperatura().insere(tp_nome, tp_tempmax, tp_tempmin, tp_status, cd_id);
+			temperaturaTO = Uteis.connection_temperatura().insere(tp_nome, tp_tempmax, tp_tempmin, tp_status, tp_porta, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -590,13 +619,14 @@ public class AdminController extends HttpServlet {
 		double tp_tempmax = Double.parseDouble(request.getParameter("tp_tempmax"));
 		double tp_tempmin = Double.parseDouble(request.getParameter("tp_tempmin"));
 		char tp_status = request.getParameter("tp_status").charAt(0);
+		int tp_porta = Integer.parseInt(request.getParameter("tp_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		
 		
 		//PEGA O TemperaturaTO
 		TemperaturaTO temperaturaTO = null;
 		try{
-			temperaturaTO = Uteis.connection_temperatura().altera(tp_id, tp_nome, tp_tempmax, tp_tempmin, tp_status, cd_id);
+			temperaturaTO = Uteis.connection_temperatura().altera(tp_id, tp_nome, tp_tempmax, tp_tempmin, tp_status, tp_porta, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -763,12 +793,13 @@ public class AdminController extends HttpServlet {
 	//GRAVA NOVO PORTAO
 	public String inserePortao(HttpServletRequest request, HttpServletResponse response){
 		String pt_nome = request.getParameter("pt_nome");
+		int pt_porta = Integer.parseInt(request.getParameter("pt_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		
 		//PEGA O PortaoTO
 		PortaoTO portaoTO = null;
 		try{
-			portaoTO = Uteis.connection_portao().insere(pt_nome, cd_id);
+			portaoTO = Uteis.connection_portao().insere(pt_nome, pt_porta, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -784,13 +815,14 @@ public class AdminController extends HttpServlet {
 	public String alteraPortao(HttpServletRequest request, HttpServletResponse response){
 		int pt_id= Integer.parseInt(request.getParameter("pt_id"));
 		String pt_nome = request.getParameter("pt_nome");
+		int pt_porta = Integer.parseInt(request.getParameter("pt_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		
 		
 		//PEGA O PortaoTO
 		PortaoTO portaoTO = null;
 		try{
-			portaoTO = Uteis.connection_portao().altera(pt_id, pt_nome, cd_id);
+			portaoTO = Uteis.connection_portao().altera(pt_id, pt_nome, pt_porta, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}

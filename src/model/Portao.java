@@ -4,6 +4,7 @@ public class Portao {
 	private int pt_id;
 	private String pt_nome;
 	private char pt_status;
+	private int pt_porta;
 	private int cd_id;
 	
 	
@@ -16,6 +17,9 @@ public class Portao {
 	}
 	public char getPt_status() {
 		return pt_status;
+	}
+	public int getPt_porta() {
+		return pt_porta;
 	}
 	public int getCd_id() {
 		return cd_id;
@@ -31,6 +35,9 @@ public class Portao {
 	}
 	public void setPt_status(char pt_status) {
 		this.pt_status = pt_status;
+	}
+	public void setPt_porta(int pt_porta) {
+		this.pt_porta = pt_porta;
 	}
 	public void setCd_id(int cd_id) {
 		this.cd_id = cd_id;

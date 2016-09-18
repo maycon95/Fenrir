@@ -819,8 +819,11 @@ function montaLinha_comodo(i){
 	var aux = objTabelaComodo.lista[i];
 	var linha = "<td class='w40 center' ><input value='' readonly></td>"+
 				"<td class='w40'><input value='"+aux.cd_id+"' name='cd_id' readonly></td>"+
-				"<td class='w230'><input class='uppercase' value='"+aux.cd_nome+"' name='cd_nome' cd_nome='"+aux.cd_nome+"' maxlength='20'></td>";
-
+				"<td class='w230'><input class='uppercase' value='"+aux.cd_nome+"' name='cd_nome' cd_nome='"+aux.cd_nome+"' maxlength='20'></td>" +
+				"<td class='w240'>"+
+					"<input	value='"+aux.cd_tipo+"' name='cd_tipo'/>"+
+					"<select name='cd_tipo'></select>"+
+				"</td>";
 	return linha;
 }
 
@@ -843,6 +846,7 @@ function insere_comodo(){
 	var novaPosicao = {};
 	novaPosicao.cd_id = "";
 	novaPosicao.cd_nome = "";
+	novaPosicao.cd_tipo = "";
 	
 	
 	objTabelaComodo.lista.push(novaPosicao);
@@ -944,6 +948,9 @@ function grava_comodo(cell, fcustom_grava){
 	if(empty($(linha+"[name=cd_nome]").val()))
 		mensagem +='Nome do comodo é obrigatório';
 
+	if(empty($(linha+"[name=cd_tipo]").val()))
+		mensagem +='Tipo do comodo é obrigatório';
+
 	if(!empty(mensagem)){
 		alert(mensagem);
 		//swal("N�o foi Poss�vel Cadastrar o Usuario\n Verifique os Campos a baixo",mensagem,'error');
@@ -952,6 +959,7 @@ function grava_comodo(cell, fcustom_grava){
 
 	var funcao = "funcao=comodo&comando="+(status=='+' ? 'insert' : 'update') +
 				"&cd_nome=" + $(linha+"[name=cd_nome]").val().toUpperCase()+
+				"&cd_tipo=" + $(linha+"[name=cd_tipo]").val()+
 				"&cd_id=" + $(linha+"[name=cd_id]").val();
 
 	//swal.loading();
@@ -1119,6 +1127,90 @@ function exclui_comodo(){
 
 
 //*******************************************************
+//				ENVIAR IMAGEM DO COMODO
+//*******************************************************
+function upload_planta(){
+    var file = document.querySelector('input[type=file]').files[0];
+    var actpos = $("#position_comodo").val();
+
+    var img = $("#cd_planta");
+    var reader = new FileReader();
+
+
+    reader.onloadend = function(){
+        img.attr('src', reader.result);
+        console.log(reader.result);
+        $.ajax({
+            url: "/Fenrir/Controller/"+ SERVLET,
+            type: 'POST',
+            data: {'funcao' : 'comodo', 'comando': 'upload_planta', 'cd_id': objTabelaComodo.lista[actpos].cd_id, 'cd_planta': reader.result},
+        })
+        .done(function(retorno) {
+			retorno = JSon(retorno);
+			if(!retorno){
+				var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
+				alert('Houve um erro interno de servidor.\nEntre em contato com o suporte');
+//				swal('Erro ao Alterar Imagem',erro,'error');
+				img.attr('src', "");
+				return;
+			}
+			if(!empty(retorno.error)){
+				//ERRO
+				alert('erro: ' + retorno.mensagem);
+				selecionaLinha(DIV_TABELA_COMODO,actpos,1);
+
+				// swal({
+				// 		title:'Erro ao Alterar Imagem',
+				// 		text: retorno.mensagem,
+				// 		type: 'error'
+				// 	},
+				// 	function(){
+				// 		selecionaLinha(DIV_TABELA_COMODO,actpos,1);
+				// 	}
+				// );
+				img.attr('src', "");
+				return;
+			}
+        });
+    };
+
+    if(file){
+        reader.readAsDataURL(file);
+    } else {
+		img.attr('src', "");
+    }
+}
+
+
+//***********************************************************************
+//FUNCAO QUE BUSCA A IMAGEM
+//***********************************************************************
+function buscaImagem(){
+	actpos = $('#position_comodo').val()
+	cd_id = $(DIV_TABELA_COMODO + " tr[posicao="+actpos+"] input[name=cd_id]").val();
+	var funcao = 'cd_id='+ cd_id;
+	AJAX(SERVLET_IMAGEM, funcao, function(retorno){
+		
+		var baseString = retorno;
+		// data:image/png;base64
+		
+		if(empty(baseString)) {
+			$("#cd_planta").prop('src','');	
+			return;
+		}
+		
+		if(baseString.substring(0,4) != "data"){
+			baseString = "data:image/png;base64," + baseString;
+		}
+		
+		$("#cd_planta").prop('src',baseString);	
+	});
+}
+
+
+
+
+//*******************************************************
 //				PINTA AS LINHAS - COMODO
 //*******************************************************
 function pintaLinha_comodo(elemento){
@@ -1128,6 +1220,8 @@ function pintaLinha_comodo(elemento){
 	$('#position_comodo').val(actpos);
 	$(DIV_TABELA_COMODO + ' .active').removeClass('active');
 	$(elemento).addClass('active');
+	
+	buscaImagem();
 }
 
 
@@ -1262,6 +1356,7 @@ function montaLinha_lampada(i){
 				"<td class='w70 number'><input value='"+aux.lp_tensao+"' name='lp_tensao'></td>"+
 				"<td class='w70 number'><input value='"+number_format(aux.lp_consumo,3,',','.')+"' name='lp_consumo'></td>"+
 				"<td class='w70 number'><input value='"+number_format(aux.lp_constotal,3,',','.')+"' name='lp_constotal'></td>"+
+				"<td class='w70 number'><input value='"+aux.lp_porta+"' name='lp_porta'></td>"+
 				"<td class='w70 number'>"+
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
 					"<select name='cd_id'></select>"+
@@ -1292,6 +1387,7 @@ function insere_lampada(){
 	novaPosicao.lp_tensao = 0;
 	novaPosicao.lp_consumo = 0;
 	novaPosicao.lp_constotal = 0;
+	novaPosicao.lp_porta = 0;
 	novaPosicao.cd_id = "";
 	
 	
@@ -1400,6 +1496,9 @@ function grava_lampada(cell, fcustom_grava){
 	if(empty($(linha+"[name=lp_consumo]").val()))
 		mensagem +='Consumo da lâmpada é obrigatório';
 
+	if(empty($(linha+"[name=lp_porta]").val()))
+		mensagem +='Porta é obrigatório';
+
 	if(empty($(linha+"[name=cd_id]").val()))
 		mensagem +='Comodo é obrigatório';
 
@@ -1415,6 +1514,7 @@ function grava_lampada(cell, fcustom_grava){
 				"&lp_tensao=" + $(linha+"[name=lp_tensao]").val()+
 				"&lp_consumo=" + $(linha+"[name=lp_consumo]").val().replace(/\./g,'').replace(',','.')+
 				"&lp_constotal=" + $(linha+"[name=lp_constotal]").val().replace(/\./g,'').replace(',','.')+
+				"&lp_porta=" + $(linha+"[name=lp_porta]").val()	+
 				"&cd_id=" + $(linha+"[name=cd_id]").val();
 				
 	//swal.loading();
@@ -1714,6 +1814,7 @@ function montaLinha_temperatura(i){
 				"<td class='w170'><input class='uppercase' value='"+aux.tp_nome+"' name='tp_nome' tp_nome='"+aux.tp_nome+"' maxlength='20'></td>"+
 				"<td class='w70 number'><input value='"+number_format(aux.tp_tempmax,2,',','.')+"' name='tp_tempmax'></td>"+
 				"<td class='w70 number'><input value='"+number_format(aux.tp_tempmin,3,',','.')+"' name='tp_tempmin'></td>"+
+				"<td class='w70 number'><input value='"+aux.tp_porta+"' name='tp_porta'></td>"+
 				"<td class='w70 number'>"+
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
 					"<select name='cd_id'></select>"+
@@ -1748,6 +1849,7 @@ function insere_temperatura(){
 	novaPosicao.tp_tempmax = 0;
 	novaPosicao.tp_tempmin = 0;
 	novaPosicao.tp_status = 'D';
+	novaPosicao.tp_porta = 0;
 	novaPosicao.cd_id = "";
 	
 	
@@ -1850,6 +1952,9 @@ function grava_temperatura(cell, fcustom_grava){
 	if(empty($(linha+"[name=tp_nome]").val()))
 		mensagem +='Nome do sensor é obrigatório';
 
+	if(empty($(linha+"[name=tp_porta]").val()))
+		mensagem +='Porta é obrigatório';
+
 	if(empty($(linha+"[name=cd_id]").val()))
 		mensagem +='Comodo é obrigatório';
 
@@ -1865,6 +1970,7 @@ function grava_temperatura(cell, fcustom_grava){
 				"&tp_tempmax=" + $(linha+"[name=tp_tempmax]").val().replace(/\./g,'').replace(',','.')+
 				"&tp_tempmin=" + $(linha+"[name=tp_tempmin]").val().replace(/\./g,'').replace(',','.')+
 				"&tp_status=" + $(linha+"[name=tp_status]").val().toUpperCase()+
+				"&tp_porta=" + $(linha+"[name=tp_porta]").val()+
 				"&cd_id=" + $(linha+"[name=cd_id]").val();
 				
 	//swal.loading();
@@ -2613,6 +2719,7 @@ function montaLinha_portao(i){
 	var linha = "<td class='w40 center' ><input value='' readonly></td>"+
 				"<td class='w40'><input value='"+aux.pt_id+"' name='pt_id' readonly></td>"+
 				"<td class='w200'><input class='uppercase' value='"+aux.pt_nome+"' name='pt_nome' pt_nome='"+aux.pt_nome+"' maxlength='20'></td>"+
+				"<td class='w70 number'><input value='"+aux.pt_porta+"' name='pt_porta' ></td>"+
 				"<td class='w70 center'>"+
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
 					"<select name='cd_id'></select>"+
@@ -2640,6 +2747,7 @@ function insere_portao(){
 	var novaPosicao = {};
 	novaPosicao.pt_id = "";
 	novaPosicao.pt_nome = "";
+	novaPosicao.pt_porta = 0;
 	novaPosicao.cd_id = "";
 	
 	
@@ -2742,6 +2850,9 @@ function grava_portao(cell, fcustom_grava){
 	if(empty($(linha+"[name=pt_nome]").val()))
 		mensagem +='Nome do portao é obrigatório';
 
+	if(empty($(linha+"[name=pt_porta]").val()))
+		mensagem +='Porta é obrigatório';
+
 	if(empty($(linha+"[name=cd_id]").val()))
 		mensagem +='Comodo é obrigatório';
 
@@ -2754,6 +2865,7 @@ function grava_portao(cell, fcustom_grava){
 	var funcao = "funcao=portao&comando="+(status=='+' ? 'insert' : 'update') +
 				"&pt_id=" + $(linha+"[name=pt_id]").val()+
 				"&pt_nome=" + $(linha+"[name=pt_nome]").val().toUpperCase()+
+				"&pt_porta=" + $(linha+"[name=pt_porta]").val()+
 				"&cd_id=" + $(linha+"[name=cd_id]").val();
 				
 	//swal.loading();
@@ -3028,6 +3140,10 @@ function ComboLinha(campo, actpos, div){
 				$.each(objComboComodo, function (key, comodo){
 					$(comboMor).append($('<option>', {value: comodo.cd_id, text : comodo.cd_nome }));
 				});
+			break;
+			case "cd_tipo":
+				$(comboMor).append('<option value="SALA">SALA</option>'+
+								   '<option value="COZINHA">COZINHA</option>');	
 			break;
 			case "tp_status":
 				$(comboMor).append('<option value="A">ATIVADO</option>'+
@@ -3352,6 +3468,14 @@ $(document).ready(function(){
 	//***********************************************************************
 	$(DIV_TABELA_COMODO).on("focus","input",function(){
 		pintaLinha_comodo($(this).parent().parent());
+
+		if(!$(this).parent().hasClass("inativo")){
+			switch ($(this).attr("name")) {
+				case "cd_tipo":
+					ComboLinha($(this), $("#position_comodo").val(), DIV_TABELA_COMODO);
+				break;
+			}
+		}
 	});
 	
 	//***********************************************************************
@@ -3368,6 +3492,16 @@ $(document).ready(function(){
 		edicao_comodo($(this));
 	});
 
+
+	//***********************************************************************
+	//MUDA O COMBO PARA INPUT AO PERDER O FOCO DO COMBO
+	//***********************************************************************
+	$(DIV_TABELA_COMODO).on('blur', 'select[name=cd_tipo]', function(){
+		TiraComboLinha($(this), $("#position_comodo").val(), DIV_TABELA_COMODO);
+		edicao_comodo($(this));
+	});
+	
+	
 	//***********************************************************************
 	//				FIM EVENTOS DA TABELA DE COMODO
 	//***********************************************************************
@@ -3876,7 +4010,3 @@ $(document).ready(function(){
 	
 });
 //***********************************************************************
-
-
- 
- 

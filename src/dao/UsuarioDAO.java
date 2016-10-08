@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,8 +19,7 @@ public class UsuarioDAO {
 	    UsuarioTO userTO = new UsuarioTO();
 
 	    try{
-		   Class.forName(Uteis.DRIVER); 
-		   conn = DriverManager.getConnection(Uteis.DBURL);
+	       conn = Uteis.connection();
 		   conn.setAutoCommit(false);
 	       stm = conn.prepareStatement(sqlSelect);
 	       stm.setString(1, us_nome);
@@ -61,8 +59,7 @@ public class UsuarioDAO {
 	    UsuarioTO userTO = new UsuarioTO();
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlSelect);
 			stm.setString(1, us_nome+"%");
 			rs = stm.executeQuery();
@@ -97,8 +94,7 @@ public class UsuarioDAO {
 	    PreparedStatement stm = null;
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlInsert);
 			stm.setString(1, us_nome);
 			stm.executeUpdate();
@@ -127,8 +123,7 @@ public class UsuarioDAO {
 	    PreparedStatement stm = null;
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlUpdate);
 			stm.setString(1, us_nome);
 			stm.setString(2, us_nome_old);
@@ -158,8 +153,7 @@ public class UsuarioDAO {
 	    PreparedStatement stm = null;
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlDelete);
 			stm.setString(1, us_nome);
 			stm.executeUpdate();

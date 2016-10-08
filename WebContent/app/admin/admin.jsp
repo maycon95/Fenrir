@@ -13,6 +13,7 @@
 			  <li class="list-group-item active" name="usuario">Usuário</li>
 			  <li class="list-group-item" name="comodo">Cômodo</li>
 			  <li class="list-group-item" name="lampada">Lâmpada</li>
+			  <li class="list-group-item" name="dimmer">Dimmer</li>
 			  <li class="list-group-item" name="temperatura">Sensor de Temperatura</li>
 			  <li class="list-group-item" name="camera">Cameras</li>
 			  <li class="list-group-item" name="portao">Portão</li>
@@ -147,7 +148,7 @@
 
 			
 			<!-- TABELA DE LAMPADA -->
-			<div class='container panel panel-default w660 hide_custom' name="table_lampada" style='padding-top: 15px'>
+			<div class='container panel panel-default w590 hide_custom' name="table_lampada" style='padding-top: 15px'>
 				<div class='h40'>
 					<input class='search uppercase' type="search" id="lp_busca">
 					<input class='bt busca' type="button" id="lp_buscar" onclick='montaQuery_lampada();'>
@@ -166,7 +167,6 @@
 								<td class="w170">Lâmpada</td>
 								<td class="w70">Tensão</td>
 								<td class="w70">Consumo</td>
-								<td class="w70">C.Total</td>
 								<td class="w70">Porta</td>
 								<td class="w90">Comodo</td>
 							</tr>
@@ -189,6 +189,46 @@
 				</div>
 			</div>
 			
+			
+
+			<!-- TABELA DE DIMMER -->
+			<div class='container panel panel-default w400 hide_custom' name="table_dimmer" style='padding-top: 15px'>
+				<div class='h40'>
+					<input class='search uppercase' type="search" id="dm_busca">
+					<input class='bt busca' type="button" id="dm_buscar" onclick='montaQuery_dimmer();'>
+					<input class='bt insere' type="button" id="dm_insere" onclick='insere_dimmer();'>
+					<input class='bt deleta' type="button" id="dm_deleta" onclick='exclui_dimmer();'>
+					<input class='bt grava' type="button" id="dm_grava" onclick='grava_dimmer();'>
+					<input class='bt cancela' type="button" id="dm_cancela" onclick='cancela_dimmer();'>
+				</div>
+				
+				<div class='panel panel-default panel-table'>
+					<table class='table table-hover'>
+						<thead>
+							<tr class='title'>
+								<td class="w40">#</td>
+								<td class="w40">ID</td>
+								<td class="w200">Lâmpada</td>
+								<td class="w70">Porta</td>
+							</tr>
+						</thead>
+						<tbody id="dados_dimmer" class='h200'>
+
+						</tbody>
+					</table>
+				</div>
+
+				<div class='footer'>
+					<div class='registros w120'>
+						<label>Posicao:</label> 
+						<input type='text' class='w40' id='position_dimmer' value="0" readonly />
+					</div>
+					<div class='registros w120'>
+						<label>Registros:</label>
+						<input type="text" class='w40' id="record_dimmer" value="0" readonly />				
+					</div>
+				</div>
+			</div>
 			
 			
 			<!-- TABELA DE TEMPERATURA -->

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Uteis.Uteis;
+import dao.UsuarioDAO;
 import model.Usuario;
 import to.UsuarioTO;
 
@@ -38,7 +39,7 @@ public class loginController extends HttpServlet {
 		        //PEGA O UsuarioTO
 				UsuarioTO userTO = null;
 				try{
-					userTO = Uteis.connection_user().logar(us_nome, us_senha);	
+					userTO = new UsuarioDAO().logar(us_nome, us_senha);	
 				}catch(Exception e){
 					response.getWriter().write(Uteis.trataErro(e));
 		        	return;

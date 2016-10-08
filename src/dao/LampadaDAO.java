@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,8 +19,7 @@ public class LampadaDAO {
 	    LampadaTO lampadaTO = new LampadaTO();
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlSelect);
 			stm.setString(1, lp_nome+"%");
 			rs = stm.executeQuery();
@@ -63,8 +61,7 @@ public class LampadaDAO {
 	    PreparedStatement stm = null;
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlInsert);
 			stm.setString(1, lp_nome);
 			stm.setInt(2, lp_tensao);
@@ -98,8 +95,7 @@ public class LampadaDAO {
 	    PreparedStatement stm = null;
 	    
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlUpdate);
 			stm.setString(1, lp_nome);
 			stm.setInt(2, lp_tensao);
@@ -134,8 +130,7 @@ public class LampadaDAO {
 	    PreparedStatement stm = null;
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlDelete);
 			stm.setString(1, lp_id);
 			stm.executeUpdate();

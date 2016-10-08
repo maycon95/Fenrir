@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import Uteis.Uteis;
+import dao.ComodoDAO;
 import to.ComodoTO;
 
 @WebServlet("/Controller/Comodo")
@@ -49,7 +50,7 @@ public class ComodoController extends HttpServlet {
   		ComodoTO comodoTO = null;
   		
   		try{
-  			comodoTO = Uteis.connection_comodo().buscaDispositivos(cd_tipo, us_nome);
+  			comodoTO = new ComodoDAO().buscaDispositivos(cd_tipo, us_nome);
   		}catch(Exception e){
   			return Uteis.addSlashes(Uteis.trataErro(e));
   		}

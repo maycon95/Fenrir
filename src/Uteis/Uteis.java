@@ -1,18 +1,27 @@
 package Uteis;
 
-import dao.AcessoDAO;
-import dao.CameraDAO;
-import dao.ComodoDAO;
-import dao.LampadaDAO;
-import dao.PortaoDAO;
-import dao.TemperaturaDAO;
-import dao.UsuarioDAO;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public abstract class Uteis{
+	private static String usuario = "maycon";
+	private static String senha = "1234";
+	
+	private static String DRIVER = "com.mysql.jdbc.Driver";
+	private static String DBURL = "jdbc:mysql://localhost/fenrir?user="+usuario+"&password="+senha;
 
-	public static String DRIVER = "com.mysql.jdbc.Driver";
-	public static String DBURL = "jdbc:mysql://localhost/fenrir?user=maycon&password=1234";
-
+	
+	// --------------------------------------------------------------------------------------------------------------
+    //PEGA CONEXAO COM O BANCO
+    // --------------------------------------------------------------------------------------------------------------
+	public static Connection connection() throws ClassNotFoundException, SQLException{
+    	Class.forName(DRIVER); 
+		return DriverManager.getConnection(DBURL);
+		
+	}
+	
+	
 	// --------------------------------------------------------------------------------------------------------------
     //TRATA ERRO 
     // --------------------------------------------------------------------------------------------------------------
@@ -27,61 +36,6 @@ public abstract class Uteis{
 		String mensagem = e.toString().substring(e.toString().indexOf(":")+2, e.toString().length());
 		return "{\"error\":\"true\",\"mensagem\":\""+addSlashes(mensagem)+"\"}";
 	}
-	
-	
-    // --------------------------------------------------------------------------------------------------------------
-    //CONEXÃO COM O BANCO - USUARIO
-    // --------------------------------------------------------------------------------------------------------------
-	public static UsuarioDAO connection_user(){
-		return new UsuarioDAO();
-	}
-
-    // --------------------------------------------------------------------------------------------------------------
-    //CONEXÃO COM O BANCO - COMODO
-    // --------------------------------------------------------------------------------------------------------------
-	public static ComodoDAO connection_comodo(){
-		return new ComodoDAO();
-	}
-			
-    // --------------------------------------------------------------------------------------------------------------
-    //CONEXÃO COM O BANCO - LAMPADA
-    // --------------------------------------------------------------------------------------------------------------
-	public static LampadaDAO connection_lampada(){
-		return new LampadaDAO();
-	}
-	
-	// --------------------------------------------------------------------------------------------------------------
-    //CONEXÃO COM O BANCO - SENSOR DE TEMPERATURA
-    // --------------------------------------------------------------------------------------------------------------
-	public static TemperaturaDAO connection_temperatura(){
-		return new TemperaturaDAO();
-	}
-	
-	// --------------------------------------------------------------------------------------------------------------
-    //CONEXÃO COM O BANCO - SENSOR DE CAMERA
-    // --------------------------------------------------------------------------------------------------------------
-	public static CameraDAO connection_camera(){
-		return new CameraDAO();
-	}
-
-	// --------------------------------------------------------------------------------------------------------------
-    //CONEXÃO COM O BANCO - PORTAO
-    // --------------------------------------------------------------------------------------------------------------
-	public static PortaoDAO connection_portao(){
-		return new PortaoDAO();
-	}
-	
-	// --------------------------------------------------------------------------------------------------------------
-    //CONEXÃO COM O BANCO - ACESSO
-    // --------------------------------------------------------------------------------------------------------------
-	public static AcessoDAO connection_acesso(){
-		return new AcessoDAO();
-	}
-	
-	
-	
-	
-	
 	
 	
 	public static String addSlashes(String s) {

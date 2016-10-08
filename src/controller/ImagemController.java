@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Uteis.Uteis;
+import dao.ComodoDAO;
 
 @WebServlet("/Controller/Imagem")
 public class ImagemController extends HttpServlet {
@@ -44,7 +45,7 @@ public class ImagemController extends HttpServlet {
   		String imagem = null;
   		
   		try{
-  			imagem = Uteis.connection_comodo().buscaImagem(cd_id);  			
+  			imagem = new ComodoDAO().buscaImagem(cd_id);  			
   		}catch(Exception e){
   			return Uteis.addSlashes(Uteis.trataErro(e));
   		}

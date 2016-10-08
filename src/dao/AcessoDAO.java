@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,8 +22,7 @@ public class AcessoDAO {
 	    AcessoTO acessoTO = new AcessoTO();
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlSelect);
 			stm.setString(1, us_nome);
 			rs = stm.executeQuery();
@@ -66,8 +64,7 @@ public class AcessoDAO {
 	    AcessoTO acessoTO = new AcessoTO();
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlSelect);
 			stm.setString(1, us_nome);
 			stm.setInt(2, cd_id);
@@ -105,8 +102,7 @@ public class AcessoDAO {
 	    PreparedStatement stm = null;
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlInsert);
 			stm.setString(1, us_nome);
 			stm.setInt(2, cd_id);
@@ -137,8 +133,7 @@ public class AcessoDAO {
 	    PreparedStatement stm = null;
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlDelete);
 			stm.setString(1, us_nome);
 			stm.setInt(2, cd_id);

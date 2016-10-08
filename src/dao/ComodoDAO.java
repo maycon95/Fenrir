@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,8 +22,7 @@ public class ComodoDAO {
 	    ComodoTO comodoTO = new ComodoTO();
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlSelect);
 			stm.setString(1, cd_nome+"%");
 			rs = stm.executeQuery();
@@ -61,8 +59,7 @@ public class ComodoDAO {
 	    PreparedStatement stm = null;
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlInsert);
 			stm.setString(1, cd_nome);
 			stm.setString(2, cd_tipo);
@@ -92,8 +89,7 @@ public class ComodoDAO {
 	    PreparedStatement stm = null;
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlUpdate);
 			stm.setString(1, cd_nome);
 			stm.setString(2, cd_tipo);
@@ -124,8 +120,7 @@ public class ComodoDAO {
 	    PreparedStatement stm = null;
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlDelete);
 			stm.setString(1, cd_id);
 			stm.executeUpdate();
@@ -154,9 +149,7 @@ public class ComodoDAO {
 		Connection conn = null;
 		//CONEXAO COM O BANCO
 		try{
-			Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
-			
+			conn = Uteis.connection();
 		}catch(Exception e){
 			throw e;
 		}
@@ -358,8 +351,7 @@ public class ComodoDAO {
 	    PreparedStatement stm = null;
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlUpdate);
 			stm.setString(1, cd_planta);
 			stm.setInt(2, cd_id);
@@ -392,8 +384,7 @@ public class ComodoDAO {
 	    String imagem = "";
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlSelect);
 			stm.setInt(1, cd_id);
 			rs = stm.executeQuery();

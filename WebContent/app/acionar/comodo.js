@@ -92,13 +92,20 @@ function montaComodo(){
 		for(var j = 0; j < aux.listaLampada.length; j++){
 			var auxLampada = aux.listaLampada[j];
 			var comando = auxLampada.lp_porta + '_LAMPADA' ;
-			dispositivos += "<div class='col-xs-12 col-md-4 text-center'>"+
+			dispositivos += "<div class='col-xs-12 col-md-4 text-center' id='lp_"+auxLampada.lp_id+"'>"+
 							"	<div class='btn-group'>"+
-							"		<input type='button' class='btn btn-default button lampada' comando='"+comando+"'>"+				
+							"		<input type='button' name='dispositivo' class='btn btn-default button lampada' comando='"+comando+"'>"+				
 							"	</div>"+
 							"	<div>"+
 							"		<h4>"+auxLampada.lp_nome+"</h4>"+
 							"	</div>"+
+							"	<div>"+
+							"		<input type='button' name='dimer' value='-' style='float:left;'/>"+
+							"		<input type='text' name='valorDimer' value='0' style='float: left; text-align: right;' class='w40' readonly/>"+
+							"		<input type='button' name='dimer' value='+' style='float:left;'/>"+
+							"	</div>"+
+							
+							
 							"</div>";
 		}
 
@@ -106,7 +113,7 @@ function montaComodo(){
 		for(var j = 0; j < aux.listaPortao.length; j++){
 			var auxPortao = aux.listaPortao[j];
 			var comando = auxPortao.pt_porta + '_PORTAO' ;
-			dispositivos += "<div class='col-xs-12 col-md-4 text-center'>"+
+			dispositivos += "<div class='col-xs-12 col-md-4 text-center' name=''>"+
 							"	<div class='btn-group'>"+
 							"		<input type='button'class='btn btn-default button garagem' comando='"+comando+"'>"+				
 							"	</div>"+
@@ -117,34 +124,19 @@ function montaComodo(){
 		}
 		
 		$(DIV_LISTA_COMODO +" div[name="+aux.cd_id+"] .panel-body").append(dispositivos);
-
-
-
-
-
-					// <!-- LP1 -->
-
-
-
-
-					// <!-- LP2 -->
-					// <div class='col-xs-12 col-md-4 text-center'>
-					// 	<div class='btn-group'>
-					// 		<input type='button' class='btn btn-default button lampada'>				
-					// 	</div>
-					// 	<div>
-					// 		<h4>Iluminação</h4>
-					// 	</div>
-					// </div>
-
-
 	}
-
 	
 	//BUSCA A IMAGEM DO COMODO
 	buscaImagem();
 }
 
+
+
+//FUNCAO PARA ACIONAR O DIMER DO DISPOSITIVO
+function dimer(dimer){
+	var valorAtual = $(dimer).parent
+
+}
 
 
 
@@ -158,6 +150,11 @@ function buscaImagem(){
 		
 		var baseString = retorno;
 		// data:image/png;base64
+		
+		if(empty(baseString)){
+			$("#imagem").prop('src',"");
+			return;
+		}
 		
 		if(baseString.substring(0,4) != "data"){
 			baseString = "data:image/png;base64," + baseString;
@@ -189,9 +186,21 @@ function buscaImagem(){
 
 //***********************************************************************
 $(document).ready(function(){
-	$(DIV_LISTA_COMODO).on('click', 'input[type=button]', function(){
+	//ACIONAR O DISPOSITIVO SELECIONADO
+	$(DIV_LISTA_COMODO).on('click', 'input[type=button][name=dispositivo]', function(){
 		alert($(this).attr('comando'));
 	});
+
+
+	//DIMER DAS LAMPADAS
+	$(DIV_LISTA_COMODO).on('click', 'input[name=dimer]', function(){
+		dimer($(this));
+	});
+
+
+
+
+
 	
 });
 //***********************************************************************

@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,8 +19,7 @@ public class CameraDAO {
 	    CameraTO cameraTO = new CameraTO();
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlSelect);
 			stm.setString(1, cm_nome+"%");
 			rs = stm.executeQuery();
@@ -59,8 +57,7 @@ public class CameraDAO {
 	    PreparedStatement stm = null;
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlInsert);
 			stm.setString(1, cm_nome);
 			stm.setString(2, cm_ip);
@@ -91,8 +88,7 @@ public class CameraDAO {
 	    PreparedStatement stm = null;
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlUpdate);
 			stm.setString(1, cm_nome);
 			stm.setString(2, cm_ip);
@@ -124,8 +120,7 @@ public class CameraDAO {
 	    PreparedStatement stm = null;
 
 	    try{
-	    	Class.forName(Uteis.DRIVER); 
-			conn = DriverManager.getConnection(Uteis.DBURL);
+	    	conn = Uteis.connection();
 			stm = conn.prepareStatement(sqlDelete);
 			stm.setString(1, cm_id);
 			stm.executeUpdate();

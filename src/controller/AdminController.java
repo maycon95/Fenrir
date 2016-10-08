@@ -9,9 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import Uteis.Uteis;
+import dao.AcessoDAO;
+import dao.CameraDAO;
+import dao.ComodoDAO;
+import dao.DimmerDAO;
+import dao.LampadaDAO;
+import dao.PortaoDAO;
+import dao.TemperaturaDAO;
+import dao.UsuarioDAO;
 import to.AcessoTO;
 import to.CameraTO;
 import to.ComodoTO;
+import to.DimmerTO;
 import to.LampadaTO;
 import to.PortaoTO;
 import to.TemperaturaTO;
@@ -111,6 +120,25 @@ public class AdminController extends HttpServlet {
 				}
 			break;
 
+			case "dimmer":
+				if(comando.equals("busca")){
+					response.getWriter().write(buscaDimmer(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
+					return;
+				}
+				if(comando.equals("insert")){
+					response.getWriter().write(insereDimmer(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
+					return;
+				}
+				if(comando.equals("update")){
+					response.getWriter().write(alteraDimmer(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
+					return;
+				}
+				if(comando.equals("exclui")){
+					response.getWriter().write(excluiDimmer(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
+					return;
+				}
+			break;
+
 			case "temperatura":
 				if(comando.equals("busca")){
 					response.getWriter().write(buscaTemperatura(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
@@ -171,8 +199,7 @@ public class AdminController extends HttpServlet {
 			break;
 
 			
-			
-			
+
 			case "monta_combo":
 				response.getWriter().write(montaCombo(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
 			break;
@@ -194,19 +221,23 @@ public class AdminController extends HttpServlet {
 
 	//MONTA COMBO
 	public String montaCombo(HttpServletRequest request, HttpServletResponse response){
-		
         //PEGA O ComodoTO
 		ComodoTO comodoTO = null;
+		LampadaTO lampadaTO = null;
+		
 		try{
-			comodoTO = Uteis.connection_comodo().busca("");
+			comodoTO = new ComodoDAO().busca("");
+			lampadaTO = new LampadaDAO().busca("");
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
         
+		Object[] combo = {comodoTO, lampadaTO};
+		    
         //CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
     	Gson gson = new Gson();
-    	String retorno = gson.toJson(comodoTO);
-    	
+    	String retorno = gson.toJson(combo);
+		
 		return retorno;
 	}
 	
@@ -225,7 +256,7 @@ public class AdminController extends HttpServlet {
         //PEGA O UsuarioTO
 		UsuarioTO userTO = null;
 		try{
-			userTO = Uteis.connection_user().busca(busca);
+			userTO = new UsuarioDAO().busca(busca);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -244,7 +275,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O UsuarioTO
 		UsuarioTO userTO = null;
 		try{
-			userTO = Uteis.connection_user().insere(us_nome);
+			userTO = new UsuarioDAO().insere(us_nome);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -263,7 +294,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O UsuarioTO
 		UsuarioTO userTO = null;
 		try{
-			userTO = Uteis.connection_user().altera(us_nome, us_nome_old);
+			userTO = new UsuarioDAO().altera(us_nome, us_nome_old);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -281,7 +312,7 @@ public class AdminController extends HttpServlet {
 	
 		String retorno = "";
 		try{
-			retorno = Uteis.connection_user().exclui(us_nome);
+			retorno = new UsuarioDAO().exclui(us_nome);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -307,7 +338,7 @@ public class AdminController extends HttpServlet {
         //PEGA O AcessoTO
 		AcessoTO acessoTO = null;
 		try{
-			acessoTO = Uteis.connection_acesso().buscaPorUser(busca);
+			acessoTO = new AcessoDAO().buscaPorUser(busca);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -328,7 +359,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O AcessoTO
 		AcessoTO acessoTO = null;
 		try{
-			acessoTO = Uteis.connection_acesso().gravaAcesso(us_nome, cd_id, ac_libera);
+			acessoTO = new AcessoDAO().gravaAcesso(us_nome, cd_id, ac_libera);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -348,7 +379,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O AcessoTO
 		AcessoTO acessoTO = null;
 		try{
-			acessoTO = Uteis.connection_acesso().bloqueiaAcesso(us_nome, cd_id);
+			acessoTO = new AcessoDAO().bloqueiaAcesso(us_nome, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -378,7 +409,7 @@ public class AdminController extends HttpServlet {
         //PEGA O ComodoTO
 		ComodoTO comodoTO = null;
 		try{
-			comodoTO = Uteis.connection_comodo().busca(busca);
+			comodoTO = new ComodoDAO().busca(busca);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -397,7 +428,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O ComodoTO
 		ComodoTO comodoTO = null;
 		try{
-			comodoTO = Uteis.connection_comodo().insere(cd_nome, cd_tipo);
+			comodoTO = new ComodoDAO().insere(cd_nome, cd_tipo);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -417,7 +448,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O ComodoTO
 		ComodoTO comodoTO = null;
 		try{
-			comodoTO = Uteis.connection_comodo().altera(cd_id, cd_nome, cd_tipo);
+			comodoTO = new ComodoDAO().altera(cd_id, cd_nome, cd_tipo);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -435,7 +466,7 @@ public class AdminController extends HttpServlet {
 	
 		String retorno = "";
 		try{
-			retorno = Uteis.connection_comodo().exclui(cd_id);
+			retorno = new ComodoDAO().exclui(cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -452,7 +483,7 @@ public class AdminController extends HttpServlet {
 		
 		String retorno = "";
 		try{
-			retorno = Uteis.connection_comodo().uploadPlanta(cd_id, cd_planta);
+			retorno = new ComodoDAO().uploadPlanta(cd_id, cd_planta);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -482,7 +513,7 @@ public class AdminController extends HttpServlet {
         //PEGA O LampadaTO
 		LampadaTO lampadaTO = null;
 		try{
-			lampadaTO = Uteis.connection_lampada().busca(busca); 
+			lampadaTO = new LampadaDAO().busca(busca); 
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -506,7 +537,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O LampadaTO
 		LampadaTO lampadaTO = null;
 		try{
-			lampadaTO = Uteis.connection_lampada().insere(lp_nome, lp_tensao, lp_consumo, lp_constotal, lp_porta, cd_id);
+			lampadaTO = new LampadaDAO().insere(lp_nome, lp_tensao, lp_consumo, lp_constotal, lp_porta, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -531,7 +562,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O ComodoTO
 		LampadaTO lampadaTO = null;
 		try{
-			lampadaTO = Uteis.connection_lampada().altera(lp_id, lp_nome, lp_tensao, lp_consumo, lp_constotal, lp_porta, cd_id);
+			lampadaTO = new LampadaDAO().altera(lp_id, lp_nome, lp_tensao, lp_consumo, lp_constotal, lp_porta, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -549,7 +580,7 @@ public class AdminController extends HttpServlet {
 	
 		String retorno = "";
 		try{
-			retorno = Uteis.connection_comodo().exclui(lp_id);
+			retorno = new LampadaDAO().exclui(lp_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -560,6 +591,98 @@ public class AdminController extends HttpServlet {
 	//			FIM FUNCOES DE LAMPADA
 	//--------------------------------------------
 
+	
+
+	
+	
+	
+	
+
+	//------------------------------------------
+	//FUNCOES DA TABELA DE DIMMER
+	//------------------------------------------
+	
+	//BUSCA DIMMER
+	public String buscaDimmer(HttpServletRequest request, HttpServletResponse response){
+		//pega o comando enviado pela pagina
+		String  busca = request.getParameter("busca");
+		
+        //PEGA O DimmerTO
+		DimmerTO dimmerTO = null;
+		try{
+			dimmerTO = new DimmerDAO().busca(busca); 
+		}catch(Exception e){
+			return Uteis.addSlashes(Uteis.trataErro(e));
+		}
+        
+        //CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+    	Gson gson = new Gson();
+    	String retorno = gson.toJson(dimmerTO);
+    	
+		return retorno;
+	}
+	
+	//GRAVA NOVA DIMMER
+	public String insereDimmer(HttpServletRequest request, HttpServletResponse response){
+		int lp_id = Integer.parseInt(request.getParameter("lp_id"));
+		int dm_porta = Integer.parseInt(request.getParameter("dm_porta"));
+		
+		//PEGA O DimmerTO
+		DimmerTO dimmerTO = null;
+		try{
+			dimmerTO = new DimmerDAO().insere(lp_id, dm_porta);
+		}catch(Exception e){
+			return Uteis.addSlashes(Uteis.trataErro(e));
+		}
+		
+		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+    	Gson gson = new Gson();
+    	String retorno = gson.toJson(dimmerTO);
+    	
+		return retorno;
+	}
+	
+	//ALTERA DADOS - DIMMER
+	public String alteraDimmer(HttpServletRequest request, HttpServletResponse response){
+		int dm_id = Integer.parseInt(request.getParameter("dm_id"));
+		int lp_id = Integer.parseInt(request.getParameter("lp_id"));
+		int dm_porta = Integer.parseInt(request.getParameter("dm_porta"));
+		
+		//PEGA O DimmerTO
+		DimmerTO dimmerTO = null;
+		try{
+			dimmerTO = new DimmerDAO().altera(dm_id, lp_id, dm_porta);
+		}catch(Exception e){
+			return Uteis.addSlashes(Uteis.trataErro(e));
+		}
+		
+		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+    	Gson gson = new Gson();
+    	String retorno = gson.toJson(dimmerTO);
+    	
+		return retorno;
+	}
+	
+	//EXCLUI DIMMER
+	public String excluiDimmer(HttpServletRequest request, HttpServletResponse response){
+		int dm_id = Integer.parseInt(request.getParameter("dm_id"));
+	
+		String retorno = "";
+		try{
+			retorno = new DimmerDAO().exclui(dm_id);
+		}catch(Exception e){
+			return Uteis.addSlashes(Uteis.trataErro(e));
+		}
+		
+		return retorno;
+	}
+	//--------------------------------------------
+	//			FIM FUNCOES DE DIMMER
+	//--------------------------------------------
+
+	
+	
+	
 	
 	
 	
@@ -576,7 +699,7 @@ public class AdminController extends HttpServlet {
         //PEGA O TemperaturaTO
 		TemperaturaTO temperaturaTO = null;
 		try{
-			temperaturaTO = Uteis.connection_temperatura().busca(busca); 
+			temperaturaTO = new TemperaturaDAO().busca(busca); 
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -600,7 +723,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O TemperaturaTO
 		TemperaturaTO temperaturaTO = null;
 		try{
-			temperaturaTO = Uteis.connection_temperatura().insere(tp_nome, tp_tempmax, tp_tempmin, tp_status, tp_porta, cd_id);
+			temperaturaTO = new TemperaturaDAO().insere(tp_nome, tp_tempmax, tp_tempmin, tp_status, tp_porta, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -626,7 +749,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O TemperaturaTO
 		TemperaturaTO temperaturaTO = null;
 		try{
-			temperaturaTO = Uteis.connection_temperatura().altera(tp_id, tp_nome, tp_tempmax, tp_tempmin, tp_status, tp_porta, cd_id);
+			temperaturaTO = new TemperaturaDAO().altera(tp_id, tp_nome, tp_tempmax, tp_tempmin, tp_status, tp_porta, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -644,7 +767,7 @@ public class AdminController extends HttpServlet {
 	
 		String retorno = "";
 		try{
-			retorno = Uteis.connection_temperatura().exclui(tp_id);
+			retorno = new TemperaturaDAO().exclui(tp_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -677,7 +800,7 @@ public class AdminController extends HttpServlet {
         //PEGA O CameraTO
 		CameraTO cameraTO = null;
 		try{
-			cameraTO = Uteis.connection_camera().busca(busca); 
+			cameraTO = new CameraDAO().busca(busca); 
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -698,7 +821,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O CameraTO
 		CameraTO cameraTO = null;
 		try{
-			cameraTO = Uteis.connection_camera().insere(cm_nome, cm_ip, cd_id);
+			cameraTO = new CameraDAO().insere(cm_nome, cm_ip, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -721,7 +844,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O CameraTO
 		CameraTO cameraTO = null;
 		try{
-			cameraTO = Uteis.connection_camera().altera(cm_id, cm_nome, cm_ip, cd_id);
+			cameraTO = new CameraDAO().altera(cm_id, cm_nome, cm_ip, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -739,7 +862,7 @@ public class AdminController extends HttpServlet {
 	
 		String retorno = "";
 		try{
-			retorno = Uteis.connection_camera().exclui(cm_id);
+			retorno = new CameraDAO().exclui(cm_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -778,7 +901,7 @@ public class AdminController extends HttpServlet {
         //PEGA O PortaoTO
 		PortaoTO portaoTO = null;
 		try{
-			portaoTO = Uteis.connection_portao().busca(busca); 
+			portaoTO = new PortaoDAO().busca(busca); 
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -799,7 +922,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O PortaoTO
 		PortaoTO portaoTO = null;
 		try{
-			portaoTO = Uteis.connection_portao().insere(pt_nome, pt_porta, cd_id);
+			portaoTO = new PortaoDAO().insere(pt_nome, pt_porta, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -822,7 +945,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O PortaoTO
 		PortaoTO portaoTO = null;
 		try{
-			portaoTO = Uteis.connection_portao().altera(pt_id, pt_nome, pt_porta, cd_id);
+			portaoTO = new PortaoDAO().altera(pt_id, pt_nome, pt_porta, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -840,7 +963,7 @@ public class AdminController extends HttpServlet {
 	
 		String retorno = "";
 		try{
-			retorno = Uteis.connection_portao().exclui(pt_id);
+			retorno = new PortaoDAO().exclui(pt_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}

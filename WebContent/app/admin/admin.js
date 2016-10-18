@@ -3586,7 +3586,10 @@ function ComboLinha(campo, actpos, div){
 			break;
 			case "cd_tipo":
 				$(comboMor).append('<option value="SALA">SALA</option>'+
-								   '<option value="COZINHA">COZINHA</option>');	
+								   '<option value="COZINHA">COZINHA</option>'+
+								   '<option value="QUARTO">QUARTO</option>'+
+								   '<option value="BANHEIRO">BANHEIRO</option>'+
+								   '<option value="GARAGEM">GARAGEM</option>');	
 			break;
 			case "tp_status":
 				$(comboMor).append('<option value="A">ATIVADO</option>'+
@@ -3668,7 +3671,11 @@ $(document).ready(function(){
 		//MOSTRA A TABELA DA OPÇÃOS SELECIONADA E ESCONDE AS OUTRAS
 		$("div[name*=table_]").hide();
 		$("div[name=tabelas] div[name=table_"+$(this).attr("name")+"]").show();
-		$(".footer input").val("0");//RESETA O FOOTER
+		if($(this).attr('name') == "usuario"){
+			$("div[name=tabelas] div[name=table_acesso]").show();
+		}
+		
+		$(".footer input").val("null");//RESETA O FOOTER
 		$(".table tbody").html("");//LIMPA AS TABELAS
 		
 		//LIMPA OS OBJETOS

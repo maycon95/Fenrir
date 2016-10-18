@@ -27,7 +27,10 @@ function acionarComodos(categoria){
 }
 
 
-
+function conexaoArduino(){
+	var url = '../home/testeConexao.jsp';
+	window.open(url,'_self');
+}
 
 
 

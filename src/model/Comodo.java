@@ -7,21 +7,27 @@ public class Comodo {
 	private String cd_nome;
 	private String cd_tipo;
 	private ArrayList<Lampada> listaLampada;
+	private ArrayList<Dimmer> listaDimmer;
 	private ArrayList<Portao> listaPortao;
+	private ArrayList<Temperatura> listaTemperatura;
 	//planta
 
 	public Comodo(){
 		this.setCd_id(0);
 		this.setCd_nome(null);
 		listaLampada = new ArrayList<Lampada>();
+		listaDimmer = new ArrayList<Dimmer>();
 		listaPortao = new ArrayList<Portao>();
+		listaTemperatura = new ArrayList<Temperatura>();
 	}
 	
 	public Comodo(int cd_id, String cd_nome){
 		this.setCd_id(cd_id);
 		this.setCd_nome(cd_nome);
 		listaLampada = new ArrayList<Lampada>();
+		listaDimmer = new ArrayList<Dimmer>();
 		listaPortao = new ArrayList<Portao>();
+		listaTemperatura = new ArrayList<Temperatura>();
 	}
 	
 	//GETTER'S
@@ -66,8 +72,21 @@ public class Comodo {
 		return listaLampada;
 	}
 
-
 	
+	//DIMMER
+	public void addDimmer(Dimmer dimmer){
+		listaDimmer.add(dimmer);
+	}
+	
+	public boolean removeDimmer(Dimmer dimmer){
+		return(listaDimmer.remove(dimmer));
+	}
+	
+	public ArrayList<Dimmer> getListaDimmer(){
+		return listaDimmer;
+	}
+
+
 	//PORTAO
 	public void addPortao(Portao portao){
 		listaPortao.add(portao);
@@ -81,5 +100,20 @@ public class Comodo {
 		return listaPortao;
 	}
 
+	
+	//TEMPERATURA
+	public void addTemperatura(Temperatura temp){
+		listaTemperatura.add(temp);
+	}
+	
+	public boolean removeTemperatura(Temperatura temp){
+		return(listaTemperatura.remove(temp));
+	}
+	
+	public ArrayList<Temperatura> getListaTemperatura(){
+		return listaTemperatura;
+	}
+
+	
 
 }

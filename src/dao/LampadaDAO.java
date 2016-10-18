@@ -55,9 +55,9 @@ public class LampadaDAO {
 	
 	
 	//INSERE NOVA LAMPADA
-	public LampadaTO insere(String lp_nome, int lp_tensao, double lp_consumo, double lp_constotal, int lp_porta, int cd_id) throws Exception{
+	public LampadaTO insere(String lp_nome, int lp_tensao, double lp_consumo, int lp_porta, int cd_id) throws Exception{
 		Connection conn = null;
-	    String sqlInsert = "INSERT INTO tb_lampada(lp_nome, lp_tensao, lp_consumo, lp_constotal, lp_porta, cd_id) VALUES(?, ?, ?, ?, ?, ?) ";
+	    String sqlInsert = "INSERT INTO tb_lampada(lp_nome, lp_tensao, lp_consumo, lp_porta, cd_id) VALUES(?, ?, ?, ?, ?) ";
 	    PreparedStatement stm = null;
 
 	    try{
@@ -66,9 +66,8 @@ public class LampadaDAO {
 			stm.setString(1, lp_nome);
 			stm.setInt(2, lp_tensao);
 			stm.setDouble(3, lp_consumo);
-			stm.setDouble(4, lp_constotal);
-			stm.setInt(5, lp_porta);
-			stm.setInt(6, cd_id);
+			stm.setInt(4, lp_porta);
+			stm.setInt(5, cd_id);
 			stm.executeUpdate();
 	
 			return busca(lp_nome);//CHAMA A BUSCA DE USUARIO PARA RETORNAR OS DADOS INSERIDO
@@ -88,10 +87,10 @@ public class LampadaDAO {
 	    }
 	}
 
-	//ALTERA DADOS DO COMODO
-	public LampadaTO altera(int lp_id, String lp_nome, int lp_tensao, double lp_consumo, double lp_constotal, int lp_porta, int cd_id) throws Exception{
+	//ALTERA DADOS DO LAMPADA
+	public LampadaTO altera(int lp_id, String lp_nome, int lp_tensao, double lp_consumo, int lp_porta, int cd_id) throws Exception{
 		Connection conn = null;
-	    String sqlUpdate = "UPDATE tb_lampada SET lp_nome = ?, lp_tensao = ?, lp_consumo = ?, lp_constotal = ?, lp_porta = ?, cd_id = ? WHERE lp_id= ?";
+	    String sqlUpdate = "UPDATE tb_lampada SET lp_nome = ?, lp_tensao = ?, lp_consumo = ?, lp_porta = ?, cd_id = ? WHERE lp_id= ?";
 	    PreparedStatement stm = null;
 	    
 	    try{
@@ -100,10 +99,9 @@ public class LampadaDAO {
 			stm.setString(1, lp_nome);
 			stm.setInt(2, lp_tensao);
 			stm.setDouble(3, lp_consumo);
-			stm.setDouble(4, lp_constotal);
-			stm.setInt(5, lp_porta);
-			stm.setInt(6, cd_id);
-			stm.setInt(7, lp_id);
+			stm.setInt(4, lp_porta);
+			stm.setInt(5, cd_id);
+			stm.setInt(6, lp_id);
 			stm.executeUpdate();
 	
 			return busca(lp_nome);//CHAMA A BUSCA DE COMODO PARA RETORNAR OS DADOS ALTERADO
@@ -123,7 +121,7 @@ public class LampadaDAO {
 	    }
 	}
 	
-	//EXCLUI COMODO
+	//EXCLUI LAMPADA
 	public String exclui(String lp_id) throws Exception{
 		Connection conn = null;
 	    String sqlDelete = "DELETE FROM tb_lampada WHERE lp_id = ?";
@@ -151,4 +149,34 @@ public class LampadaDAO {
 	       }
 	    }
 	}
+	
+
+	//ATUALIZA O STATUS DA LAMPADA
+	public void updateStatus(int lp_id, String lp_status) throws Exception{
+		Connection conn = null;
+	    String sqlUpdate = "UPDATE tb_lampada SET lp_status = ? WHERE lp_id= ?";
+	    PreparedStatement stm = null;
+	    
+	    try{
+	    	conn = Uteis.connection();
+			stm = conn.prepareStatement(sqlUpdate);
+			stm.setString(1, lp_status);
+			stm.setInt(2, lp_id);
+			stm.executeUpdate();
+	    }
+	    catch (Exception e){
+	    	throw e;
+	    }
+	    finally{
+	       if (stm != null){
+	          try{
+	             stm.close();
+	          }
+	          catch (SQLException e1){
+	             System.out.print(e1.getStackTrace());
+	          }
+	       }
+	    }
+	}
+
 }

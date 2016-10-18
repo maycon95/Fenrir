@@ -16,7 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
+
 import Uteis.Uteis;
+import dao.LampadaDAO;
+import dao.TemperaturaDAO;
+import to.TemperaturaTO;
 
 @WebServlet("/Controller/ControlarLuz")
 public class ControlarLuz extends HttpServlet {
@@ -35,11 +40,12 @@ public class ControlarLuz extends HttpServlet {
         
 		//pega o tipo dispositivo a ser acionado
 		String funcao = request.getParameter("funcao");
-		
+
 		switch(funcao){
 			case "lampada":
 				//pega o comando enviado pela pagina
 				String comando = request.getParameter("comando") + "\n";
+				int lp_id = Integer.parseInt(request.getParameter("lp_id"));
 				String retorno ="";
 				
 				//CRIA O ARRAY DE JSON
@@ -48,6 +54,7 @@ public class ControlarLuz extends HttpServlet {
 		        JSONObject statusDispositivo = new JSONObject();  
 				
 				//envia o comando para o arduino via rede
+
 				if (comando!=null){
 					//endereco ip do arduino na rede
 					byte[] addr = {(byte) 192,(byte) 168,1,(byte) 200};
@@ -71,19 +78,31 @@ public class ControlarLuz extends HttpServlet {
 		
 						// Fecha o Socket
 						cliente.close();  
+
+						//ATUALIZA O STATUS DO DISPOSITIVO NO BANCO
+						try{
+							new LampadaDAO().updateStatus(lp_id, retorno);
+						}catch(Exception e){
+							retorno = Uteis.addSlashes(Uteis.trataErro(e));
+						}
 						
 						statusDispositivo.put("status", retorno);
-							
+
 					} catch(Exception e) {
 						//VERIFICA SE OCORREU ALGUM ERRO E RETORNA PARA A TELA
 				       	response.getWriter().write(Uteis.trataErro("Ocorreu um Erro ao acionar o dispositivo!"));
 					} 
 				}
-				
 		        jsonArray.put(statusDispositivo); //INSERE O OBJ JSON NO ARRAY
 		        response.getWriter().write(jsonArray.toString()); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
 			break;
+			
+			case "temperatura":
+				response.getWriter().write(attTemperatura(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
+			return;
+			
 		}
+		
 		
 	}
 
@@ -93,4 +112,32 @@ public class ControlarLuz extends HttpServlet {
 	}	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//BUSCA TEMPERATURA
+	public String attTemperatura(HttpServletRequest request, HttpServletResponse response){
+		//pega o comando enviado pela pagina
+		String tp_id = request.getParameter("tp_id");
+		
+        //PEGA O TemperaturaTO
+		TemperaturaTO tempTO = null;
+		try{
+			tempTO = new TemperaturaDAO().buscaTemp(tp_id); 
+		}catch(Exception e){
+			return Uteis.addSlashes(Uteis.trataErro(e));
+		}
+        
+        //CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+    	Gson gson = new Gson();
+    	String retorno = gson.toJson(tempTO);
+    	
+		return retorno;
+	}
 }

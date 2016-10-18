@@ -49,7 +49,7 @@
 				<div class='footer'>
 					<div class='registros w120'>
 						<label>Posicao:</label> 
-						<input type='text' class='w40' id='position_user' value="0" readonly />
+						<input type='text' class='w40' id='position_user' value="null" readonly />
 					</div>
 					<div class='registros w120'>
 						<label>Registros:</label>
@@ -83,7 +83,7 @@
 				<div class='footer'>
 					<div class='registros w120'>
 						<label>Posicao:</label> 
-						<input type='text' class='w40' id='position_acesso' value="0" readonly />
+						<input type='text' class='w40' id='position_acesso' value="null" readonly />
 					</div>
 					<div class='registros w120'>
 						<label>Registros:</label>
@@ -102,7 +102,7 @@
 					<input class='bt deleta' type="button" id="cd_deleta" onclick='exclui_comodo();'>
 					<input class='bt grava' type="button" id="cd_grava" onclick='grava_comodo();'>
 					<input class='bt cancela' type="button" id="cd_cancela" onclick='cancela_comodo();'>
-					<input type="file" name="file_upload" id='file_up' onchange="upload_planta()" class=''>
+					<!-- <input type="file" name="file_upload" id='file_up' onchange="upload_planta()" class=''>  -->
 				</div>
 				
 				<div class='panel panel-default panel-table'>
@@ -124,7 +124,7 @@
 				<div class='footer'>
 					<div class='registros w120'>
 						<label>Posicao:</label> 
-						<input type='text' class='w40' id='position_comodo' value="0" readonly />
+						<input type='text' class='w40' id='position_comodo' value="null" readonly />
 					</div>
 					<div class='registros w120'>
 						<label>Registros:</label>
@@ -134,7 +134,7 @@
 
 
 
-
+				<!-- 
 				<div class="w380 h300" id='div_logo'>
 					<input type="file" name="file_upload" id='file_up' onchange="upload_planta()" class='hide'>
 					<label class="" for='file_up' title="clique para poder fazer o upload"></label>
@@ -143,7 +143,7 @@
 						<img src="" id="cd_planta" class='w360 h180' name='cd_planta' title=''/>
 					</div>
 				</div>
-					
+			 	-->
 			</div>
 
 			
@@ -180,7 +180,7 @@
 				<div class='footer'>
 					<div class='registros w120'>
 						<label>Posicao:</label> 
-						<input type='text' class='w40' id='position_lampada' value="0" readonly />
+						<input type='text' class='w40' id='position_lampada' value="null" readonly />
 					</div>
 					<div class='registros w120'>
 						<label>Registros:</label>
@@ -221,7 +221,7 @@
 				<div class='footer'>
 					<div class='registros w120'>
 						<label>Posicao:</label> 
-						<input type='text' class='w40' id='position_dimmer' value="0" readonly />
+						<input type='text' class='w40' id='position_dimmer' value="null" readonly />
 					</div>
 					<div class='registros w120'>
 						<label>Registros:</label>
@@ -265,7 +265,7 @@
 				<div class='footer'>
 					<div class='registros w120'>
 						<label>Posicao:</label> 
-						<input type='text' class='w40' id='position_temperatura' value="0" readonly />
+						<input type='text' class='w40' id='position_temperatura' value="null" readonly />
 					</div>
 					<div class='registros w120'>
 						<label>Registros:</label>
@@ -311,7 +311,7 @@
 				<div class='footer'>
 					<div class='registros w120'>
 						<label>Posicao:</label> 
-						<input type='text' class='w40' id='position_camera' value="0" readonly />
+						<input type='text' class='w40' id='position_camera' value="null" readonly />
 					</div>
 					<div class='registros w120'>
 						<label>Registros:</label>
@@ -360,7 +360,7 @@
 				<div class='footer'>
 					<div class='registros w120'>
 						<label>Posicao:</label> 
-						<input type='text' class='w40' id='position_portao' value="0" readonly />
+						<input type='text' class='w40' id='position_portao' value="null" readonly />
 					</div>
 					<div class='registros w120'>
 						<label>Registros:</label>

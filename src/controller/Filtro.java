@@ -46,8 +46,6 @@ public class Filtro implements Filter {
 		chain.doFilter(request, response);
 	}
 
-
 	public void init(FilterConfig fConfig) throws ServletException {
 	}
-
 }

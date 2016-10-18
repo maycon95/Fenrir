@@ -530,14 +530,13 @@ public class AdminController extends HttpServlet {
 		String lp_nome = request.getParameter("lp_nome");
 		int lp_tensao = Integer.parseInt(request.getParameter("lp_tensao"));
 		double lp_consumo = Double.parseDouble(request.getParameter("lp_consumo"));
-		double lp_constotal = Double.parseDouble(request.getParameter("lp_constotal"));
 		int lp_porta = Integer.parseInt(request.getParameter("lp_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		
 		//PEGA O LampadaTO
 		LampadaTO lampadaTO = null;
 		try{
-			lampadaTO = new LampadaDAO().insere(lp_nome, lp_tensao, lp_consumo, lp_constotal, lp_porta, cd_id);
+			lampadaTO = new LampadaDAO().insere(lp_nome, lp_tensao, lp_consumo, lp_porta, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -555,14 +554,13 @@ public class AdminController extends HttpServlet {
 		String lp_nome = request.getParameter("lp_nome");
 		int lp_tensao = Integer.parseInt(request.getParameter("lp_tensao"));
 		double lp_consumo = Double.parseDouble(request.getParameter("lp_consumo"));
-		double lp_constotal = Double.parseDouble(request.getParameter("lp_constotal"));
 		int lp_porta = Integer.parseInt(request.getParameter("lp_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		
 		//PEGA O ComodoTO
 		LampadaTO lampadaTO = null;
 		try{
-			lampadaTO = new LampadaDAO().altera(lp_id, lp_nome, lp_tensao, lp_consumo, lp_constotal, lp_porta, cd_id);
+			lampadaTO = new LampadaDAO().altera(lp_id, lp_nome, lp_tensao, lp_consumo, lp_porta, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}

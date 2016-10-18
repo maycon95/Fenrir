@@ -7,8 +7,10 @@ import java.sql.SQLException;
 
 
 import model.Comodo;
+import model.Dimmer;
 import model.Lampada;
 import model.Portao;
+import model.Temperatura;
 import Uteis.Uteis;
 import to.ComodoTO;
 
@@ -158,9 +160,13 @@ public class ComodoDAO {
 											"WHERE cd.cd_id = ac.cd_id AND ac.us_nome = ? AND cd.cd_tipo = ?";
 		
 		//BUSCA AS LAMPADAS
-		String sqlSelectLampada = "SELECT lp_id, lp_status, lp_nome, lp_porta, cd_id FROM tb_lampada WHERE cd_id = ?";
-		
+		String sqlSelectLampada = "SELECT l.lp_id, l.lp_status, l.lp_nome, l.lp_porta, l.cd_id, d.dm_id, d.dm_valor, d.dm_porta "+
+											"FROM tb_lampada l left join tb_dimmer d on d.lp_id = l.lp_id where cd_id = ? order by l.lp_nome";
+
 		String sqlSelectPortao = "SELECT pt_id, pt_status, pt_nome, pt_porta, cd_id FROM tb_portao WHERE cd_id = ?";
+		
+		String sqlSelectTemp = "SELECT tp_id, tp_nome, tp_temp, cd_id FROM tb_temperatura WHERE cd_id = ?";
+		
 		
 	    PreparedStatement stm = null;
 	    ResultSet rs = null;
@@ -185,7 +191,7 @@ public class ComodoDAO {
 			stm.close();
 			
 			for(int i = 0; i < comodoTO.getLista().size(); i++){
-				//BUSCO AS LAMPADAS DOS COMODOS DISPONIVEIS  
+				//BUSCO AS LAMPADAS DOS COMODOS DISPONIVEIS
 		    	stm = conn.prepareStatement(sqlSelectLampada);
 		    	stm.setInt(1, comodoTO.getLista().get(i).getCd_id());	    	
 		    	rs = stm.executeQuery();	
@@ -197,6 +203,14 @@ public class ComodoDAO {
 					lampada.setLp_nome(rs.getString("lp_nome"));
 					lampada.setLp_porta(rs.getInt("lp_porta"));
 					comodoTO.getLista().get(i).addLampada(lampada); // INSERE A LAMPADA NA LISTA
+					
+					//DIMMER
+					Dimmer dimmer = new Dimmer();
+					dimmer.setDm_id(rs.getInt("dm_id"));
+					dimmer.setLp_id(rs.getInt("lp_id"));
+					dimmer.setDm_valor(rs.getInt("dm_valor"));
+					dimmer.setDm_porta(rs.getInt("dm_porta"));
+					comodoTO.getLista().get(i).addDimmer(dimmer);
 				}
 				stm.close();
 				
@@ -214,6 +228,23 @@ public class ComodoDAO {
 					portao.setPt_porta(rs.getInt("pt_porta"));
 					comodoTO.getLista().get(i).addPortao(portao); // INSERE O PORTAO NA LISTA
 				}
+				
+				
+
+				//BUSCO O SENSOR DO COMODO
+		    	stm = conn.prepareStatement(sqlSelectTemp);
+		    	stm.setInt(1, comodoTO.getLista().get(i).getCd_id());	    	
+		    	rs = stm.executeQuery();	
+		    	
+				if(rs.next()) {
+					Temperatura temp= new Temperatura();
+					temp.setCd_id(rs.getInt("cd_id"));
+					temp.setTp_id(rs.getInt("tp_id"));
+					temp.setTp_nome(rs.getString("tp_nome"));
+					temp.setTp_temp(Double.parseDouble(rs.getString("tp_temp")));
+					comodoTO.getLista().get(i).addTemperatura(temp); // INSERE A LAMPADA NA LISTA
+				}
+				stm.close();
 				
 			}
 			return comodoTO;

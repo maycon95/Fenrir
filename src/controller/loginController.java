@@ -29,14 +29,14 @@ public class loginController extends HttpServlet {
         
         //PEGA A FUNCAO A SER EXECUTADA
         String funcao = request.getParameter("funcao");
-		
+		        
 		switch(funcao){
 			case "logar":
 				//pega o comando enviado pela pagina
 				String us_nome = request.getParameter("us_nome");
 				String us_senha = request.getParameter("us_senha");
-							
-		        //PEGA O UsuarioTO
+				
+				//PEGA O UsuarioTO
 				UsuarioTO userTO = null;
 				try{
 					userTO = new UsuarioDAO().logar(us_nome, us_senha);	

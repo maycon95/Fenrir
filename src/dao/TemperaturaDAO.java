@@ -150,4 +150,73 @@ public class TemperaturaDAO {
 	       }
 	    }
 	}
+
+	//ATUALIZA O VALOR DO SENSOR 
+	public void attTemperatura(int tp_id, double tp_temp) throws Exception{
+		Connection conn = null;
+	    String sqlUpdate = "UPDATE tb_temperatura SET tp_temp = ? WHERE tp_id = ?";
+	    PreparedStatement stm = null;
+
+	    try{
+	    	conn = Uteis.connection();
+			stm = conn.prepareStatement(sqlUpdate);
+			stm.setDouble(1, tp_temp);
+			stm.setInt(2, tp_id);
+			stm.executeUpdate();
+	    }
+	    catch (Exception e){
+	    	throw e;
+	    }
+	    finally{
+	       if (stm != null){
+	          try{
+	             stm.close();
+	          }
+	          catch (SQLException e1){
+	             System.out.print(e1.getStackTrace());
+	          }
+	       }
+	    }
+	}
+	
+	
+	//BUSCA UM SENSOR DE TEMPERATURA NO BANCO - TELA DE ADMIN
+	public TemperaturaTO buscaTemp(String tp_id) throws Exception{ 
+		Connection conn = null;
+	    String sqlSelect = "SELECT tp_id, tp_nome, tp_temp, cd_id FROM tb_temperatura WHERE tp_id = ? ";
+	    PreparedStatement stm = null;
+	    ResultSet rs = null;
+	    TemperaturaTO temperaturaTO = new TemperaturaTO();
+
+	    try{
+	    	conn = Uteis.connection();
+			stm = conn.prepareStatement(sqlSelect);
+			stm.setString(1, tp_id);
+			rs = stm.executeQuery();
+		
+			while(rs.next()) {
+				Temperatura temperatura = new Temperatura();
+				temperatura.setTp_id(rs.getInt("tp_id"));
+				temperatura.setTp_nome(rs.getString("tp_nome"));
+				temperatura.setTp_temp(rs.getDouble("tp_temp"));
+				temperatura.setCd_id(rs.getInt("cd_id"));
+				temperaturaTO.add(temperatura);
+			}
+			return temperaturaTO;
+	    }
+	    catch (Exception e){
+	    	throw e;
+	    }
+	    finally{
+	       if (stm != null){
+	          try{
+	             stm.close();
+	          }
+	          catch (SQLException e1){
+	             System.out.print(e1.getStackTrace());
+	          }
+	       }
+	    }
+	}
+
 }

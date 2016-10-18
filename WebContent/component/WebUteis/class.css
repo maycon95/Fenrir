@@ -13,7 +13,12 @@
 .button.garagem{background-image: url(../../component/img/garagem.png);}
 .button.camera{background-image: url(../../component/img/camera.png);}
 .button.sensores{background-image: url(../../component/img/sensores.png);}
+.button.temperatura{background-image: url(../../component/img/temperatura.png);}
+.button.sala{background-image: url(../../component/img/sala.png);}
 .button.relatorio{background-image: url(../../component/img/relatorio.png);}
+.button.quarto{background-image: url(../../component/img/quarto.png);}
+.button.cozinha{background-image: url(../../component/img/cozinha.png);}
+.button.wc{background-image: url(../../component/img/wc.png);}
 .search{min-width: 10px; float: left; height: 30px; line-height: 25px; background-color: #fff; border: 1px solid #ccc;
 							 margin: 0 5px 0 0; padding: 0 5px; width: 130px;}
 

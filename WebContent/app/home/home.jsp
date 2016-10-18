@@ -15,16 +15,7 @@
 
 			<div class="col-xs-12 col-md-4 text-center">
 				<div class="btn-group">
-					<input type='button' class='btn btn-default button lampada' onclick="acionarDispositivos('iluminacao');">				
-				</div>
-				<div>
-					<h4>Iluminação</h4>
-				</div>
-			</div>
-			
-			<div class="col-xs-12 col-md-4 text-center">
-				<div class="btn-group">
-					<input type='button' class='btn btn-default button arcondicionado' onclick="acionarComodos('sala');">
+					<input type='button' class='btn btn-default button sala' onclick="acionarComodos('sala');">
 				</div>
 				<div>
 					<h4>Salas</h4>
@@ -33,10 +24,19 @@
 			
 			<div class="col-xs-12 col-md-4 text-center">
 				<div class="btn-group">
-					<input type='button' class='btn btn-default button garagem' onclick=''>	
+					<input type='button' class='btn btn-default button quarto' onclick="acionarComodos('quarto');"'>	
 				</div>
 				<div>
-					<h4>Garagem</h4>
+					<h4>Quarto</h4>
+				</div>
+			</div>
+			
+			<div class="col-xs-12 col-md-4 text-center">
+				<div class="btn-group">
+					<input type='button' class='btn btn-default button cozinha' onclick="acionarComodos('cozinha');">	
+				</div>
+				<div>
+					<h4>Cozinha</h4>
 				</div>
 			</div>
 		
@@ -44,35 +44,32 @@
 		
 		<div class='main'>
 			<div class="col-xs-12 col-md-4 text-center">
-				<h5></h5>
-					
 				<div class="btn-group">
-					<input type='button' class='btn btn-default button camera' onclick=''>
+					<input type='button' class='btn btn-default button wc' onclick="acionarComodos('banheiro');">	
 				</div>
 				<div>
-					<h4>Câmera</h4>
+					<h4>Banheiro</h4>
 				</div>
 			</div>
 			
 			<div class="col-xs-12 col-md-4 text-center">
-				<h5></h5>					
 				<div class="btn-group">
-					<input type='button' class='btn btn-default button sensores' onclick=''>
+					<input type='button' class='btn btn-default button garagem' onclick="acionarComodos('garagem');">	
 				</div>
 				<div>
-					<h4>Sensor</h4>
+					<h4>Garagem</h4>
 				</div>
 			</div>
 			
 			<div class="col-xs-12 col-md-4 text-center">
-				<h5></h5>
 				<div class="btn-group">
-					<input type='button' class='btn btn-default button relatorio' onclick=''>
+					<input type='button' class='btn btn-default button relatorio' onclick="relatorio();">	
 				</div>
 				<div>
-					<h4>Relatórios</h4>
+					<h4>Relatório</h4>
 				</div>
 			</div>
+			
 		</div>
 	</body>
 </html>

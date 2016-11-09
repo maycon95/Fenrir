@@ -281,7 +281,7 @@
 			
 			
 			<!-- TABELA DE CAMERA -->
-			<div class='container panel panel-default w490 hide_custom' name="table_camera" style='padding-top: 15px'>
+			<div class='container panel panel-default w790 hide_custom' name="table_camera" style='padding-top: 15px'>
 				<div class='h40'>
 					<input class='search uppercase' type="search" id="cm_busca">
 					<input class='bt busca' type="button" id="cm_buscar" onclick='montaQuery_camera();'>
@@ -299,6 +299,9 @@
 								<td class="w40">ID</td>
 								<td class="w170">Nome Camera</td>
 								<td class="w100">Endereço IP</td>
+								<td class="w100">Porta</td>
+								<td class="w100">Usuario</td>
+								<td class="w100">Senha</td>
 								<td class="w90">Comodo</td>
 							</tr>
 						</thead>

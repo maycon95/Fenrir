@@ -287,9 +287,22 @@ function buscaImagem(){
 
 
 
+function mov_camera(command){
+	var funcao = 'decoder_control.cgi?user=admin&pwd=&command='+ command; //LEMBRAR DE ARRUMAR
+	AJAX_CAMERA(funcao, function(retorno){
+		
+		var retorno = retorno;
+		console.log(retorno);
+		// data:image/png;base64
+		
+		if(empty(retorno)){
+			alert("retorno vazio")
+			return;
+		}
 
+	});
 
-
+}
 
 
 

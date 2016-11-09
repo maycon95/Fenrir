@@ -52,6 +52,20 @@ function AJAX(servlet,url, fRetorno){
 
 
 //***********************************************************************
+//FUNCAO AJAX - PARA CAMERA
+//***********************************************************************
+function AJAX_CAMERA(addr, port, url, fRetorno){
+	var url = "http://"+addr+":"+port+"/"+url
+	funcao = fRetorno;
+	req = initRequest();
+	req.open("POST", url, true);
+	req.onreadystatechange = callback;
+	req.send(null);
+}
+
+
+
+//***********************************************************************
 //RETORNO DA REQUISISAO
 //***********************************************************************
 function callback() {

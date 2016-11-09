@@ -89,6 +89,7 @@ public class ControlarLuz extends HttpServlet {
 						statusDispositivo.put("status", retorno);
 
 					} catch(Exception e) {
+						e.printStackTrace();
 						//VERIFICA SE OCORREU ALGUM ERRO E RETORNA PARA A TELA
 				       	response.getWriter().write(Uteis.trataErro("Ocorreu um Erro ao acionar o dispositivo!"));
 					} 

@@ -813,13 +813,16 @@ public class AdminController extends HttpServlet {
 	//GRAVA NOVA CAMERA
 	public String insereCamera(HttpServletRequest request, HttpServletResponse response){
 		String cm_nome = request.getParameter("cm_nome");
-		String cm_ip = request.getParameter("cm_ip");
+		String cm_addr = request.getParameter("cm_addr");
+		int cm_port = Integer.parseInt(request.getParameter("cm_port"));
+		String cm_user = request.getParameter("cm_user");
+		String cm_pwd = request.getParameter("cm_pwd");
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		
 		//PEGA O CameraTO
 		CameraTO cameraTO = null;
 		try{
-			cameraTO = new CameraDAO().insere(cm_nome, cm_ip, cd_id);
+			cameraTO = new CameraDAO().insere(cm_nome, cm_addr, cm_port, cm_user, cm_pwd, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}
@@ -835,14 +838,17 @@ public class AdminController extends HttpServlet {
 	public String alteraCamera(HttpServletRequest request, HttpServletResponse response){
 		int cm_id= Integer.parseInt(request.getParameter("cm_id"));
 		String cm_nome = request.getParameter("cm_nome");
-		String cm_ip = request.getParameter("cm_ip");
+		String cm_addr = request.getParameter("cm_addr");
+		int cm_port = Integer.parseInt(request.getParameter("cm_port"));
+		String cm_user = request.getParameter("cm_user");
+		String cm_pwd = request.getParameter("cm_pwd");
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		
 		
 		//PEGA O CameraTO
 		CameraTO cameraTO = null;
 		try{
-			cameraTO = new CameraDAO().altera(cm_id, cm_nome, cm_ip, cd_id);
+			cameraTO = new CameraDAO().altera(cm_id, cm_nome, cm_addr, cm_port, cm_user, cm_pwd, cd_id);
 		}catch(Exception e){
 			return Uteis.addSlashes(Uteis.trataErro(e));
 		}

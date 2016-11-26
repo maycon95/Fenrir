@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 
 import model.Comodo;
-import model.Dimmer;
 import model.Lampada;
 import model.Portao;
 import model.Temperatura;
@@ -204,13 +203,6 @@ public class ComodoDAO {
 					lampada.setLp_porta(rs.getInt("lp_porta"));
 					comodoTO.getLista().get(i).addLampada(lampada); // INSERE A LAMPADA NA LISTA
 					
-					//DIMMER
-					Dimmer dimmer = new Dimmer();
-					dimmer.setDm_id(rs.getInt("dm_id"));
-					dimmer.setLp_id(rs.getInt("lp_id"));
-					dimmer.setDm_valor(rs.getInt("dm_valor"));
-					dimmer.setDm_porta(rs.getInt("dm_porta"));
-					comodoTO.getLista().get(i).addDimmer(dimmer);
 				}
 				stm.close();
 				

@@ -7,7 +7,6 @@ var SERVLET = "Admin"; //SERVLET USADO NESTA PAGINA
 var objTabelaUsuario = {}; //OBJETO DA TABELA DE USUARIO 
 var objTabelaComodo = {};  //OBJETO DA TABELA DE COMODO
 var objTabelaLampada = {}; //OBJETO DA TABELA DE LAMPADA
-var objTabelaDimmer = {}; //OBJETO DA TABELA DE DIMMER
 var objTabelaTemperatura = {}; //OBJETO DA TABELA DE TEMPERATURA
 var objTabelaCamera = {}; //OBJETO DA TABELA DE CAMERA
 var objTabelaPortao = {}; //OBJETO DA TABELA DE PORTAO
@@ -18,7 +17,6 @@ var objTabelaAcesso = {}; //OBJETO DA TABELA DE ACESSO
 var DIV_TABELA_USUARIO = "#dados_usuario";
 var DIV_TABELA_COMODO = "#dados_comodo";
 var DIV_TABELA_LAMPADA = "#dados_lampada";
-var DIV_TABELA_DIMMER = "#dados_dimmer";
 var DIV_TABELA_TEMPERATURA = "#dados_temperatura";
 var DIV_TABELA_CAMERA = "#dados_camera";
 var DIV_TABELA_PORTAO = "#dados_portao";
@@ -506,7 +504,9 @@ function pintaLinha_usuario(elemento){
 	$(elemento).addClass('active');
 
 	//BUSCA OS ACESSOS DESSE USUARIO
-	montaQuery_acesso();
+	objTabelaAcesso.lista = objTabelaUsuario.lista[actpos].acessos;
+	objTabelaAcesso.total = objTabelaAcesso.lista.length;
+	montaTabela_acesso();
 }
 
 
@@ -516,41 +516,41 @@ function pintaLinha_usuario(elemento){
 //				TABELA DE ACESSOS 
 //******************************************************************************
 
-
-//*******************************************************
-//					BUSCA ACESSOS
-//*******************************************************
-function montaQuery_acesso(){
-	//PEGA A POSICAO DO USUARIO SELECIONADO
-	var actpos_usuario = $("#position_user").val();
-	if(empty(actpos_usuario)) return; //SE N SELECIONAR UM USUARIO NAO FAZ NADA
-	if(!Verifica_Alteracao(DIV_TABELA_USUARIO)) return; //SE ESTIVER INSERINDO OU ALTERANDO USUARIO N FAZ NADA
-
-	us_nome = objTabelaUsuario.lista[actpos_usuario].us_nome;
-
-	var funcao = "funcao=acesso"+
-				 "&comando=buscaAcessoUsuario" +
-				 "&busca="+us_nome;
-
-	 AJAX(SERVLET, funcao, function(retorno){
-		retorno = JSon(retorno);
-	
-		//CASO OCORRA ALGUM ERRO
-		if(!retorno){
-			alert("Ocorreu um erro interno ao servidor");
-		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
-		}
-		if (!empty(retorno.error)) {
-			alert("Ocorreu um erro ao buscar acessos\n"+
-				  "Erro: " + retorno.mensagem);
-		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
-		}
-
-		objTabelaAcesso = retorno;
-		objTabelaAcesso.total = objTabelaAcesso.lista.length;
-		montaTabela_acesso();
-	 });
-}
+//
+////*******************************************************
+////					BUSCA ACESSOS
+////*******************************************************
+//function montaQuery_acesso(){
+//	//PEGA A POSICAO DO USUARIO SELECIONADO
+//	var actpos_usuario = $("#position_user").val();
+//	if(empty(actpos_usuario)) return; //SE N SELECIONAR UM USUARIO NAO FAZ NADA
+//	if(!Verifica_Alteracao(DIV_TABELA_USUARIO)) return; //SE ESTIVER INSERINDO OU ALTERANDO USUARIO N FAZ NADA
+//
+//	us_nome = objTabelaUsuario.lista[actpos_usuario].us_nome;
+//
+//	var funcao = "funcao=acesso"+
+//				 "&comando=buscaAcessoUsuario" +
+//				 "&busca="+us_nome;
+//
+//	 AJAX(SERVLET, funcao, function(retorno){
+//		retorno = JSon(retorno);
+//	
+//		//CASO OCORRA ALGUM ERRO
+//		if(!retorno){
+//			alert("Ocorreu um erro interno ao servidor");
+//		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
+//		}
+//		if (!empty(retorno.error)) {
+//			alert("Ocorreu um erro ao buscar acessos\n"+
+//				  "Erro: " + retorno.mensagem);
+//		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
+//		}
+//
+//		objTabelaAcesso = retorno;
+//		objTabelaAcesso.total = objTabelaAcesso.lista.length;
+//		montaTabela_acesso();
+//	 });
+//}
 
 
 //*******************************************************
@@ -718,7 +718,7 @@ function grava_acesso(cell, fcustom_grava){
 		}
 
 		//JOGA O RETORNO DO ACESSO NO OBJETO
-		objTabelaAcesso.lista[actpos] = retorno.lista[0];
+		objTabelaAcesso.lista[actpos] = retorno.lista[0].acessos[0];
 		
 		if(status === '+'){
           setStatus(actpos, 'a', DIV_TABELA_ACESSO);
@@ -1400,7 +1400,7 @@ function montaLinha_lampada(i){
 				"<td class='w70 number'><input value='"+aux.lp_tensao+"' name='lp_tensao'></td>"+
 				"<td class='w80 number'><input value='"+number_format(aux.lp_consumo,3,',','.')+"' name='lp_consumo'></td>"+
 				"<td class='w70 number'><input value='"+aux.lp_porta+"' name='lp_porta'></td>"+
-				"<td class='w110 number'><input value='"+aux.lp_porta+"' name='lp_portaDimmer'></td>"+
+				"<td class='w110 number'><input value='"+aux.dm_porta+"' name='dm_porta'></td>"+
 				"<td class='w100 number'>"+
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
 					"<select name='cd_id'></select>"+
@@ -1431,6 +1431,7 @@ function insere_lampada(){
 	novaPosicao.lp_tensao = 0;
 	novaPosicao.lp_consumo = 0;
 	novaPosicao.lp_porta = 0;
+	novaPosicao.dm_porta = 0;
 	novaPosicao.cd_id = "";
 	
 	
@@ -1540,7 +1541,7 @@ function grava_lampada(cell, fcustom_grava){
 		mensagem +='Consumo da lâmpada é obrigatório';
 
 	if(empty($(linha+"[name=lp_porta]").val()))
-		mensagem +='Porta é obrigatório';
+		mensagem +='Porta da Lampada é obrigatório';
 
 	if(empty($(linha+"[name=cd_id]").val()))
 		mensagem +='Comodo é obrigatório';
@@ -1557,6 +1558,7 @@ function grava_lampada(cell, fcustom_grava){
 				"&lp_tensao=" + $(linha+"[name=lp_tensao]").val()+
 				"&lp_consumo=" + $(linha+"[name=lp_consumo]").val().replace(/\./g,'').replace(',','.')+
 				"&lp_porta=" + $(linha+"[name=lp_porta]").val()	+
+				"&dm_porta=" + $(linha+"[name=dm_porta]").val()	+
 				"&cd_id=" + $(linha+"[name=cd_id]").val();
 				
 	//swal.loading();
@@ -1750,439 +1752,6 @@ function pintaLinha_lampada(elemento){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//**********************************************************************************
-//					FUNCOES DA TABELA DE DIMMER
-//**********************************************************************************
-
-
-//*******************************************************
-//					BUSCA DIMMER
-//*******************************************************
-function montaQuery_dimmer(){
-	var funcao = "funcao=dimmer"+
-				 "&comando=busca" +
-				 "&busca="+$("#dm_busca").val();
-
-	 AJAX(SERVLET, funcao, function(retorno){
-		retorno = JSon(retorno);
-	
-		//CASO OCORRA ALGUM ERRO
-		if(!retorno){
-			alert("Ocorreu um erro interno ao servidor");
-		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
-		}
-		if (!empty(retorno.error)) {
-			alert("Ocorreu um erro ao buscar dimmers\n"+
-				  "Erro: " + retorno.mensagem);
-		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
-		}
-
-		objTabelaDimmer = retorno;
-		objTabelaDimmer.total = objTabelaDimmer.lista.length;
-		montaTabela_dimmer();
-	 });
-}
-
-
-//*******************************************************
-//					MONTA TABELA - DIMMER
-//*******************************************************
-function montaTabela_dimmer(fCustom){
-	//LIMPA A TABELA
-	LimpaTabela(DIV_TABELA_DIMMER);
-
-	//MONTA AS LINHAS DA TABELA
-	var tabela = "";
-	for(var i = 0; i < objTabelaDimmer.total; i++){
-		tabela += "<tr posicao='"+i+"'>";
-		tabela += montaLinha_dimmer(i);
-		tabela += "</tr>";  
-	}
-
-	//COLOCA AS LINHAS NA TABELA
-	$(DIV_TABELA_DIMMER).append(tabela);
-
-	if(objTabelaDimmer.total > 0 && empty(fCustom)){
-		selecionaLinha(DIV_TABELA_DIMMER,0,1);
-		$(DIV_TABELA_DIMMER).animate({ scrollTop: "=0" }, "fast"); //VOLTA O SCROLL PRA CIMA
-	}
-	$("#record_dimmer").val(objTabelaDimmer.total);
-	//FUNCAO CUSTOM
-	if(!empty(fCustom)){
-		fCustom();
-	}
-	
-	if(objTabelaDimmer.total == 0){
-		$("#dm_busca").select();
-	}
-}
-
-
-//*******************************************************
-//				MONTA LINHA - DIMMER
-//*******************************************************
-function montaLinha_dimmer(i){
-	var aux = objTabelaDimmer.lista[i];
-	var linha = "<td class='w40 center' ><input value='' readonly></td>"+
-				"<td class='w40'><input value='"+aux.dm_id+"' name='dm_id' readonly></td>"+
-				"<td class='w200'>"+
-					"<input value='"+aux.lp_nome+"' name='lp_nome' lp_id='"+aux.lp_id+"' />"+
-					"<select name='lp_nome'></select>"+
-				"</td>"+
-				"<td class='w60 number'><input value='"+aux.dm_porta+"' name='dm_porta'></td>";				
-	return linha;
-}
-
-
-//*******************************************************
-//				INSERE LINHA - DIMMER
-//*******************************************************
-function insere_dimmer(){	
-	if(!Verifica_Alteracao(DIV_TABELA_DIMMER)){
-		selecionaLinha(DIV_TABELA_DIMMER,$('#position_dimmer').val(),2);
-		return;
-	}
-
-	if(empty(objTabelaDimmer.lista)){
-		objTabelaDimmer = {};
-		objTabelaDimmer.lista = [];
-		objTabelaDimmer.total = 0;
-	}
-
-	var novaPosicao = {};
-	novaPosicao.dm_id = "";
-	novaPosicao.lp_nome = "";
-	novaPosicao.lp_id = 0;
-	novaPosicao.dm_porta = 0;
-	
-	
-	objTabelaDimmer.lista.push(novaPosicao);
-	objTabelaDimmer.total += 1;
-	
-	var actpos = objTabelaDimmer.total > 0 ? (objTabelaDimmer.total - 1) : 0;
-
-	montaTabela_dimmer(function(){
-		setStatus(actpos,'+',DIV_TABELA_DIMMER);
-		pintaLinha_dimmer($(DIV_TABELA_DIMMER	 + " tr[posicao="+actpos+"]"));
-		Bloqueia_Linhas(actpos,DIV_TABELA_DIMMER);
-		$('#record_dimmer').val(objTabelaDimmer.total);
-		selecionaLinha(DIV_TABELA_DIMMER,actpos,2);
-	});	
-}
-
-
-//*******************************************************
-//			MUDA O STATUS DA LINHA EDITADA DA TABELA 
-//*******************************************************
-function edicao_dimmer(elemento){
-	var posicao = $(elemento.parent().parent()).attr('posicao');
-	var campo = $(elemento).attr('name');
-	var original = objTabelaDimmer.lista[posicao][campo];
-
-	//NAO HOUVE ALTERACAO
-	if($(elemento).val() == original || getStatus(posicao,DIV_TABELA_DIMMER) !== ''){
-		return;
-	}
-
-	setStatus(posicao, 'a', DIV_TABELA_DIMMER);
-	Bloqueia_Linhas(posicao, DIV_TABELA_DIMMER);
-}
-
-
-//*******************************************************
-//			CANCELA AS MUDANCAS FEITAS NA TABELA - DIMMER
-//*******************************************************
-function cancela_dimmer(cell){
-	var actpos = $("#position_dimmer").val();
-	if(empty(actpos)){
-		return;
-	}
-
-	if(empty(cell)){
-		cell = 2;
-	}
-
-	if(getStatus(actpos,DIV_TABELA_DIMMER) === 'a'){
-		var tr = montaLinha_dimmer(actpos);
-
-		$(DIV_TABELA_DIMMER + " tr[posicao="+actpos+"]").html(tr);
-
-		Desbloqueia_Linhas(actpos,DIV_TABELA_DIMMER);
-
-	}else if(getStatus(actpos,DIV_TABELA_DIMMER) === '+'){
-		objTabelaDimmer.lista.splice(actpos,1);
-		objTabelaDimmer.total -= 1;
-
-		montaTabela_dimmer(function(){
-			$('#record_dimmer').val(objTabelaDimmer.total);
-			if(objTabelaDimmer.total > 0){
-				if(actpos > 0){
-					--actpos;
-				}
-			}
-		});
-	}
-	selecionaLinha(DIV_TABELA_DIMMER,actpos,cell);
-}
-
-
-//*******************************************************
-//			GRAVA OS DADOS EDITADOS DA TABELA - DIMMER
-//*******************************************************
-function grava_dimmer(cell, fcustom_grava){
-	var actpos = $("#position_dimmer").val();
-	if(empty(actpos)){
-		alert("Selecione uma linha");
-    //	swal('Aten��o','� necess�rio selecionar uma linha','warning');
-		return;
-	}
-
-	if(empty(cell)){
-		cell = 1;
-	}
-
-	var status = getStatus(actpos, DIV_TABELA_DIMMER);
-
-	if(empty(status)){
-		selecionaLinha(DIV_TABELA_DIMMER, actpos, cell);
-		return;
-	}
-
-	var linha = DIV_TABELA_DIMMER + " tr[posicao="+actpos+"] input";
-
-	//VALIDACOES
-	var mensagem = '';
-	if(empty($(linha+"[name=lp_nome]").val()))
-		mensagem +='Lâmpada é obrigatório';
-
-	if(empty($(linha+"[name=dm_porta]").val()))
-		mensagem +='Porta é obrigatório';
-
-	if(!empty(mensagem)){
-		alert(mensagem);
-		//swal("N�o foi Poss�vel Cadastrar o Usuario\n Verifique os Campos a baixo",mensagem,'error');
-		return;
-	}
-
-	var funcao = "funcao=dimmer&comando="+(status=='+' ? 'insert' : 'update') +
-				"&dm_id=" + $(linha+"[name=dm_id]").val()+
-				"&lp_id=" + $(linha+"[name=lp_nome]").attr('lp_id')+
-				"&dm_porta=" + $(linha+"[name=dm_porta]").val();
-
-	//swal.loading();
-	AJAX(SERVLET, funcao, function(retorno){
-		retorno = JSon(retorno);
-
-      if(!retorno){
-			var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
-
-			LimpaTabela(DIV_TABELA_DIMMER);
-
-			$(DIV_TABELA_DIMMER).html(erro);
-			alert('Erro ao gravar alterações da tabela\n' + erro);
-			return;
-		}
-
-		if(!empty(retorno.error)){
-//			swal({
-//				title: 'Erro ao gravar',
-//				text: retorno.mensagem,
-//				type: 'error'
-//			}, function(){
-//					selecionaLinha(DIV_TABELA_COMODO, actpos, cell);
-//				}
-//			);
-			
-			alert('Erro ao gravar\n'+retorno.mensagem);
-
-			return;
-		}
-
-		//JOGA O RETORNO NO OBJETO
-		objTabelaDimmer.lista[actpos] = retorno.lista[0];
-		
-		if(status === '+'){
-          setStatus(actpos, 'a', DIV_TABELA_DIMMER);
-		}
-		cancela_dimmer(cell);
-
-		if(!empty(fcustom_grava)){
-			fcustom_grava();
-			return;
-		}
-
-		//swal.close();
-	});
-}
-
-
-//*******************************************************
-//			DELETA O REGISTRO SELECIONADO - DIMMER
-//*******************************************************
-function exclui_dimmer(){
-	var actpos = $('#position_dimmer').val();
-	if(empty(actpos)){
-		alert('Selecione uma linha');
-		//swal('Atencao','É necessário selecionar uma linha','warning');
-		return;
-	}
-
-	if(!empty(getStatus(actpos,DIV_TABELA_DIMMER))){
-		cancela_dimmer(1);
-		return;
-	}
-
-	var dm_id = objTabelaDimmer.lista[actpos].dm_id;
-
-
-	var funcao = "funcao=dimmer" +
-				 "&comando=exclui"+
-				 "&dm_id=" + dm_id;
-
-	AJAX(SERVLET, funcao, function(retorno){
-		retorno = JSon(retorno);
-		if(!retorno){
-			var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
-			alert(erro);
-//			swal('Erro de excluão',erro,'error');
-			return;
-		}
-		if(!empty(retorno.error)){
-			//ERRO
-//			swal({
-//					title:'Erro ao excluir Usuario',
-//					text: retorno.mensagem,
-//					type: 'error'
-//				},
-//				function(){
-//					selecionaLinha(DIV_TABELA_COMODO,actpos,1);
-//				}
-//			);
-			alert('Erro ao excluir Dimmer\n'+retorno.error);
-			return;
-		}
-
-		objTabelaDimmer.lista.splice(actpos,1);
-		objTabelaDimmer.total -= 1;
-		
-		montaTabela_dimmer(function(){
-			$('#record_dimmer').val(objTabelaDimmer.total);
-			if(objTabelaDimmer.total > 0){
-				if(actpos > 0){
-					--actpos;
-				}
-				selecionaLinha(DIV_TABELA_DIMMER,actpos,1);
-			}
-		});
-	});
-
-	// swal({
-	// 		title: "Deseja excluir o Usuário selecionado?",
-	// 		type: "warning",
-	// 		showCancelButton: true,
-	// 		confirmButtonText: "Sim",
-	// 		cancelButtonText: "Não",
-	// 		closeOnConfirm: false,
-	// 		closeOnCancel: true,
-	// 		showLoaderOnConfirm: true,
-	// 		confirmButtonColor: "#DD6B55"
-	// 	}, function(confirmouExclusao){
-	// 		if(!confirmouExclusao){
-	// 			return;
-	// 		}
-
-	// 		var funcao = "funcao=deleta&us_nome=" + us_nome;
-
-	// 		AJAX(SERVLET, funcao, function(retorno){
-	// 			retorno = json(retorno);
-	// 			if(!retorno){
-	// 				var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
-	// 				swal('Erro de excluão',erro,'error');
-	// 				return;
-	// 			}
-	// 			if(!empty(retorno.error)){
-	// 				//ERRO
-	// 				swal({
-	// 						title:'Erro ao excluir Usuario',
-	// 						text: retorno.mensagem,
-	// 						type: 'error'
-	// 					},
-	// 					function(){
-	// 						selecionaLinha(DIV_TABELA_COMODO,actpos,1);
-	// 					}
-	// 				);
-	// 				return;
-	// 			}
-
-	// 			objTabelaComodo.registros.splice(actpos,1);
-	// 			objTabelaComodo.total -= 1;
-	// 			swal.close();
-
-	// 			montaTabela_usuario(function(){
-	// 				$('#record_user').val(objTabelaComodo.total);
-	// 				if(objTabelaComodo.total > 0){
-	// 					if(actpos > 0){
-	// 						--actpos;
-	// 					}
-	// 					selecionaLinha(DIV_TABELA_COMODO,actpos,1);
-	// 				}
-	// 			});
-	// 		});
-	// 	}
-	// );
-}
-
-
-//*******************************************************
-//				PINTA AS LINHAS - DIMMER
-//*******************************************************
-function pintaLinha_dimmer(elemento){
-	var actpos = $(elemento).attr('posicao');
-	if(actpos == $('#position_dimmer').val()) return; // SE FOR A LINHA ATUAL N FAZ NADA
-
-	$('#position_dimmer').val(actpos);
-	$(DIV_TABELA_DIMMER + ' .active').removeClass('active');
-	$(elemento).addClass('active');
-}
-
-
-//***********************************************************************
-//					FIM FUNCOES DA TABELA DE DIMMER
-//***********************************************************************
 
 
 
@@ -2752,10 +2321,10 @@ function montaLinha_camera(i){
 	var linha = "<td class='w60 center' ><input value='' readonly></td>"+
 				"<td class='w70'><input value='"+aux.cm_id+"' name='cm_id' readonly></td>"+
 				"<td class='w190'><input class='uppercase' value='"+aux.cm_nome+"' name='cm_nome' cm_nome='"+aux.cm_nome+"' maxlength='20'></td>"+
-				"<td class='w180 number'><input value='"+aux.cm_ip+"' name='cm_ip'></td>"+
+				"<td class='w180'><input value='"+aux.cm_addr+"' name='cm_addr'></td>"+
 				"<td class='w80 number'><input value='"+aux.cm_port+"' name='cm_port'></td>"+
-				"<td class='w120 number'><input value='"+aux.cm_user+"' name='cm_user'></td>"+
-				"<td class='w120 number'><input value='"+aux.cm_pws+"' name='cm_pws'></td>"+
+				"<td class='w120'><input value='"+aux.cm_user+"' name='cm_user'></td>"+
+				"<td class='w120'><input type='password' value='"+aux.cm_pwd+"' name='cm_pwd'></td>"+
 				"<td class='w120 center'>"+
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
 					"<select name='cd_id'></select>"+
@@ -2783,7 +2352,10 @@ function insere_camera(){
 	var novaPosicao = {};
 	novaPosicao.cm_id = "";
 	novaPosicao.cm_nome = "";
-	novaPosicao.cm_ip = 0;
+	novaPosicao.cm_addr = "";
+	novaPosicao.cm_port = "0";
+	novaPosicao.cm_user = "";
+	novaPosicao.cm_pwd = "";
 	novaPosicao.cd_id = "";
 	
 	
@@ -2898,7 +2470,10 @@ function grava_camera(cell, fcustom_grava){
 	var funcao = "funcao=camera&comando="+(status=='+' ? 'insert' : 'update') +
 				"&cm_id=" + $(linha+"[name=cm_id]").val()+
 				"&cm_nome=" + $(linha+"[name=cm_nome]").val().toUpperCase()+
-				"&cm_ip=" + $(linha+"[name=cm_ip]").val()+
+				"&cm_addr=" + $(linha+"[name=cm_addr]").val()+
+				"&cm_port=" + $(linha+"[name=cm_port]").val()+
+				"&cm_user=" + $(linha+"[name=cm_user]").val()+
+				"&cm_pwd=" + $(linha+"[name=cm_pwd]").val()+
 				"&cd_id=" + $(linha+"[name=cd_id]").val();
 				
 	//swal.loading();
@@ -4093,7 +3668,7 @@ $(document).ready(function(){
 	//*******************************************************
 	//KEYPRESS SO PERMITE NUMEROS
 	//*******************************************************
-	$(DIV_TABELA_LAMPADA).on("keypress", 'input[name=lp_tensao][name=lp_porta][name=lp_portaDimmer]',function(e){
+	$(DIV_TABELA_LAMPADA).on("keypress", 'input[name=lp_tensao], input[name=lp_porta], input[name=dm_porta]',function(e){
 		return somenteNumero(e,false,false,this);
 	});
 
@@ -4107,13 +3682,6 @@ $(document).ready(function(){
 	//***********************************************************************
 	//				FIM EVENTOS DA TABELA DE LAMPADA
 	//***********************************************************************
-
-
-	
-	
-	
-
-	
 	
 
 
@@ -4136,127 +3704,6 @@ $(document).ready(function(){
 	
 	
 	
-	//***********************************************************************
-	//				EVENTOS DA TABELA DE DIMMER
-	//***********************************************************************
-	
-
-	//***********************************************************************
-	//BUSCA DIMMER QUANDO APERTAR ENTER
-	//***********************************************************************
-	$("#dm_busca").on("keyup", function(e){
-		switch (e.which) {
-			case 13://ENTER
-				montaQuery_dimmer();
-			break;
-		}
-	});
-	
-	
-	//*******************************************************
-	//KEYUP DOS INPUTS DA DIV_TABELA
-	//*******************************************************
-	$(DIV_TABELA_DIMMER).on("keyup", 'input',function(e){
-		var actpos = $("#position_dimmer").val();
-		var cell = $(this).parent().index();
-		switch (e.which) {
-			case 38: //PARA CIMA
-				if(actpos > 0){
-					selecionaLinha(DIV_TABELA_DIMMER,--actpos,cell);
-				}
-			break;
-
-			case 40://PARA BAIXO
-				if (Number(actpos)+1 < $("#record_dimmer").val()){
-					selecionaLinha(DIV_TABELA_DIMMER,++actpos,cell);
-				} else if(Verifica_Alteracao(DIV_TABELA_DIMMER)){
-						insere_dimmer();
-				}
-			break;
-
-			case 27://ESC
-				$(this).blur();
-				cancela_dimmer(cell);
-			break;
-
-			case 45://INSER
-				if(Verifica_Alteracao(DIV_TABELA_DIMMER)){
-					insere_dimmer();
-				}
-			break;
-
-			case 13://ENTER
-				$(this).blur();
-				grava_dimmer(cell);
-			break;
-		}
-	});
-
-	//***********************************************************************
-	//PINTA  ALINHA SELECIONADA
-	//***********************************************************************
-	$(DIV_TABELA_DIMMER).on("focus","input",function(){
-		pintaLinha_dimmer($(this).parent().parent());
-
-		if(!$(this).parent().hasClass("inativo")){
-			switch ($(this).attr("name")) {
-				case "lp_nome":
-					ComboLinha($(this), $("#position_dimmer").val(), DIV_TABELA_DIMMER);
-				break;
-			}
-		}
-	});
-
-
-
-	//***********************************************************************
-	//MUDA O COMBO PARA INPUT AO PERDER O FOCO DO COMBO
-	//***********************************************************************
-	$(DIV_TABELA_DIMMER).on('blur', 'select[name=lp_nome]', function(){
-		TiraComboLinha($(this), $("#position_dimmer").val(), DIV_TABELA_DIMMER);
-		edicao_dimmer($(this));
-	});
-	
-	//***********************************************************************
-	//SELECIONA O TEXTO INTEIRO NO CLICK TABELA
-	//***********************************************************************
-	$(DIV_TABELA_DIMMER).on("click", 'td:not(.inativo) input', function(){
-		$(this).select();
-	});
-
-	//*******************************************************
-	//EDICAO DOS DADOS - DIMMER
-	//*******************************************************
-	$(DIV_TABELA_DIMMER).on('change', 'input', function(){
-		edicao_dimmer($(this));
-	});
-	
-	//*******************************************************
-	//KEYPRESS SO PERMITE NUMEROS
-	//*******************************************************
-	$(DIV_TABELA_DIMMER).on("keypress", 'input[name=dm_porta]',function(e){
-		return somenteNumero(e,false,false,this);
-	});
-	//***********************************************************************
-	//				FIM EVENTOS DA TABELA DE DIMMER
-	//***********************************************************************
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -4479,16 +3926,19 @@ $(document).ready(function(){
 	});
 
 	//*******************************************************
-	//EDICAO DOS DADOS - LAMPADA
+	//EDICAO DOS DADOS - CAMERA
 	//*******************************************************
 	$(DIV_TABELA_CAMERA).on('change', 'input', function(){
+		if ($(this).parent().hasClass('number')) {
+			notnull($(this));
+		}
 		edicao_camera($(this));
 	});
 	
 	//*******************************************************
 	//KEYPRESS SO PERMITE NUMEROS
 	//*******************************************************
-	$(DIV_TABELA_CAMERA).on("keypress", 'input[name=cm_tensao]',function(e){
+	$(DIV_TABELA_CAMERA).on("keypress", 'input[name=cm_port]',function(e){
 		return somenteNumero(e,false,false,this);
 	});
 

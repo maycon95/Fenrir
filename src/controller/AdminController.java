@@ -8,19 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
+import Uteis.Retorno;
 import Uteis.Uteis;
-import dao.AcessoDAO;
 import dao.CameraDAO;
 import dao.ComodoDAO;
-import dao.DimmerDAO;
 import dao.LampadaDAO;
 import dao.PortaoDAO;
 import dao.TemperaturaDAO;
 import dao.UsuarioDAO;
-import to.AcessoTO;
 import to.CameraTO;
 import to.ComodoTO;
-import to.DimmerTO;
 import to.LampadaTO;
 import to.PortaoTO;
 import to.TemperaturaTO;
@@ -64,10 +61,6 @@ public class AdminController extends HttpServlet {
 			break;
 
 			case "acesso":
-				if(comando.equals("buscaAcessoUsuario")){
-					response.getWriter().write(buscaAcessoUsuario(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
-					return;
-				}
 				if(comando.equals("liberaAcesso")){
 					response.getWriter().write(liberaAcesso(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
 					return;
@@ -116,25 +109,6 @@ public class AdminController extends HttpServlet {
 				}
 				if(comando.equals("exclui")){
 					response.getWriter().write(excluiLampada(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
-					return;
-				}
-			break;
-
-			case "dimmer":
-				if(comando.equals("busca")){
-					response.getWriter().write(buscaDimmer(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
-					return;
-				}
-				if(comando.equals("insert")){
-					response.getWriter().write(insereDimmer(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
-					return;
-				}
-				if(comando.equals("update")){
-					response.getWriter().write(alteraDimmer(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
-					return;
-				}
-				if(comando.equals("exclui")){
-					response.getWriter().write(excluiDimmer(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
 					return;
 				}
 			break;
@@ -229,7 +203,7 @@ public class AdminController extends HttpServlet {
 			comodoTO = new ComodoDAO().busca("");
 			lampadaTO = new LampadaDAO().busca("");
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
         
 		Object[] combo = {comodoTO, lampadaTO};
@@ -258,7 +232,7 @@ public class AdminController extends HttpServlet {
 		try{
 			userTO = new UsuarioDAO().busca(busca);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
         
         //CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
@@ -277,7 +251,7 @@ public class AdminController extends HttpServlet {
 		try{
 			userTO = new UsuarioDAO().insere(us_nome);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
@@ -296,7 +270,7 @@ public class AdminController extends HttpServlet {
 		try{
 			userTO = new UsuarioDAO().altera(us_nome, us_nome_old);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
@@ -314,7 +288,7 @@ public class AdminController extends HttpServlet {
 		try{
 			retorno = new UsuarioDAO().exclui(us_nome);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		return retorno;
@@ -330,43 +304,23 @@ public class AdminController extends HttpServlet {
 	//FUNCOES DA TABELA DE ACESSO
 	//------------------------------------------
 	
-	//BUSCA ACESSOS DE UM USUARIO
-	public String buscaAcessoUsuario(HttpServletRequest request, HttpServletResponse response){
-		//pega o comando enviado pela pagina
-		String busca = request.getParameter("busca");
-		
-        //PEGA O AcessoTO
-		AcessoTO acessoTO = null;
-		try{
-			acessoTO = new AcessoDAO().buscaPorUser(busca);
-		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
-		}
-        
-        //CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
-    	Gson gson = new Gson();
-    	String retorno = gson.toJson(acessoTO);
-    	
-		return retorno;
-	}
-	
 	//GRAVA LIBERA ACESSO PARA UM COMODO
 	public String liberaAcesso(HttpServletRequest request, HttpServletResponse response){
 		String us_nome = request.getParameter("us_nome");
 		int cd_id= Integer.parseInt(request.getParameter("cd_id"));
 		char ac_libera = request.getParameter("ac_libera").charAt(0);
 		
-		//PEGA O AcessoTO
-		AcessoTO acessoTO = null;
+		//PEGA O UsuarioTO
+		UsuarioTO usuarioTO = null;
 		try{
-			acessoTO = new AcessoDAO().gravaAcesso(us_nome, cd_id, ac_libera);
+			usuarioTO = new UsuarioDAO().gravaAcesso(us_nome, cd_id, ac_libera);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
     	Gson gson = new Gson();
-    	String retorno = gson.toJson(acessoTO);
+    	String retorno = gson.toJson(usuarioTO);
     	
 		return retorno;
 	}
@@ -376,17 +330,17 @@ public class AdminController extends HttpServlet {
 		String us_nome = request.getParameter("us_nome");
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		
-		//PEGA O AcessoTO
-		AcessoTO acessoTO = null;
+		//PEGA O UsuarioTO
+		UsuarioTO usuarioTO = null;
 		try{
-			acessoTO = new AcessoDAO().bloqueiaAcesso(us_nome, cd_id);
+			usuarioTO = new UsuarioDAO().bloqueiaAcesso(us_nome, cd_id);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
     	Gson gson = new Gson();
-    	String retorno = gson.toJson(acessoTO);
+    	String retorno = gson.toJson(usuarioTO);
     	
 		return retorno;
 	}
@@ -411,7 +365,7 @@ public class AdminController extends HttpServlet {
 		try{
 			comodoTO = new ComodoDAO().busca(busca);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
         
         //CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
@@ -430,7 +384,7 @@ public class AdminController extends HttpServlet {
 		try{
 			comodoTO = new ComodoDAO().insere(cd_nome, cd_tipo);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
@@ -450,7 +404,7 @@ public class AdminController extends HttpServlet {
 		try{
 			comodoTO = new ComodoDAO().altera(cd_id, cd_nome, cd_tipo);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
@@ -468,7 +422,7 @@ public class AdminController extends HttpServlet {
 		try{
 			retorno = new ComodoDAO().exclui(cd_id);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		return retorno;
@@ -485,7 +439,7 @@ public class AdminController extends HttpServlet {
 		try{
 			retorno = new ComodoDAO().uploadPlanta(cd_id, cd_planta);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		return retorno;
@@ -507,6 +461,9 @@ public class AdminController extends HttpServlet {
 	
 	//BUSCA LAMPADA
 	public String buscaLampada(HttpServletRequest request, HttpServletResponse response){
+		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+    	Gson gson = new Gson();
+		
 		//pega o comando enviado pela pagina
 		String busca = request.getParameter("busca");
 		
@@ -515,14 +472,10 @@ public class AdminController extends HttpServlet {
 		try{
 			lampadaTO = new LampadaDAO().busca(busca); 
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return gson.toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
         
-        //CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
-    	Gson gson = new Gson();
-    	String retorno = gson.toJson(lampadaTO);
-    	
-		return retorno;
+		return gson.toJson(lampadaTO);
 	}
 	
 	//GRAVA NOVA LAMPADA
@@ -531,21 +484,23 @@ public class AdminController extends HttpServlet {
 		int lp_tensao = Integer.parseInt(request.getParameter("lp_tensao"));
 		double lp_consumo = Double.parseDouble(request.getParameter("lp_consumo"));
 		int lp_porta = Integer.parseInt(request.getParameter("lp_porta"));
+		int dm_porta = Integer.parseInt(request.getParameter("dm_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		
-		//PEGA O LampadaTO
-		LampadaTO lampadaTO = null;
-		try{
-			lampadaTO = new LampadaDAO().insere(lp_nome, lp_tensao, lp_consumo, lp_porta, cd_id);
-		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
-		}
 		
 		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
     	Gson gson = new Gson();
-    	String retorno = gson.toJson(lampadaTO);
     	
-		return retorno;
+		//PEGA O LampadaTO
+		LampadaTO lampadaTO = null;
+		try{
+			lampadaTO = new LampadaDAO().insere(lp_nome, lp_tensao, lp_consumo, lp_porta, dm_porta, cd_id);
+		}catch(Exception e){
+			return gson.toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
+		
+		}
+		
+    	return gson.toJson(lampadaTO);
 	}
 	
 	//ALTERA DADOS - LAMPADA
@@ -555,20 +510,22 @@ public class AdminController extends HttpServlet {
 		int lp_tensao = Integer.parseInt(request.getParameter("lp_tensao"));
 		double lp_consumo = Double.parseDouble(request.getParameter("lp_consumo"));
 		int lp_porta = Integer.parseInt(request.getParameter("lp_porta"));
+		int dm_porta = Integer.parseInt(request.getParameter("dm_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
+		
+		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+		Gson gson = new Gson();
+
 		
 		//PEGA O ComodoTO
 		LampadaTO lampadaTO = null;
 		try{
-			lampadaTO = new LampadaDAO().altera(lp_id, lp_nome, lp_tensao, lp_consumo, lp_porta, cd_id);
+			lampadaTO = new LampadaDAO().altera(lp_id, lp_nome, lp_tensao, lp_consumo, lp_porta, dm_porta, cd_id);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return gson.toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
-		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
-    	Gson gson = new Gson();
-    	String retorno = gson.toJson(lampadaTO);
-    	
+		String retorno = gson.toJson(lampadaTO);    	
 		return retorno;
 	}
 	
@@ -580,7 +537,8 @@ public class AdminController extends HttpServlet {
 		try{
 			retorno = new LampadaDAO().exclui(lp_id);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			Gson gson = new Gson();
+			return gson.toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		return retorno;
@@ -592,92 +550,6 @@ public class AdminController extends HttpServlet {
 	
 
 	
-	
-	
-	
-
-	//------------------------------------------
-	//FUNCOES DA TABELA DE DIMMER
-	//------------------------------------------
-	
-	//BUSCA DIMMER
-	public String buscaDimmer(HttpServletRequest request, HttpServletResponse response){
-		//pega o comando enviado pela pagina
-		String  busca = request.getParameter("busca");
-		
-        //PEGA O DimmerTO
-		DimmerTO dimmerTO = null;
-		try{
-			dimmerTO = new DimmerDAO().busca(busca); 
-		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
-		}
-        
-        //CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
-    	Gson gson = new Gson();
-    	String retorno = gson.toJson(dimmerTO);
-    	
-		return retorno;
-	}
-	
-	//GRAVA NOVA DIMMER
-	public String insereDimmer(HttpServletRequest request, HttpServletResponse response){
-		int lp_id = Integer.parseInt(request.getParameter("lp_id"));
-		int dm_porta = Integer.parseInt(request.getParameter("dm_porta"));
-		
-		//PEGA O DimmerTO
-		DimmerTO dimmerTO = null;
-		try{
-			dimmerTO = new DimmerDAO().insere(lp_id, dm_porta);
-		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
-		}
-		
-		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
-    	Gson gson = new Gson();
-    	String retorno = gson.toJson(dimmerTO);
-    	
-		return retorno;
-	}
-	
-	//ALTERA DADOS - DIMMER
-	public String alteraDimmer(HttpServletRequest request, HttpServletResponse response){
-		int dm_id = Integer.parseInt(request.getParameter("dm_id"));
-		int lp_id = Integer.parseInt(request.getParameter("lp_id"));
-		int dm_porta = Integer.parseInt(request.getParameter("dm_porta"));
-		
-		//PEGA O DimmerTO
-		DimmerTO dimmerTO = null;
-		try{
-			dimmerTO = new DimmerDAO().altera(dm_id, lp_id, dm_porta);
-		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
-		}
-		
-		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
-    	Gson gson = new Gson();
-    	String retorno = gson.toJson(dimmerTO);
-    	
-		return retorno;
-	}
-	
-	//EXCLUI DIMMER
-	public String excluiDimmer(HttpServletRequest request, HttpServletResponse response){
-		int dm_id = Integer.parseInt(request.getParameter("dm_id"));
-	
-		String retorno = "";
-		try{
-			retorno = new DimmerDAO().exclui(dm_id);
-		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
-		}
-		
-		return retorno;
-	}
-	//--------------------------------------------
-	//			FIM FUNCOES DE DIMMER
-	//--------------------------------------------
-
 	
 	
 	
@@ -694,16 +566,17 @@ public class AdminController extends HttpServlet {
 		//pega o comando enviado pela pagina
 		String busca = request.getParameter("busca");
 		
-        //PEGA O TemperaturaTO
+		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+		Gson gson = new Gson();
+
+		//PEGA O TemperaturaTO
 		TemperaturaTO temperaturaTO = null;
 		try{
 			temperaturaTO = new TemperaturaDAO().busca(busca); 
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return gson.toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
         
-        //CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
-    	Gson gson = new Gson();
     	String retorno = gson.toJson(temperaturaTO);
     	
 		return retorno;
@@ -718,16 +591,17 @@ public class AdminController extends HttpServlet {
 		int tp_porta = Integer.parseInt(request.getParameter("tp_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		
+		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+		Gson gson = new Gson();
+
 		//PEGA O TemperaturaTO
 		TemperaturaTO temperaturaTO = null;
 		try{
 			temperaturaTO = new TemperaturaDAO().insere(tp_nome, tp_tempmax, tp_tempmin, tp_status, tp_porta, cd_id);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return gson.toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
-		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
-    	Gson gson = new Gson();
     	String retorno = gson.toJson(temperaturaTO);
     	
 		return retorno;
@@ -743,17 +617,17 @@ public class AdminController extends HttpServlet {
 		int tp_porta = Integer.parseInt(request.getParameter("tp_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		
+		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+		Gson gson = new Gson();
 		
 		//PEGA O TemperaturaTO
 		TemperaturaTO temperaturaTO = null;
 		try{
 			temperaturaTO = new TemperaturaDAO().altera(tp_id, tp_nome, tp_tempmax, tp_tempmin, tp_status, tp_porta, cd_id);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return gson.toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
-		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
-    	Gson gson = new Gson();
     	String retorno = gson.toJson(temperaturaTO);
     	
 		return retorno;
@@ -767,7 +641,7 @@ public class AdminController extends HttpServlet {
 		try{
 			retorno = new TemperaturaDAO().exclui(tp_id);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		return retorno;
@@ -795,16 +669,17 @@ public class AdminController extends HttpServlet {
 		//pega o comando enviado pela pagina
 		String busca = request.getParameter("busca");
 		
-        //PEGA O CameraTO
+		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+		Gson gson = new Gson();
+
+		//PEGA O CameraTO
 		CameraTO cameraTO = null;
 		try{
 			cameraTO = new CameraDAO().busca(busca); 
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return gson.toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
         
-        //CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
-    	Gson gson = new Gson();
     	String retorno = gson.toJson(cameraTO);
     	
 		return retorno;
@@ -819,16 +694,17 @@ public class AdminController extends HttpServlet {
 		String cm_pwd = request.getParameter("cm_pwd");
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		
+		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+		Gson gson = new Gson();
+
 		//PEGA O CameraTO
 		CameraTO cameraTO = null;
 		try{
 			cameraTO = new CameraDAO().insere(cm_nome, cm_addr, cm_port, cm_user, cm_pwd, cd_id);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return gson.toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
-		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
-    	Gson gson = new Gson();
     	String retorno = gson.toJson(cameraTO);
     	
 		return retorno;
@@ -850,7 +726,7 @@ public class AdminController extends HttpServlet {
 		try{
 			cameraTO = new CameraDAO().altera(cm_id, cm_nome, cm_addr, cm_port, cm_user, cm_pwd, cd_id);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
@@ -868,7 +744,7 @@ public class AdminController extends HttpServlet {
 		try{
 			retorno = new CameraDAO().exclui(cm_id);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		return retorno;
@@ -928,7 +804,7 @@ public class AdminController extends HttpServlet {
 		try{
 			portaoTO = new PortaoDAO().insere(pt_nome, pt_porta, cd_id);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
@@ -951,7 +827,7 @@ public class AdminController extends HttpServlet {
 		try{
 			portaoTO = new PortaoDAO().altera(pt_id, pt_nome, pt_porta, cd_id);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
@@ -969,7 +845,7 @@ public class AdminController extends HttpServlet {
 		try{
 			retorno = new PortaoDAO().exclui(pt_id);
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
 		
 		return retorno;

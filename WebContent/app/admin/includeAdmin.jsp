@@ -414,8 +414,6 @@
 						</div>
 						<div id="ab" class="panel-body">
 							<div>
-								<input type="search" name="" id="us_busca">
-								<button type="button" class="btn btn-default" onclick="montaQuery_acesso();"></button>
 								<button type="button" class="btn btn-default" onclick="grava_acesso();"></button>
 								<button type="button" class="btn btn-default" onclick="cancela_acesso();"></button>
 							</div>

@@ -7,8 +7,9 @@ public class Lampada {
 	private double lp_consumo;
 	private double lp_constotal;
 	private char lp_status;
-	private int lp_dimmer;
 	private int lp_porta;
+	private int dm_porta;
+	private int dm_valor;
 	private int cd_id;
 
 	
@@ -47,10 +48,6 @@ public class Lampada {
 		return lp_status;
 	}
 
-	public int getLp_dimmer() {
-		return lp_dimmer;
-	}
-
 	public int getLp_porta() {
 		return lp_porta;
 	}
@@ -59,9 +56,15 @@ public class Lampada {
 		return cd_id;
 	}
 
-	
+	public int getDm_porta() {
+		return dm_porta;
+	}
 
-	
+	public int getDm_valor() {
+		return dm_valor;
+	}
+
+
 	//SETTER'S
 	public void setLp_id(int lp_id) {
 		this.lp_id = lp_id;
@@ -86,16 +89,20 @@ public class Lampada {
 		this.lp_status = lp_status;
 	}
 
-	public void setLp_dimmer(int lp_dimmer) {
-		this.lp_dimmer = lp_dimmer;
-	}
-
 	public void setLp_porta(int lp_porta) {
 		this.lp_porta = lp_porta;
 	}
 
 	public void setCd_id(int cd_id) {
 		this.cd_id = cd_id;
+	}
+
+	public void setDm_porta(int dm_porta) {
+		this.dm_porta = dm_porta;
+	}
+
+	public void setDm_valor(int dm_valor) {
+		this.dm_valor = dm_valor;
 	}
 
 

@@ -4,11 +4,19 @@ public class Retorno {
 	private String status;
 	private String error;
 	
-	public Retorno(){}
+	public Retorno(){
+		this.status = "";
+		this.error = null;
+	}
 	
 	public Retorno(String status){
 		this.status = status;
 		this.error = null;
+	}
+	
+	public Retorno(String status, String error){
+		this.status = status;
+		this.error = error;
 	}
 	
 	public String getStatus() {

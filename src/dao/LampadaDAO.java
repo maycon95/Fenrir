@@ -13,7 +13,7 @@ public class LampadaDAO {
 	//BUSCA UMA LAMPADA NO BANCO - TELA DE ADMIN
 	public LampadaTO busca(String lp_nome) throws Exception{ 
 		Connection conn = null;
-	    String sqlSelect = "SELECT lp_id, lp_nome, lp_tensao, lp_consumo, lp_constotal, lp_porta, cd_id FROM tb_lampada WHERE lp_nome like ? ";
+	    String sqlSelect = "SELECT lp_id, lp_nome, lp_tensao, lp_consumo, lp_constotal, lp_porta, dm_porta, cd_id FROM tb_lampada WHERE lp_nome like ? ";
 	    PreparedStatement stm = null;
 	    ResultSet rs = null;
 	    LampadaTO lampadaTO = new LampadaTO();
@@ -55,9 +55,9 @@ public class LampadaDAO {
 	
 	
 	//INSERE NOVA LAMPADA
-	public LampadaTO insere(String lp_nome, int lp_tensao, double lp_consumo, int lp_porta, int cd_id) throws Exception{
+	public LampadaTO insere(String lp_nome, int lp_tensao, double lp_consumo, int lp_porta, int dm_porta, int cd_id) throws Exception{
 		Connection conn = null;
-	    String sqlInsert = "INSERT INTO tb_lampada(lp_nome, lp_tensao, lp_consumo, lp_porta, cd_id) VALUES(?, ?, ?, ?, ?) ";
+	    String sqlInsert = "INSERT INTO tb_lampada(lp_nome, lp_tensao, lp_consumo, lp_porta, dm_porta, cd_id) VALUES(?, ?, ?, ?, ?, ?) ";
 	    PreparedStatement stm = null;
 
 	    try{
@@ -67,7 +67,8 @@ public class LampadaDAO {
 			stm.setInt(2, lp_tensao);
 			stm.setDouble(3, lp_consumo);
 			stm.setInt(4, lp_porta);
-			stm.setInt(5, cd_id);
+			stm.setInt(5, dm_porta);
+			stm.setInt(6, cd_id);
 			stm.executeUpdate();
 	
 			return busca(lp_nome);//CHAMA A BUSCA DE USUARIO PARA RETORNAR OS DADOS INSERIDO
@@ -88,9 +89,9 @@ public class LampadaDAO {
 	}
 
 	//ALTERA DADOS DO LAMPADA
-	public LampadaTO altera(int lp_id, String lp_nome, int lp_tensao, double lp_consumo, int lp_porta, int cd_id) throws Exception{
+	public LampadaTO altera(int lp_id, String lp_nome, int lp_tensao, double lp_consumo, int lp_porta, int dm_porta, int cd_id) throws Exception{
 		Connection conn = null;
-	    String sqlUpdate = "UPDATE tb_lampada SET lp_nome = ?, lp_tensao = ?, lp_consumo = ?, lp_porta = ?, cd_id = ? WHERE lp_id= ?";
+	    String sqlUpdate = "UPDATE tb_lampada SET lp_nome = ?, lp_tensao = ?, lp_consumo = ?, lp_porta = ?, dm_porta = ?, cd_id = ? WHERE lp_id= ?";
 	    PreparedStatement stm = null;
 	    
 	    try{
@@ -100,8 +101,9 @@ public class LampadaDAO {
 			stm.setInt(2, lp_tensao);
 			stm.setDouble(3, lp_consumo);
 			stm.setInt(4, lp_porta);
-			stm.setInt(5, cd_id);
-			stm.setInt(6, lp_id);
+			stm.setInt(5, dm_porta);
+			stm.setInt(6, cd_id);
+			stm.setInt(7, lp_id);
 			stm.executeUpdate();
 	
 			return busca(lp_nome);//CHAMA A BUSCA DE COMODO PARA RETORNAR OS DADOS ALTERADO

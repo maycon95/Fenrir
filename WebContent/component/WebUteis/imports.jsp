@@ -12,6 +12,11 @@
 		<script src="../../component/WebUteis/functions.js"></script>
 		<script src="../../component/JQuery/jquery.js"></script>
 		<script src="../../component/md5/md5.min.js"></script>
+
+
+		<script src="../../component/js/jquery-2.2.0.min.js" type="text/javascript"></script>
+		<script src="../../component/js/bootstrap.min.js" type="text/javascript"></script>
+
 		
 		<!-- IMPORT ESPECIFICOS FICA EM SUAS PROPRIAS PAGINA -->
 	

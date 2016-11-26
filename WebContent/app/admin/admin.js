@@ -28,13 +28,50 @@ var DIV_TABELA_ACESSO = "#dados_acesso";
 //COMBO DE COMODOS
 var objComboComodo = {}; //OBJETO DO COMBO DE COMODOS
 var objComboLampada = {}; //OBJETO DO COMBO DE LAMPADAS
-
+var buscaComodo = true; //VARIAVEL PRA VERIFICA SE PRECISA BUSCAR OS COMBOS
 //***********************************************************************
 
 
 //***********************************************************************
 //					FIM CONSTANTES SEMPMRE USADAS
 //***********************************************************************
+
+
+
+
+
+
+
+//***********************************************************************
+//ABRE A TABELA SELECIONADA
+//***********************************************************************
+function admin(tabela){
+	$("#divfundo").css("visibility","visible");
+	$("#tabela_" + tabela).removeClass('hide');
+	
+	if(buscaComodo){
+		monta_combo();
+	}
+	
+}
+
+function fecha_admin(tabela){
+	$("#divfundo").css("visibility","hidden");
+	$("#tabela_" + tabela).addClass('hide');
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -68,7 +105,8 @@ function monta_combo(){
 		//[1] - LAMPADAS
 		objComboComodo = retorno[0].lista;
 		objComboLampada = retorno[1].lista;
-
+		
+		buscaComodo = false;
 	});	
 }
 
@@ -155,8 +193,8 @@ function montaTabela_usuario(fCustom){
 //*******************************************************
 function montaLinha_usuario(i){
 	var aux = objTabelaUsuario.lista[i];
-	var linha = "<td class='w40 center' ><input value='' readonly></td>"+
-				"<td class='w290'><input class='uppercase' value='"+aux.us_nome+"' name='us_nome' us_nome='"+aux.us_nome+"'  maxlength='20'></td>";
+	var linha = "<td class='w60 center' ><input value='' readonly></td>"+
+				"<td class='w240'><input class='uppercase' value='"+aux.us_nome+"' name='us_nome' us_nome='"+aux.us_nome+"'  maxlength='20'></td>";
 
 	return linha;
 }
@@ -550,9 +588,9 @@ function montaTabela_acesso(fCustom){
 //*******************************************************
 function montaLinha_acesso(i){
 	var aux = objTabelaAcesso.lista[i];
-	var linha = "<td class='w40 center' ><input value='' readonly></td>"+
-				"<td class='w290'><input class='uppercase' value='"+aux.cd_nome+"' name='cd_nome' cd_nome='"+aux.cd_nome+"' readonly></td>"+
-				"<td class='w50 number'>"+
+	var linha = "<td class='w60 center' ><input value='' readonly></td>"+
+				"<td class='w180'><input class='uppercase' value='"+aux.cd_nome+"' name='cd_nome' cd_nome='"+aux.cd_nome+"' readonly></td>"+
+				"<td class='w60 number'>"+
 					"<input value='"+aux.ac_libera+"' name='ac_libera'/>"+
 					"<select name='ac_libera'></select>"+
 				"</td>";
@@ -770,7 +808,7 @@ function montaQuery_comodo(){
 		}
 		if (!empty(retorno.error)) {
 			alert("Ocorreu um erro ao buscar comodos\n"+
-				  "Erro: " + retorno.mensagem);
+				  "Erro: " + retorno.error);
 		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
 		}
 
@@ -823,10 +861,11 @@ function montaTabela_comodo(fCustom){
 //*******************************************************
 function montaLinha_comodo(i){
 	var aux = objTabelaComodo.lista[i];
-	var linha = "<td class='w40 center' ><input value='' readonly></td>"+
-				"<td class='w40'><input value='"+aux.cd_id+"' name='cd_id' readonly></td>"+
-				"<td class='w230'><input class='uppercase' value='"+aux.cd_nome+"' name='cd_nome' cd_nome='"+aux.cd_nome+"' maxlength='20'></td>" +
-				"<td class='w240'>"+
+	
+	var linha = "<td class='w60 center' ><input value='' readonly></td>"+
+				"<td class='w70'><input value='"+aux.cd_id+"' name='cd_id' readonly></td>"+
+				"<td class='w200'><input class='uppercase' value='"+aux.cd_nome+"' name='cd_nome' cd_nome='"+aux.cd_nome+"' maxlength='20'></td>" +
+				"<td class='w260'>"+
 					"<input	value='"+aux.cd_tipo+"' name='cd_tipo'/>"+
 					"<select name='cd_tipo'></select>"+
 				"</td>";
@@ -1191,25 +1230,25 @@ function upload_planta(){
 //FUNCAO QUE BUSCA A IMAGEM
 //***********************************************************************
 function buscaImagem(){
-	actpos = $('#position_comodo').val()
-	cd_id = $(DIV_TABELA_COMODO + " tr[posicao="+actpos+"] input[name=cd_id]").val();
-	var funcao = 'cd_id='+ cd_id;
-	AJAX(SERVLET_IMAGEM, funcao, function(retorno){
-		
-		var baseString = retorno;
-		// data:image/png;base64
-		
-		if(empty(baseString)) {
-			$("#cd_planta").prop('src','');	
-			return;
-		}
-		
-		if(baseString.substring(0,4) != "data"){
-			baseString = "data:image/png;base64," + baseString;
-		}
-		
-		$("#cd_planta").prop('src',baseString);	
-	});
+//	actpos = $('#position_comodo').val()
+//	cd_id = $(DIV_TABELA_COMODO + " tr[posicao="+actpos+"] input[name=cd_id]").val();
+//	var funcao = 'cd_id='+ cd_id;
+//	AJAX(SERVLET_IMAGEM, funcao, function(retorno){
+//		
+//		var baseString = retorno;
+//		// data:image/png;base64
+//		
+//		if(empty(baseString)) {
+//			$("#cd_planta").prop('src','');	
+//			return;
+//		}
+//		
+//		if(baseString.substring(0,4) != "data"){
+//			baseString = "data:image/png;base64," + baseString;
+//		}
+//		
+//		$("#cd_planta").prop('src',baseString);	
+//	});
 }
 
 
@@ -1226,7 +1265,7 @@ function pintaLinha_comodo(elemento){
 	$(DIV_TABELA_COMODO + ' .active').removeClass('active');
 	$(elemento).addClass('active');
 	
-	buscaImagem();
+//	buscaImagem();
 }
 
 
@@ -1355,13 +1394,14 @@ function montaTabela_lampada(fCustom){
 //*******************************************************
 function montaLinha_lampada(i){
 	var aux = objTabelaLampada.lista[i];
-	var linha = "<td class='w40 center' ><input value='' readonly></td>"+
-				"<td class='w40'><input value='"+aux.lp_id+"' name='lp_id' readonly></td>"+
-				"<td class='w170'><input class='uppercase' value='"+aux.lp_nome+"' name='lp_nome' lp_nome='"+aux.lp_nome+"' maxlength='20'></td>"+
+	var linha = "<td class='w60 center' ><input value='' readonly></td>"+
+				"<td class='w70'><input value='"+aux.lp_id+"' name='lp_id' readonly></td>"+
+				"<td class='w190'><input class='uppercase' value='"+aux.lp_nome+"' name='lp_nome' lp_nome='"+aux.lp_nome+"' maxlength='20'></td>"+
 				"<td class='w70 number'><input value='"+aux.lp_tensao+"' name='lp_tensao'></td>"+
-				"<td class='w70 number'><input value='"+number_format(aux.lp_consumo,3,',','.')+"' name='lp_consumo'></td>"+
+				"<td class='w80 number'><input value='"+number_format(aux.lp_consumo,3,',','.')+"' name='lp_consumo'></td>"+
 				"<td class='w70 number'><input value='"+aux.lp_porta+"' name='lp_porta'></td>"+
-				"<td class='w70 number'>"+
+				"<td class='w110 number'><input value='"+aux.lp_porta+"' name='lp_portaDimmer'></td>"+
+				"<td class='w100 number'>"+
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
 					"<select name='cd_id'></select>"+
 				"</td>";
@@ -2253,17 +2293,17 @@ function montaTabela_temperatura(fCustom){
 //*******************************************************
 function montaLinha_temperatura(i){
 	var aux = objTabelaTemperatura.lista[i];
-	var linha = "<td class='w40 center' ><input value='' readonly></td>"+
-				"<td class='w40'><input value='"+aux.tp_id+"' name='tp_id' readonly></td>"+
-				"<td class='w170'><input class='uppercase' value='"+aux.tp_nome+"' name='tp_nome' tp_nome='"+aux.tp_nome+"' maxlength='20'></td>"+
+	var linha = "<td class='w60 center' ><input value='' readonly></td>"+
+				"<td class='w70'><input value='"+aux.tp_id+"' name='tp_id' readonly></td>"+
+				"<td class='w190'><input class='uppercase' value='"+aux.tp_nome+"' name='tp_nome' tp_nome='"+aux.tp_nome+"' maxlength='20'></td>"+
 				"<td class='w70 number'><input value='"+number_format(aux.tp_tempmax,2,',','.')+"' name='tp_tempmax'></td>"+
-				"<td class='w70 number'><input value='"+number_format(aux.tp_tempmin,3,',','.')+"' name='tp_tempmin'></td>"+
+				"<td class='w80 number'><input value='"+number_format(aux.tp_tempmin,3,',','.')+"' name='tp_tempmin'></td>"+
 				"<td class='w70 number'><input value='"+aux.tp_porta+"' name='tp_porta'></td>"+
-				"<td class='w70 number'>"+
+				"<td class='w120 number'>"+
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
 					"<select name='cd_id'></select>"+
 				"</td>"+
-				"<td class='w70 center'>"+
+				"<td class='w50 center'>"+
 					"<input value='"+aux.tp_status+"' name='tp_status'/>"+
 					"<select name='tp_status'></select>"+
 				"</td>";
@@ -2709,11 +2749,14 @@ function montaTabela_camera(fCustom){
 //*******************************************************
 function montaLinha_camera(i){
 	var aux = objTabelaCamera.lista[i];
-	var linha = "<td class='w40 center' ><input value='' readonly></td>"+
-				"<td class='w40'><input value='"+aux.cm_id+"' name='cm_id' readonly></td>"+
-				"<td class='w170'><input class='uppercase' value='"+aux.cm_nome+"' name='cm_nome' cm_nome='"+aux.cm_nome+"' maxlength='20'></td>"+
-				"<td class='w100 number'><input value='"+aux.cm_ip+"' name='cm_ip'></td>"+
-				"<td class='w70 center'>"+
+	var linha = "<td class='w60 center' ><input value='' readonly></td>"+
+				"<td class='w70'><input value='"+aux.cm_id+"' name='cm_id' readonly></td>"+
+				"<td class='w190'><input class='uppercase' value='"+aux.cm_nome+"' name='cm_nome' cm_nome='"+aux.cm_nome+"' maxlength='20'></td>"+
+				"<td class='w180 number'><input value='"+aux.cm_ip+"' name='cm_ip'></td>"+
+				"<td class='w80 number'><input value='"+aux.cm_port+"' name='cm_port'></td>"+
+				"<td class='w120 number'><input value='"+aux.cm_user+"' name='cm_user'></td>"+
+				"<td class='w120 number'><input value='"+aux.cm_pws+"' name='cm_pws'></td>"+
+				"<td class='w120 center'>"+
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
 					"<select name='cd_id'></select>"+
 				"</td>";
@@ -3160,11 +3203,11 @@ function montaTabela_portao(fCustom){
 //*******************************************************
 function montaLinha_portao(i){
 	var aux = objTabelaPortao.lista[i];
-	var linha = "<td class='w40 center' ><input value='' readonly></td>"+
-				"<td class='w40'><input value='"+aux.pt_id+"' name='pt_id' readonly></td>"+
-				"<td class='w200'><input class='uppercase' value='"+aux.pt_nome+"' name='pt_nome' pt_nome='"+aux.pt_nome+"' maxlength='20'></td>"+
-				"<td class='w70 number'><input value='"+aux.pt_porta+"' name='pt_porta' ></td>"+
-				"<td class='w70 center'>"+
+	var linha = "<td class='w60 center' ><input value='' readonly></td>"+
+				"<td class='w70'><input value='"+aux.pt_id+"' name='pt_id' readonly></td>"+
+				"<td class='w190'><input class='uppercase' value='"+aux.pt_nome+"' name='pt_nome' pt_nome='"+aux.pt_nome+"' maxlength='20'></td>"+
+				"<td class='w80 number'><input value='"+aux.pt_porta+"' name='pt_porta' ></td>"+
+				"<td class='w100 center'>"+
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
 					"<select name='cd_id'></select>"+
 				"</td>";
@@ -3660,35 +3703,6 @@ function TiraComboLinha(campo, actpos, div){
 
 //***********************************************************************
 $(document).ready(function(){
-	//***********************************************************************
-	//MOSTRA A TABELA SELECIONADA 
-	//***********************************************************************
-	$("#options").on('click', 'li',function(){
-		//ATIVA A OPÇÃO QUE FOI SELECIONADA
-		$("#options li").removeClass("active");
-		$(this).addClass("active");
-
-		//MOSTRA A TABELA DA OPÇÃOS SELECIONADA E ESCONDE AS OUTRAS
-		$("div[name*=table_]").hide();
-		$("div[name=tabelas] div[name=table_"+$(this).attr("name")+"]").show();
-		if($(this).attr('name') == "usuario"){
-			$("div[name=tabelas] div[name=table_acesso]").show();
-		}
-		
-		$(".footer input").val("null");//RESETA O FOOTER
-		$(".table tbody").html("");//LIMPA AS TABELAS
-		
-		//LIMPA OS OBJETOS
-		objTabelaUsuario = {}; //OBJETO DA TABELA DE USUARIO 
-		objTabelaComodo = {};  //OBJETO DA TABELA DE COMODO
-		objTabelaLampada = {}; //OBJETO DA TABELA DE LAMPADA
-		objTabelaTemperatura= {}; //OBJETO DA TABELA DE TEMPERATURA
-		objTabelaCamera= {}; //OBJETO DA TABELA DE CAMERA
-	});
-	
-	
-	
-	
 	
 	//***********************************************************************
 	//				EVENTOS DA TABELA DE USUARIO
@@ -4079,7 +4093,7 @@ $(document).ready(function(){
 	//*******************************************************
 	//KEYPRESS SO PERMITE NUMEROS
 	//*******************************************************
-	$(DIV_TABELA_LAMPADA).on("keypress", 'input[name=lp_tensao]',function(e){
+	$(DIV_TABELA_LAMPADA).on("keypress", 'input[name=lp_tensao][name=lp_porta][name=lp_portaDimmer]',function(e){
 		return somenteNumero(e,false,false,this);
 	});
 

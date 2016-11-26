@@ -1,0 +1,37 @@
+@CHARSET "UTF-8";
+
+body{
+	background-repeat: no-repeat;
+	background-size: auto;/*
+	background-color: #123456*/
+}
+
+.botao{
+	width: 175px;
+	height: 175px;
+}
+
+h4{
+	color: #fff;
+	font-family: "Imprint MT Shadow";
+	font-size: x-large;
+	font-weight: 
+}
+
+.glyphicon {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#vaidarbom1{
+	padding-top: 10%;
+}
+	
+#teste3{
+	padding-left: 5px;
+}
+
+#ab{
+	width: auto;
+	height: auto:
+}

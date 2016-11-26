@@ -1,6 +1,9 @@
 		<jsp:include page="../../component/WebUteis/imports.jsp" /><!-- PEGA OS IMPORT PADRAO  -->
 		<script src="admin.js"></script> <!-- IMPORTA O JS DESSA TELA  -->
 
+		<link href="../../component/WebUteis/header.css"  rel='stylesheet' /> 
+		<link href="../../component/WebUteis/class.css"  rel='stylesheet' />  
+		
 		<title>Fenrir</title>
 	</head>
 	<body onload='monta_combo();'>

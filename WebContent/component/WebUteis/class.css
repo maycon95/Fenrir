@@ -1,12 +1,12 @@
 @CHARSET "UTF-8";
 
 /*****************   CUSTOM  *****************************/
-.hide_custom{display: none;}
+/*.hide_custom{display: none;}
 .uppercase{text-transform: uppercase !important;}
 .center{text-align: center;}
-
+*/
 /*****************  BOTOES  ******************************/
-.button{width: 128px; height: 128px;}
+/*.button{width: 128px; height: 128px;}
 .button.lampada{background-image: url(../../component/img/lampada.png);}
 .button.lampadaON{background-image: url(../../component/img/lampadaON.png);}
 .button.arcondicionado{background-image: url(../../component/img/arcondicionado.png);}
@@ -22,22 +22,22 @@
 .search{min-width: 10px; float: left; height: 30px; line-height: 25px; background-color: #fff; border: 1px solid #ccc;
 							 margin: 0 5px 0 0; padding: 0 5px; width: 130px;}
 
-
+*/
 
 /*botoes pequenos*/
 
-.bt{width: 30px; height: 30px; float: left; border-radius: 15px; background-size: 28px; background-position: center center; background-repeat: no-repeat; 
+/*.bt{width: 30px; height: 30px; float: left; border-radius: 15px; background-size: 28px; background-position: center center; background-repeat: no-repeat; 
 				background-color: transparent; cursor: pointer; margin-right: 1px !important;}
 .bt.busca{background-image: url(../../component/img/busca.png);}
 .bt.insere{background-image: url(../../component/img/insere.png);}
 .bt.deleta{background-image: url(../../component/img/deleta.png);}
 .bt.grava{background-image: url(../../component/img/grava.png);}
 .bt.cancela{background-image: url(../../component/img/cancela.png);}
-
+*/
 
 /*****************  HEADER  ******************************/
-.header{height: 70px;}
-
+/*.header{height: 70px;}
+*/
 
 
 
@@ -69,6 +69,24 @@ div.panel-table{padding-left: 4px; padding-right: 2px;}
 .footer .registros{ float:right; margin-left:5px; padding:0 5px;}
 .footer .registros label{ font-family:Tahoma, Arial; font-size:11px; float:left; height:20px; line-height:20px; margin:0 2px; color:#333;}
 .footer .registros input{ font-family:Tahoma, Arial; font-size:12px; background-color:transparent; max-width:43px; border:none; height:20px; line-height:20px; padding:0; margin:0; color:#333; text-align:right;}
+
+
+
+
+
+
+
+
+
+
+/******************  FUNDO ESCURO  ***********************/
+.fundoescuro{visibility: hidden;position: fixed;left: 0px;top: 0px;width: 100%;height: 100%;background: repeat;z-index: 999;background-image: url("../../component/img/Main.CSS.bgblur.png");}
+.box-include{margin: 0 auto;}
+
+
+
+
+
 
 
 

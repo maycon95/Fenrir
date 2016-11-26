@@ -35,9 +35,9 @@
 
 		<div class="main w380 h300 float-left " id='div_camera' style='padding: 30px; float: left; margin-top: 35px;'>
 			<div class="col-xs-12 col-md-4 text-center w320 h250">
-				
+			<!-- 	
 				<img style="-webkit-user-select: none" src="http://192.168.1.126:81/videostream.cgi?user=admin&amp;pwd=&amp;resolution=8&amp;rate=0">	
-			
+			-->
 			</div>
 			
 			<div>

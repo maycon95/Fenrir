@@ -26,7 +26,8 @@ public abstract class Uteis{
     //TRATA ERRO 
     // --------------------------------------------------------------------------------------------------------------
 	public static String trataErro(String mensagem){
-		return "{\"error\":\"true\",\"mensagem\":\""+mensagem+"\"}";
+		return addSlashes(mensagem);
+//		return "{\"error\":\"true\",\"mensagem\":\""+mensagem+"\"}";
 	}
 	
 	// --------------------------------------------------------------------------------------------------------------
@@ -34,7 +35,7 @@ public abstract class Uteis{
     // --------------------------------------------------------------------------------------------------------------
 	public static String trataErro(Exception e){
 		String mensagem = e.toString().substring(e.toString().indexOf(":")+2, e.toString().length());
-		return "{\"error\":\"true\",\"mensagem\":\""+addSlashes(mensagem)+"\"}";
+		return addSlashes(mensagem);
 	}
 	
 	

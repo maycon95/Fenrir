@@ -18,17 +18,20 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 
+import Uteis.Retorno;
 import Uteis.Uteis;
+import dao.ComodoDAO;
 import dao.LampadaDAO;
 import dao.TemperaturaDAO;
+import to.ComodoTO;
 import to.TemperaturaTO;
 
-@WebServlet("/Controller/ControlarLuz")
-public class ControlarLuz extends HttpServlet {
+@WebServlet("/Controller/Dispositivo")
+public class DispositivoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
-    public ControlarLuz() {
+    public DispositivoController() {
         super();
     }
 
@@ -46,7 +49,13 @@ public class ControlarLuz extends HttpServlet {
 				//pega o comando enviado pela pagina
 				String comando = request.getParameter("comando") + "\n";
 				int lp_id = Integer.parseInt(request.getParameter("lp_id"));
-				String retorno ="";
+				Retorno retorno = new Retorno();
+				String retornoArduino = "D";
+
+				System.out.println("Comando: " + comando);
+				System.out.println("id: " + lp_id);
+				
+				
 				
 				//CRIA O ARRAY DE JSON
 		        JSONArray jsonArray = new JSONArray();  
@@ -60,46 +69,53 @@ public class ControlarLuz extends HttpServlet {
 					byte[] addr = {(byte) 192,(byte) 168,1,(byte) 200};
 			        
 					try { 
-						// Cria um Socket cliente passando como parâmetro o ip e a porta do servidor   
-						Socket cliente = new Socket(InetAddress.getByAddress(addr),80); 
-		
-						// Cria um stream de saída 
-						DataOutputStream saida = new DataOutputStream(cliente.getOutputStream());
-						saida.flush(); 
-		
-						// Cria um buffer que armazenará as informações retornadas pelo servidor
-						BufferedReader inFromServer = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
-		
-						//envia o comando para o arduino
-						saida.write(comando.getBytes());
-						
-						//pega o retorno do arduino
-						retorno = inFromServer.readLine();
-		
-						// Fecha o Socket
-						cliente.close();  
+//						// Cria um Socket cliente passando como parâmetro o ip e a porta do servidor   
+//						Socket cliente = new Socket(InetAddress.getByAddress(addr),80); 
+//		
+//						// Cria um stream de saída 
+//						DataOutputStream saida = new DataOutputStream(cliente.getOutputStream());
+//						saida.flush(); 
+//		
+//						// Cria um buffer que armazenará as informações retornadas pelo servidor
+//						BufferedReader inFromServer = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
+//		
+//						//envia o comando para o arduino
+//						saida.write(comando.getBytes());
+//						
+//						//pega o retorno do arduino
+//						retornoArduino = inFromServer.readLine();
+//		
+//						// Fecha o Socket
+//						cliente.close();  
 
 						//ATUALIZA O STATUS DO DISPOSITIVO NO BANCO
 						try{
-							new LampadaDAO().updateStatus(lp_id, retorno);
+							new LampadaDAO().updateStatus(lp_id, retornoArduino);
+							retorno.setStatus(retornoArduino);
 						}catch(Exception e){
-							retorno = Uteis.addSlashes(Uteis.trataErro(e));
+							retorno.setError(Uteis.addSlashes(Uteis.trataErro(e)));
 						}
-						
-						statusDispositivo.put("status", retorno);
 
 					} catch(Exception e) {
 						e.printStackTrace();
 						//VERIFICA SE OCORREU ALGUM ERRO E RETORNA PARA A TELA
-				       	response.getWriter().write(Uteis.trataErro("Ocorreu um Erro ao acionar o dispositivo!"));
+						retorno.setError(Uteis.trataErro("Ocorreu um Erro ao acionar o dispositivo!"));
 					} 
 				}
-		        jsonArray.put(statusDispositivo); //INSERE O OBJ JSON NO ARRAY
-		        response.getWriter().write(jsonArray.toString()); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
+
+		  		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+		      	Gson gson = new Gson();
+		      	String resposta = gson.toJson(retorno);
+		      	
+		        response.getWriter().write(resposta); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
 			break;
 			
 			case "temperatura":
 				response.getWriter().write(attTemperatura(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
+			return;
+			
+			case "buscaDispositivo":
+				response.getWriter().write(buscaDispositivo(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
 			return;
 			
 		}
@@ -141,4 +157,33 @@ public class ControlarLuz extends HttpServlet {
     	
 		return retorno;
 	}
+	
+	
+	
+	
+	//FUNCAO PARA BUSCAR OS DISPOSITIVOS DO COMODO
+	public String buscaDispositivo(HttpServletRequest request, HttpServletResponse response){
+		//PEGA A FUNCAO A SER EXECUTADA
+        String cd_tipo = request.getParameter("cd_tipo");
+        
+        //PEGA O USUARIO DA SESSAO
+		//String us_nome = (String) request.getSession().getAttribute("usuarioLogado");
+        
+        String us_nome = "maycon";
+        
+  		ComodoTO comodoTO = null;
+  		
+  		try{
+  			comodoTO = new ComodoDAO().buscaDispositivos(cd_tipo, us_nome);
+  		}catch(Exception e){
+  			return Uteis.addSlashes(Uteis.trataErro(e));
+  		}
+          
+  		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+      	Gson gson = new Gson();
+      	String retorno = gson.toJson(comodoTO);
+      	
+  		return retorno;
+	}
+	
 }

@@ -61,7 +61,10 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `TB_CAMERA` (
   `CM_ID` INT NOT NULL AUTO_INCREMENT,
   `CM_NOME` VARCHAR(20) UNIQUE NOT NULL,
-  `CM_IP` VARCHAR(15) NULL,
+  `CM_ADDR` VARCHAR(15) NULL,
+  `CM_PORT` INTEGER NULL,
+  `CM_USER` VARCHAR(30) NOT NULL,
+  `CM_PWD` VARCHAR(30) NOT NULL,
   `CD_ID` INT NOT NULL,
   PRIMARY KEY (`CM_ID`, `CD_ID`),
   INDEX `fk_TB_CAMERA_TB_COMODO1_idx` (`CD_ID` ASC),
@@ -72,6 +75,8 @@ CREATE TABLE IF NOT EXISTS `TB_CAMERA` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+describe tb_dimmer;
 
 -- SENSOR TEMPERATURA
 CREATE TABLE IF NOT EXISTS `TB_TEMPERATURA` (
@@ -174,10 +179,10 @@ INSERT INTO tb_comodo(cd_nome,cd_tipo) VALUES('QUARTO 1','QUARTO');
 
 -- LAMPADA
 INSERT INTO tb_lampada(lp_nome,lp_tensao, lp_consumo, cd_id) 
-				VALUES('teste_lp9', 120, 30, 4);
+				VALUES('LED_1', 20, 5, 3);
 
 -- DIMMER
-INSERT INTO tb_dimmer(lp_id) values(3);
+INSERT INTO tb_dimmer(lp_id) values(11);
 
 
 -- TEMPERATURA
@@ -227,7 +232,54 @@ SELECT cd.cd_id, cd.cd_nome FROM tb_comodo cd , tb_acesso ac WHERE cd.cd_id = ac
 
 select lp.lp_id, lp.lp_nome, lp.CD_ID from tb_lampada lp, tb_comodo cd 
 			where lp.cd_id = cd.cd_id and cd.cd_tipo = 'sala' AND cd.cd_id in (1,4);
-
+;
 select cd.cd_id, cd.cd_nome from tb_comodo cd , tb_acesso ac 
 			where cd.cd_id = ac.cd_id and ac.us_nome = 'maycon' and cd.cd_tipo = 'sala';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT l.lp_id, l.lp_status, l.lp_nome, l.lp_porta, l.cd_id, d.dm_id, d.dm_valor, d.dm_porta, d.lp_id
+FROM tb_lampada l left join tb_dimmer d on d.lp_id = l.lp_id and cd_id = 4
+order by l.lp_nome;
+
+select * from tb_dimmer;
+
+
+SELECT l.lp_id, l.lp_status, l.lp_nome, l.lp_porta, l.cd_id, d.dm_id, d.dm_valor, d.dm_porta FROM tb_lampada l left join tb_dimmer d on d.lp_id = l.lp_id where cd_id = 4 order by l.lp_nome
+
+;
+
+
+
+
+
 

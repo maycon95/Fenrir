@@ -1,8 +1,8 @@
 //***********************************************************************
 //						CONSTANTES  SEMPRE USADAS
 //***********************************************************************
-var SERVLET = "Comodo"; //SERVLET USADO NESTA PAGINA
-var SERVLET_DISPOSITIVO = "ControlarLuz"; //SERVLET USADO PARA CONTROLE DE DISPOSITIVOS
+var SERVLET = "Dispositivo"; //SERVLET USADO NESTA PAGINA
+var SERVLET_DISPOSITIVO = "Dispositivo"; //SERVLET USADO PARA CONTROLE DE DISPOSITIVOS
 
 //OBJETO DAS TABELAS
 var objTabelaComodo = {}; //OBJETO DA TABELA DE COMODO 
@@ -43,7 +43,7 @@ DIV_LISTA_COMODO = "#listaComodos";
 //FUNCAO QUE BUSCAS OS DISPOSITIVOS DO COMODO SELECIONADO
 //***********************************************************************
 function buscaComodos(categoria){
-	var funcao = 'funcao=buscaComodos'+
+	var funcao = 'funcao=buscaDispositivo'+
 				 '&cd_tipo=' + categoria;
 	
 	AJAX(SERVLET,funcao, function(retorno){
@@ -219,6 +219,7 @@ function acionarDispositivo(dispositivo){
 	});	
 
 }
+
 
 
 

@@ -1,11 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8" />
-		<title>Home - Fenrir Autmações</title>
-		<link rel="stylesheet" href="css/bootstrap.min.css" />
-		<meta name="viewport" content="width=device-width" /> -->
-
 
 		<jsp:include page="../../component/WebUteis/imports.jsp" /><!-- PEGA OS IMPORT PADRAO  -->
 

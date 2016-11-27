@@ -75,8 +75,8 @@ CREATE TABLE IF NOT EXISTS `TB_CAMERA` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+drop table tb_camera;
 
-describe tb_dimmer;
 
 -- SENSOR TEMPERATURA
 CREATE TABLE IF NOT EXISTS `TB_TEMPERATURA` (
@@ -106,54 +106,15 @@ CREATE TABLE IF NOT EXISTS `TB_LAMPADA` (
   `LP_TENSAO` INT NOT NULL,
   `LP_CONSUMO` DOUBLE NOT NULL,
   `LP_CONSTOTAL` DOUBLE NULL,
-  `LP_DIMMER` INT NULL,
   `CD_ID` INT NOT NULL,
   `LP_PORTA` INT NOT NULL,
-  PRIMARY KEY (`LP_ID`, `CD_ID`),
-  INDEX `fk_TB_LAMPADA_TB_COMODO1_idx` (`CD_ID` ASC),
-  CONSTRAINT `fk_TB_LAMPADA_TB_COMODO1`
-    FOREIGN KEY (`CD_ID`)
-    REFERENCES `TB_COMODO` (`CD_ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
-drop table tb_lampada;
-drop table tb_dimmer;
-
--- LAMPADA
-CREATE TABLE IF NOT EXISTS `TB_LAMPADA` (
-  `LP_ID` INT NOT NULL AUTO_INCREMENT,
-  `LP_NOME` VARCHAR(20) NOT NULL,
-  `LP_STATUS` CHAR NOT NULL DEFAULT 'D',
-  `LP_TENSAO` INT NOT NULL,
-  `LP_CONSUMO` DOUBLE NOT NULL,
-  `LP_CONSTOTAL` DOUBLE NULL DEFAULT 0,
-  `CD_ID` INT NOT NULL,
-  PRIMARY KEY (`LP_ID`, `CD_ID`),
-  INDEX `fk_TB_LAMPADA_TB_COMODO1_idx` (`CD_ID` ASC),
-  CONSTRAINT `fk_TB_LAMPADA_TB_COMODO1`
-    FOREIGN KEY (`CD_ID`)
-    REFERENCES `TB_COMODO` (`CD_ID`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- DIMMER
-CREATE TABLE IF NOT EXISTS `TB_DIMMER` (
-  `DM_ID` INT NOT NULL AUTO_INCREMENT,
-  `DM_VALOR` INT(11) NOT NULL DEFAULT 0,
   `DM_PORTA` INT NOT NULL DEFAULT 0,
-  `LP_ID` INT NOT NULL,
-  -- `CD_ID` INT NOT NULL,
-  PRIMARY KEY (`DM_ID`, `LP_ID`), -- , `CD_ID`),
-  INDEX `fk_TB_DIMMER_TB_LAMPADA1_idx` (`LP_ID` ASC ), -- `CD_ID` ASC),
-  UNIQUE INDEX `LP_ID_UNIQUE` (`LP_ID` ASC),
-  CONSTRAINT `fk_TB_DIMMER_TB_LAMPADA1`
-    FOREIGN KEY (`LP_ID`) -- , `CD_ID`)
-    REFERENCES `TB_LAMPADA` (`LP_ID` ) --  , `CD_ID`)
+  `DM_VALOR` DOUBLE NULL DEFAULT 0,
+PRIMARY KEY (`LP_ID`, `CD_ID`),
+  INDEX `fk_TB_LAMPADA_TB_COMODO1_idx` (`CD_ID` ASC),
+  CONSTRAINT `fk_TB_LAMPADA_TB_COMODO1`
+    FOREIGN KEY (`CD_ID`)
+    REFERENCES `TB_COMODO` (`CD_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -280,6 +241,29 @@ SELECT l.lp_id, l.lp_status, l.lp_nome, l.lp_porta, l.cd_id, d.dm_id, d.dm_valor
 
 
 
+SELECT c.cd_id, c.cd_nome, ifnull((SELECT ac_libera FROM tb_acesso WHERE cd_id = c.cd_id AND us_nome = 'ma%'), 'B') AS ac_libera 
+FROM tb_comodo c;
 
 
-
+SELECT u.us_nome, c.cd_id, c.cd_nome, ifnull((SELECT ac_libera FROM tb_acesso WHERE cd_id = c.cd_id AND us_nome = u.us_nome), 'B') AS ac_libera
+ FROM tb_usuario u, tb_comodo c WHERE us_nome like '%' order by u.us_nome;
+ 
+ 
+ 
+ 
+ SELECT u.us_nome, c.cd_id, c.cd_nome, ifnull((SELECT ac_libera FROM tb_acesso WHERE cd_id = c.cd_id AND us_nome = u.us_nome), 'B') AS ac_liber
+ FROM tb_usuario u, tb_comodo c WHERE us_nome like '%' order by u.us_nome, c.cd_nome;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ SELECT lp_id, lp_status, lp_nome, lp_porta, cd_id, dm_valor, dm_porta 
+											FROM tb_lampada where cd_id = 1 order by lp_nome
+ 
+ 

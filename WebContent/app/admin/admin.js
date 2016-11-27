@@ -1,7 +1,7 @@
 //***********************************************************************
 //						CONSTANTES  SEMPRE USADAS
 //***********************************************************************
-var SERVLET = "Admin"; //SERVLET USADO NESTA PAGINA
+var SERVLET_ADMIN = "Admin"; //SERVLET_ADMIN USADO NESTA PAGINA
 
 //OBJETO DAS TABELAS
 var objTabelaUsuario = {}; //OBJETO DA TABELA DE USUARIO 
@@ -84,7 +84,7 @@ function fecha_admin(tabela){
 //*******************************************************
 function monta_combo(){
 	var funcao = 'funcao=monta_combo';
-	AJAX(SERVLET,funcao, function(retorno){
+	AJAX(SERVLET_ADMIN,funcao, function(retorno){
 		retorno = JSon(retorno);
 	
 		//CASO OCORRA ALGUM ERRO
@@ -94,7 +94,7 @@ function monta_combo(){
 		}
 		if (!empty(retorno.error)) {
 			alert("Ocorreu um erro ao buscar usuarios\n"+
-				  "Erro: " + retorno.mensagem);
+				  "Erro: " + retorno.error);
 		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
 		}
 
@@ -131,7 +131,7 @@ function montaQuery_usuario(){
 				 "&comando=busca" +
 				 "&busca="+$("#us_busca").val();
 
-	 AJAX(SERVLET, funcao, function(retorno){
+	 AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 	
 		//CASO OCORRA ALGUM ERRO
@@ -141,7 +141,7 @@ function montaQuery_usuario(){
 		}
 		if (!empty(retorno.error)) {
 			alert("Ocorreu um erro ao buscar usuarios\n"+
-				  "Erro: " + retorno.mensagem);
+				  "Erro: " + retorno.error);
 		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
 		}
 
@@ -327,7 +327,7 @@ function grava_usuario(cell, fcustom_grava){
 				"&us_nome_old=" + $(linha+"[name=us_nome]").attr("us_nome").toUpperCase();
 
 	//swal.loading();
-	AJAX(SERVLET, funcao, function(retorno){
+	AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 
       if(!retorno){
@@ -343,14 +343,14 @@ function grava_usuario(cell, fcustom_grava){
 		if(!empty(retorno.error)){
 //			swal({
 //				title: 'Erro ao gravar',
-//				text: retorno.mensagem,
+//				text: retorno.error,
 //				type: 'error'
 //			}, function(){
 //					selecionaLinha(DIV_TABELA_USUARIO, actpos, cell);
 //				}
 //			);
 			
-			alert('Erro ao gravar\n'+retorno.mensagem);
+			alert('Erro ao gravar\n'+retorno.error);
 
 			return;
 		}
@@ -398,7 +398,7 @@ function exclui_usuario(){
 				 "&comando=exclui"+
 				 "&us_nome=" + us_nome;
 
-	AJAX(SERVLET, funcao, function(retorno){
+	AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 		if(!retorno){
 			var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
@@ -410,7 +410,7 @@ function exclui_usuario(){
 			//ERRO
 //			swal({
 //					title:'Erro ao excluir Usuario',
-//					text: retorno.mensagem,
+//					text: retorno.error,
 //					type: 'error'
 //				},
 //				function(){
@@ -452,7 +452,7 @@ function exclui_usuario(){
 
 	// 		var funcao = "funcao=deleta&us_nome=" + us_nome;
 
-	// 		AJAX(SERVLET, funcao, function(retorno){
+	// 		AJAX(SERVLET_ADMIN, funcao, function(retorno){
 	// 			retorno = json(retorno);
 	// 			if(!retorno){
 	// 				var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
@@ -463,7 +463,7 @@ function exclui_usuario(){
 	// 				//ERRO
 	// 				swal({
 	// 						title:'Erro ao excluir Usuario',
-	// 						text: retorno.mensagem,
+	// 						text: retorno.error,
 	// 						type: 'error'
 	// 					},
 	// 					function(){
@@ -532,7 +532,7 @@ function pintaLinha_usuario(elemento){
 //				 "&comando=buscaAcessoUsuario" +
 //				 "&busca="+us_nome;
 //
-//	 AJAX(SERVLET, funcao, function(retorno){
+//	 AJAX(SERVLET_ADMIN, funcao, function(retorno){
 //		retorno = JSon(retorno);
 //	
 //		//CASO OCORRA ALGUM ERRO
@@ -542,7 +542,7 @@ function pintaLinha_usuario(elemento){
 //		}
 //		if (!empty(retorno.error)) {
 //			alert("Ocorreu um erro ao buscar acessos\n"+
-//				  "Erro: " + retorno.mensagem);
+//				  "Erro: " + retorno.error);
 //		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
 //		}
 //
@@ -689,7 +689,7 @@ function grava_acesso(cell, fcustom_grava){
 				"&ac_libera="+ $(linha+"[name=ac_libera]").val().toUpperCase();
 
 	//swal.loading();
-	AJAX(SERVLET, funcao, function(retorno){
+	AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 
       if(!retorno){
@@ -705,14 +705,14 @@ function grava_acesso(cell, fcustom_grava){
 		if(!empty(retorno.error)){
 //			swal({
 //				title: 'Erro ao gravar',
-//				text: retorno.mensagem,
+//				text: retorno.error,
 //				type: 'error'
 //			}, function(){
 //					selecionaLinha(DIV_TABELA_ACESSO, actpos, cell);
 //				}
 //			);
 			
-			alert('Erro ao gravar\n'+retorno.mensagem);
+			alert('Erro ao gravar\n'+retorno.error);
 
 			return;
 		}
@@ -798,7 +798,7 @@ function montaQuery_comodo(){
 				 "&comando=busca" +
 				 "&busca="+$("#cd_busca").val();
 
-	 AJAX(SERVLET, funcao, function(retorno){
+	 AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 	
 		//CASO OCORRA ALGUM ERRO
@@ -1008,7 +1008,7 @@ function grava_comodo(cell, fcustom_grava){
 				"&cd_id=" + $(linha+"[name=cd_id]").val();
 
 	//swal.loading();
-	AJAX(SERVLET, funcao, function(retorno){
+	AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 
       if(!retorno){
@@ -1024,14 +1024,14 @@ function grava_comodo(cell, fcustom_grava){
 		if(!empty(retorno.error)){
 //			swal({
 //				title: 'Erro ao gravar',
-//				text: retorno.mensagem,
+//				text: retorno.error,
 //				type: 'error'
 //			}, function(){
 //					selecionaLinha(DIV_TABELA_COMODO, actpos, cell);
 //				}
 //			);
 			
-			alert('Erro ao gravar\n'+retorno.mensagem);
+			alert('Erro ao gravar\n'+retorno.error);
 
 			return;
 		}
@@ -1077,7 +1077,7 @@ function exclui_comodo(){
 				 "&comando=exclui"+
 				 "&cd_id=" + cd_id;
 
-	AJAX(SERVLET, funcao, function(retorno){
+	AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 		if(!retorno){
 			var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
@@ -1089,7 +1089,7 @@ function exclui_comodo(){
 			//ERRO
 //			swal({
 //					title:'Erro ao excluir Usuario',
-//					text: retorno.mensagem,
+//					text: retorno.error,
 //					type: 'error'
 //				},
 //				function(){
@@ -1131,7 +1131,7 @@ function exclui_comodo(){
 
 	// 		var funcao = "funcao=deleta&us_nome=" + us_nome;
 
-	// 		AJAX(SERVLET, funcao, function(retorno){
+	// 		AJAX(SERVLET_ADMIN, funcao, function(retorno){
 	// 			retorno = json(retorno);
 	// 			if(!retorno){
 	// 				var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
@@ -1142,7 +1142,7 @@ function exclui_comodo(){
 	// 				//ERRO
 	// 				swal({
 	// 						title:'Erro ao excluir Usuario',
-	// 						text: retorno.mensagem,
+	// 						text: retorno.error,
 	// 						type: 'error'
 	// 					},
 	// 					function(){
@@ -1185,7 +1185,7 @@ function upload_planta(){
     reader.onloadend = function(){
         img.attr('src', reader.result);
         $.ajax({
-            url: "/Fenrir/Controller/"+ SERVLET,
+            url: "/Fenrir/Controller/"+ SERVLET_ADMIN,
             type: 'POST',
             data: {'funcao' : 'comodo', 'comando': 'upload_planta', 'cd_id': objTabelaComodo.lista[actpos].cd_id, 'cd_planta': reader.result},
         })
@@ -1200,12 +1200,12 @@ function upload_planta(){
 			}
 			if(!empty(retorno.error)){
 				//ERRO
-				alert('erro: ' + retorno.mensagem);
+				alert('erro: ' + retorno.error);
 				selecionaLinha(DIV_TABELA_COMODO,actpos,1);
 
 				// swal({
 				// 		title:'Erro ao Alterar Imagem',
-				// 		text: retorno.mensagem,
+				// 		text: retorno.error,
 				// 		type: 'error'
 				// 	},
 				// 	function(){
@@ -1233,7 +1233,7 @@ function buscaImagem(){
 //	actpos = $('#position_comodo').val()
 //	cd_id = $(DIV_TABELA_COMODO + " tr[posicao="+actpos+"] input[name=cd_id]").val();
 //	var funcao = 'cd_id='+ cd_id;
-//	AJAX(SERVLET_IMAGEM, funcao, function(retorno){
+//	AJAX(SERVLET_ADMIN_IMAGEM, funcao, function(retorno){
 //		
 //		var baseString = retorno;
 //		// data:image/png;base64
@@ -1334,7 +1334,7 @@ function montaQuery_lampada(){
 				 "&comando=busca" +
 				 "&busca="+$("#lp_busca").val();
 
-	 AJAX(SERVLET, funcao, function(retorno){
+	 AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 	
 		//CASO OCORRA ALGUM ERRO
@@ -1344,7 +1344,7 @@ function montaQuery_lampada(){
 		}
 		if (!empty(retorno.error)) {
 			alert("Ocorreu um erro ao buscar lâmpadas\n"+
-				  "Erro: " + retorno.mensagem);
+				  "Erro: " + retorno.error);
 		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
 		}
 
@@ -1562,7 +1562,7 @@ function grava_lampada(cell, fcustom_grava){
 				"&cd_id=" + $(linha+"[name=cd_id]").val();
 				
 	//swal.loading();
-	AJAX(SERVLET, funcao, function(retorno){
+	AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 
       if(!retorno){
@@ -1578,14 +1578,14 @@ function grava_lampada(cell, fcustom_grava){
 		if(!empty(retorno.error)){
 //			swal({
 //				title: 'Erro ao gravar',
-//				text: retorno.mensagem,
+//				text: retorno.error,
 //				type: 'error'
 //			}, function(){
 //					selecionaLinha(DIV_TABELA_COMODO, actpos, cell);
 //				}
 //			);
 			
-			alert('Erro ao gravar\n'+retorno.mensagem);
+			alert('Erro ao gravar\n'+retorno.error);
 
 			return;
 		}
@@ -1631,7 +1631,7 @@ function exclui_lampada(){
 				 "&comando=exclui"+
 				 "&lp_id=" + lp_id;
 
-	AJAX(SERVLET, funcao, function(retorno){
+	AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 		if(!retorno){
 			var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
@@ -1643,7 +1643,7 @@ function exclui_lampada(){
 			//ERRO
 //			swal({
 //					title:'Erro ao excluir Usuario',
-//					text: retorno.mensagem,
+//					text: retorno.error,
 //					type: 'error'
 //				},
 //				function(){
@@ -1685,7 +1685,7 @@ function exclui_lampada(){
 
 	// 		var funcao = "funcao=deleta&us_nome=" + us_nome;
 
-	// 		AJAX(SERVLET, funcao, function(retorno){
+	// 		AJAX(SERVLET_ADMIN, funcao, function(retorno){
 	// 			retorno = json(retorno);
 	// 			if(!retorno){
 	// 				var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
@@ -1696,7 +1696,7 @@ function exclui_lampada(){
 	// 				//ERRO
 	// 				swal({
 	// 						title:'Erro ao excluir Usuario',
-	// 						text: retorno.mensagem,
+	// 						text: retorno.error,
 	// 						type: 'error'
 	// 					},
 	// 					function(){
@@ -1802,7 +1802,7 @@ function montaQuery_temperatura(){
 				 "&comando=busca" +
 				 "&busca="+$("#tp_busca").val();
 
-	 AJAX(SERVLET, funcao, function(retorno){
+	 AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 	
 		//CASO OCORRA ALGUM ERRO
@@ -1812,7 +1812,7 @@ function montaQuery_temperatura(){
 		}
 		if (!empty(retorno.error)) {
 			alert("Ocorreu um erro ao buscar sensores de temperatura\n"+
-				  "Erro: " + retorno.mensagem);
+				  "Erro: " + retorno.error);
 		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
 		}
 
@@ -2027,7 +2027,7 @@ function grava_temperatura(cell, fcustom_grava){
 				"&cd_id=" + $(linha+"[name=cd_id]").val();
 				
 	//swal.loading();
-	AJAX(SERVLET, funcao, function(retorno){
+	AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 
     if(!retorno){
@@ -2043,14 +2043,14 @@ function grava_temperatura(cell, fcustom_grava){
 		if(!empty(retorno.error)){
 //			swal({
 //				title: 'Erro ao gravar',
-//				text: retorno.mensagem,
+//				text: retorno.error,
 //				type: 'error'
 //			}, function(){
 //					selecionaLinha(DIV_TABELA_COMODO, actpos, cell);
 //				}
 //			);
 			
-			alert('Erro ao gravar\n'+retorno.mensagem);
+			alert('Erro ao gravar\n'+retorno.error);
 
 			return;
 		}
@@ -2096,7 +2096,7 @@ function exclui_temperatura(){
 				 "&comando=exclui"+
 				 "&tp_id=" + tp_id;
 
-	AJAX(SERVLET, funcao, function(retorno){
+	AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 		if(!retorno){
 			var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
@@ -2108,7 +2108,7 @@ function exclui_temperatura(){
 			//ERRO
 //			swal({
 //					title:'Erro ao excluir Usuario',
-//					text: retorno.mensagem,
+//					text: retorno.error,
 //					type: 'error'
 //				},
 //				function(){
@@ -2150,7 +2150,7 @@ function exclui_temperatura(){
 
 	// 		var funcao = "funcao=deleta&us_nome=" + us_nome;
 
-	// 		AJAX(SERVLET, funcao, function(retorno){
+	// 		AJAX(SERVLET_ADMIN, funcao, function(retorno){
 	// 			retorno = json(retorno);
 	// 			if(!retorno){
 	// 				var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
@@ -2161,7 +2161,7 @@ function exclui_temperatura(){
 	// 				//ERRO
 	// 				swal({
 	// 						title:'Erro ao excluir Usuario',
-	// 						text: retorno.mensagem,
+	// 						text: retorno.error,
 	// 						type: 'error'
 	// 					},
 	// 					function(){
@@ -2258,7 +2258,7 @@ function montaQuery_camera(){
 				 "&comando=busca" +
 				 "&busca="+$("#cm_busca").val();
 
-	 AJAX(SERVLET, funcao, function(retorno){
+	 AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 	
 		//CASO OCORRA ALGUM ERRO
@@ -2268,7 +2268,7 @@ function montaQuery_camera(){
 		}
 		if (!empty(retorno.error)) {
 			alert("Ocorreu um erro ao buscar cameras\n"+
-				  "Erro: " + retorno.mensagem);
+				  "Erro: " + retorno.error);
 		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
 		}
 
@@ -2477,7 +2477,7 @@ function grava_camera(cell, fcustom_grava){
 				"&cd_id=" + $(linha+"[name=cd_id]").val();
 				
 	//swal.loading();
-	AJAX(SERVLET, funcao, function(retorno){
+	AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 
     if(!retorno){
@@ -2493,14 +2493,14 @@ function grava_camera(cell, fcustom_grava){
 		if(!empty(retorno.error)){
 //			swal({
 //				title: 'Erro ao gravar',
-//				text: retorno.mensagem,
+//				text: retorno.error,
 //				type: 'error'
 //			}, function(){
 //					selecionaLinha(DIV_TABELA_COMODO, actpos, cell);
 //				}
 //			);
 			
-			alert('Erro ao gravar\n'+retorno.mensagem);
+			alert('Erro ao gravar\n'+retorno.error);
 
 			return;
 		}
@@ -2546,7 +2546,7 @@ function exclui_camera(){
 				 "&comando=exclui"+
 				 "&cm_id=" + cm_id;
 
-	AJAX(SERVLET, funcao, function(retorno){
+	AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 		if(!retorno){
 			var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
@@ -2558,7 +2558,7 @@ function exclui_camera(){
 			//ERRO
 //			swal({
 //					title:'Erro ao excluir Usuario',
-//					text: retorno.mensagem,
+//					text: retorno.error,
 //					type: 'error'
 //				},
 //				function(){
@@ -2600,7 +2600,7 @@ function exclui_camera(){
 
 	// 		var funcao = "funcao=deleta&us_nome=" + us_nome;
 
-	// 		AJAX(SERVLET, funcao, function(retorno){
+	// 		AJAX(SERVLET_ADMIN, funcao, function(retorno){
 	// 			retorno = json(retorno);
 	// 			if(!retorno){
 	// 				var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
@@ -2611,7 +2611,7 @@ function exclui_camera(){
 	// 				//ERRO
 	// 				swal({
 	// 						title:'Erro ao excluir Usuario',
-	// 						text: retorno.mensagem,
+	// 						text: retorno.error,
 	// 						type: 'error'
 	// 					},
 	// 					function(){
@@ -2718,7 +2718,7 @@ function montaQuery_portao(){
 				 "&comando=busca" +
 				 "&busca="+$("#pt_busca").val();
 
-	 AJAX(SERVLET, funcao, function(retorno){
+	 AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 	
 		//CASO OCORRA ALGUM ERRO
@@ -2728,7 +2728,7 @@ function montaQuery_portao(){
 		}
 		if (!empty(retorno.error)) {
 			alert("Ocorreu um erro ao buscar portao\n"+
-				  "Erro: " + retorno.mensagem);
+				  "Erro: " + retorno.error);
 		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
 		}
 
@@ -2931,7 +2931,7 @@ function grava_portao(cell, fcustom_grava){
 				"&cd_id=" + $(linha+"[name=cd_id]").val();
 				
 	//swal.loading();
-	AJAX(SERVLET, funcao, function(retorno){
+	AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 
     if(!retorno){
@@ -2947,14 +2947,14 @@ function grava_portao(cell, fcustom_grava){
 		if(!empty(retorno.error)){
 //			swal({
 //				title: 'Erro ao gravar',
-//				text: retorno.mensagem,
+//				text: retorno.error,
 //				type: 'error'
 //			}, function(){
 //					selecionaLinha(DIV_TABELA_COMODO, actpos, cell);
 //				}
 //			);
 			
-			alert('Erro ao gravar\n'+retorno.mensagem);
+			alert('Erro ao gravar\n'+retorno.error);
 
 			return;
 		}
@@ -3000,7 +3000,7 @@ function exclui_portao(){
 				 "&comando=exclui"+
 				 "&pt_id=" + pt_id;
 
-	AJAX(SERVLET, funcao, function(retorno){
+	AJAX(SERVLET_ADMIN, funcao, function(retorno){
 		retorno = JSon(retorno);
 		if(!retorno){
 			var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
@@ -3012,7 +3012,7 @@ function exclui_portao(){
 			//ERRO
 //			swal({
 //					title:'Erro ao excluir Usuario',
-//					text: retorno.mensagem,
+//					text: retorno.error,
 //					type: 'error'
 //				},
 //				function(){
@@ -3054,7 +3054,7 @@ function exclui_portao(){
 
 	// 		var funcao = "funcao=deleta&us_nome=" + us_nome;
 
-	// 		AJAX(SERVLET, funcao, function(retorno){
+	// 		AJAX(SERVLET_ADMIN, funcao, function(retorno){
 	// 			retorno = json(retorno);
 	// 			if(!retorno){
 	// 				var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
@@ -3065,7 +3065,7 @@ function exclui_portao(){
 	// 				//ERRO
 	// 				swal({
 	// 						title:'Erro ao excluir Usuario',
-	// 						text: retorno.mensagem,
+	// 						text: retorno.error,
 	// 						type: 'error'
 	// 					},
 	// 					function(){

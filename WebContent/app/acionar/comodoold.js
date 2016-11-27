@@ -2,6 +2,7 @@
 //						CONSTANTES  SEMPRE USADAS
 //***********************************************************************
 var SERVLET = "Dispositivo"; //SERVLET USADO NESTA PAGINA
+var SERVLET_DISPOSITIVO = "Dispositivo"; //SERVLET USADO PARA CONTROLE DE DISPOSITIVOS
 
 //OBJETO DAS TABELAS
 var objTabelaComodo = {}; //OBJETO DA TABELA DE COMODO 
@@ -9,7 +10,6 @@ var objTabelaComodo = {}; //OBJETO DA TABELA DE COMODO
 
 //DIV'S DAS TABELAS
 DIV_LISTA_COMODO = "#listaComodos";
-DIV_DISPOSITIVOS = "#div_dispositivos";
 //***********************************************************************
 
 
@@ -56,7 +56,7 @@ function buscaComodos(categoria){
 		}
 		if (!empty(retorno.error)) {
 			alert("Ocorreu um erro ao buscar dispositivos\n"+
-				  "Erro: " + retorno.error);
+				  "Erro: " + retorno.mensagem);
 		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
 		}
 
@@ -79,60 +79,69 @@ function buscaComodos(categoria){
 function montaComodo(){
 	for(var i = 0; i < objTabelaComodo.total; i++){
 		var aux = objTabelaComodo.lista[i];
-		
-		
-		var lista = "<div name='comodo_id_"+aux.cd_id+"' class='w100c float-left'> "+
-					"	<h3>"+aux.cd_nome+"</h3>"+
+		var lista =  "<div class='panel panel-primary' posicao_cd='"+i+"' name='"+aux.cd_id+"'>"+
+					"	<div class='panel-heading'>"+
+					"    	<h3 class='panel-title'>"+aux.cd_nome+"</h3>"+
+					"	</div>"+
+					"	<div class='panel-body'> </div>"+	
 					"</div>";
-		
-		$(DIV_DISPOSITIVOS).append(lista);
+
+		$(DIV_LISTA_COMODO).append(lista);
 
 		var dispositivos = '';
 
 		for(var j = 0; j < aux.listaLampada.length; j++){
 			var auxLampada = aux.listaLampada[j];
+			var auxDimmer= aux.listaDimmer[j];
 			var comando = 'LAMPADA_' + auxLampada.lp_porta;
-
-			dispositivos += "<div id='lp_"+auxLampada.lp_id+"' posicao_lp='"+j+"' class='col-sm-4'>"+
-							"	<h4>"+auxLampada.lp_nome+"</h4>"+
-							"	<input type='image' class='botao' name='lampada' src='../../component/img/sala.png' style='height:128px; width:128px;'"+
-							"	 	title="+auxLampada.lp_nome+"; style='opacity: 50;'>";
+			dispositivos += "<div class='col-xs-12 col-md-4 text-center' id='lp_"+auxLampada.lp_id+"' posicao_lp='"+j+"'>"+
+							"	<div class='btn-group'>"+
+							"		<input type='button' name='dispositivo' class='btn btn-default button lampada' comando='"+comando+"'>"+				
+							"	</div>"+
+							"	<div>"+
+							"		<h4>"+auxLampada.lp_nome+"</h4>"+
+							"	</div>";
 			
-			if(auxLampada.dm_porta != "0"){
-				dispositivos += " 	<input type='range' min='0' max='99' value='"+auxLampada.dm_valor+"' step='10' onchange='' class='w130'/>";				
+			
+			if(auxDimmer.dm_id != 0){
+				dispositivos +="<div>"+
+							"		<input type='button' name='dimmer' value='-' style='float:left;'/>"+
+							"		<input type='text' name='valorDimmer' value='"+auxDimmer.dm_valor+"' style='float: left; text-align: right;' class='w40' readonly/>"+
+							"		<input type='button' name='dimmer' value='+' style='float:left;'/>"+
+							"	</div>";
 			}
 			dispositivos += "</div>";
 		}
 
 		
-//		for(var j = 0; j < aux.listaPortao.length; j++){
-//			var auxPortao = aux.listaPortao[j];
-//			var comando = 'PORTAO_' + auxPortao.pt_porta;
-//			dispositivos += "<div class='col-xs-12 col-md-4 text-center' name=''>"+
-//							"	<div class='btn-group'>"+
-//							"		<input type='button'class='btn btn-default button garagem' comando='"+comando+"'>"+				
-//							"	</div>"+
-//							"	<div>"+
-//							"		<h4>"+auxPortao.pt_nome+"</h4>"+
-//							"	</div>"+
-//							"</div>";
-//		}
-//		
-//		for(var j = 0; j < aux.listaTemperatura.length; j++){
-//			var auxTemperatura = aux.listaTemperatura[j];
-//			dispositivos += "<div class='col-xs-12 col-md-4 text-center' id='tp_"+auxTemperatura.tp_id+"' posicao_tp='"+j+"'>"+
-//							"	<div class='btn-group'>"+
-//							"		<input type='button'class='btn btn-default button temperatura' onClick='attTemp(this);'>"+				
-//							"	</div>"+
-//							"	<div>"+
-//							"		<h4>"+auxTemperatura.tp_nome+"</h4>"+
-//							"	</div>"+
-//							"</div>";
-//		}
+		for(var j = 0; j < aux.listaPortao.length; j++){
+			var auxPortao = aux.listaPortao[j];
+			var comando = 'PORTAO_' + auxPortao.pt_porta;
+			dispositivos += "<div class='col-xs-12 col-md-4 text-center' name=''>"+
+							"	<div class='btn-group'>"+
+							"		<input type='button'class='btn btn-default button garagem' comando='"+comando+"'>"+				
+							"	</div>"+
+							"	<div>"+
+							"		<h4>"+auxPortao.pt_nome+"</h4>"+
+							"	</div>"+
+							"</div>";
+		}
+		
+		for(var j = 0; j < aux.listaTemperatura.length; j++){
+			var auxTemperatura = aux.listaTemperatura[j];
+			dispositivos += "<div class='col-xs-12 col-md-4 text-center' id='tp_"+auxTemperatura.tp_id+"' posicao_tp='"+j+"'>"+
+							"	<div class='btn-group'>"+
+							"		<input type='button'class='btn btn-default button temperatura' onClick='attTemp(this);'>"+				
+							"	</div>"+
+							"	<div>"+
+							"		<h4>"+auxTemperatura.tp_nome+"</h4>"+
+							"	</div>"+
+							"</div>";
+		}
 
 		
 		
-		$(DIV_DISPOSITIVOS + " div[name=comodo_id_"+aux.cd_id+"]").append(dispositivos);
+		$(DIV_LISTA_COMODO +" div[name="+aux.cd_id+"] .panel-body").append(dispositivos);
 	}
 	
 	//BUSCA A IMAGEM DO COMODO
@@ -204,7 +213,7 @@ function acionarDispositivo(dispositivo){
 		}
 		if (!empty(retorno.error)) {
 			alert("Ocorreu um erro ao buscar dispositivos\n"+
-				  "Erro: " + retorno.error);
+				  "Erro: " + retorno.mensagem);
 		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
 		}
 	});	
@@ -235,7 +244,7 @@ function attTemp(temp){
 		}
 		if (!empty(retorno.error)) {
 			alert("Ocorreu um erro ao buscar informação da temperatura\n"+
-				  "Erro: " + retorno.error);
+				  "Erro: " + retorno.mensagem);
 		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
 		}
 		
@@ -295,7 +304,6 @@ function mov_camera(command){
 	});
 
 }
-
 
 
 

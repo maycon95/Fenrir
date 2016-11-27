@@ -148,7 +148,7 @@ public class DispositivoController extends HttpServlet {
 		try{
 			tempTO = new TemperaturaDAO().buscaTemp(tp_id); 
 		}catch(Exception e){
-			return Uteis.addSlashes(Uteis.trataErro(e));
+  			return new Gson().toJson(new Retorno("",Uteis.trataErro(e)));
 		}
         
         //CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
@@ -167,17 +167,20 @@ public class DispositivoController extends HttpServlet {
         String cd_tipo = request.getParameter("cd_tipo");
         
         //PEGA O USUARIO DA SESSAO
-		//String us_nome = (String) request.getSession().getAttribute("usuarioLogado");
+		String us_nome = (String) request.getSession().getAttribute("usuarioLogado");
         
-        String us_nome = "maycon";
+
+//        String us_nome = "maycon";
         
   		ComodoTO comodoTO = null;
   		
   		try{
   			comodoTO = new ComodoDAO().buscaDispositivos(cd_tipo, us_nome);
   		}catch(Exception e){
-  			return Uteis.addSlashes(Uteis.trataErro(e));
+  			e.printStackTrace();
+  			return new Gson().toJson(new Retorno("",Uteis.trataErro(e)));
   		}
+  		
           
   		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
       	Gson gson = new Gson();

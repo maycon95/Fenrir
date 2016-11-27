@@ -159,8 +159,8 @@ public class ComodoDAO {
 											"WHERE cd.cd_id = ac.cd_id AND ac.us_nome = ? AND cd.cd_tipo = ?";
 		
 		//BUSCA AS LAMPADAS
-		String sqlSelectLampada = "SELECT l.lp_id, l.lp_status, l.lp_nome, l.lp_porta, l.cd_id, d.dm_id, d.dm_valor, d.dm_porta "+
-											"FROM tb_lampada l left join tb_dimmer d on d.lp_id = l.lp_id where cd_id = ? order by l.lp_nome";
+		String sqlSelectLampada = " SELECT lp_id, lp_status, lp_nome, lp_porta, cd_id, dm_valor, dm_porta " +
+											" FROM tb_lampada where cd_id = ? order by lp_nome";
 
 		String sqlSelectPortao = "SELECT pt_id, pt_status, pt_nome, pt_porta, cd_id FROM tb_portao WHERE cd_id = ?";
 		
@@ -201,6 +201,8 @@ public class ComodoDAO {
 					lampada.setLp_id(rs.getInt("lp_id"));
 					lampada.setLp_nome(rs.getString("lp_nome"));
 					lampada.setLp_porta(rs.getInt("lp_porta"));
+					lampada.setDm_porta(rs.getInt("dm_porta"));
+					lampada.setDm_valor(rs.getInt("dm_valor"));
 					comodoTO.getLista().get(i).addLampada(lampada); // INSERE A LAMPADA NA LISTA
 					
 				}

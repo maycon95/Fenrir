@@ -73,7 +73,8 @@ div.panel-table{padding-left: 4px; padding-right: 2px;}
 
 
 
-
+.float-left{float: left;}
+.float-right{float: right;}
 
 
 
@@ -194,7 +195,8 @@ div.panel-table{padding-left: 4px; padding-right: 2px;}
 .w1000{width: 1000px !important;}
 
 
-
+.w50c{width: 50% !important;}
+.w100c{width: 100% !important;}
 
 
 

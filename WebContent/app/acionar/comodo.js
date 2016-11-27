@@ -10,6 +10,7 @@ var objTabelaComodo = {}; //OBJETO DA TABELA DE COMODO
 //DIV'S DAS TABELAS
 DIV_LISTA_COMODO = "#listaComodos";
 DIV_DISPOSITIVOS = "#div_dispositivos";
+DIV_CAMERA = "#div_camera";
 //***********************************************************************
 
 
@@ -89,54 +90,87 @@ function montaComodo(){
 
 		var dispositivos = '';
 
+		
+		//LOOP PARA PREENCHER AS LAMPADAS
 		for(var j = 0; j < aux.listaLampada.length; j++){
 			var auxLampada = aux.listaLampada[j];
 			var comando = 'LAMPADA_' + auxLampada.lp_porta;
 
-			dispositivos += "<div id='lp_"+auxLampada.lp_id+"' posicao_lp='"+j+"' class='col-sm-4'>"+
-							"	<h4>"+auxLampada.lp_nome+"</h4>"+
-							"	<input type='image' class='botao' name='lampada' src='../../component/img/sala.png' style='height:128px; width:128px;'"+
-							"	 	title="+auxLampada.lp_nome+"; style='opacity: 50;'>";
+			dispositivos += "<div id='lp_"+auxLampada.lp_id+"' posicao_lp='"+j+"' posicao_cd='"+i+"'  class='col-sm-4 w200 h200 center'>"+
+							"	<h4 class='center'>"+auxLampada.lp_nome+"</h4>"+
+							"	<input type='image' class='botao btnLampada"+auxLampada.lp_status+"' name='lampada' comando='"+comando+"' style='height:128px; width:128px;'"+
+							"	 	title='' >";
 			
 			if(auxLampada.dm_porta != "0"){
-				dispositivos += " 	<input type='range' min='0' max='99' value='"+auxLampada.dm_valor+"' step='10' onchange='' class='w130'/>";				
+				dispositivos += "<input type='range' min='0' max='100' value='"+auxLampada.dm_valor+"' step='10' onchange='' class='centerRange w130'/>";				
 			}
 			dispositivos += "</div>";
 		}
 
+		//LOOP PARA PREENCHER OS PORTOES
+		for(var j = 0; j < aux.listaPortao.length; j++){
+			var auxPortao = aux.listaPortao[j];
+			var comando = 'PORTAO_' + auxPortao.pt_porta;
+			
+			dispositivos += "<div id='pt_"+auxPortao.pt_id+"' posicao_pt='"+j+"' posicao_cd='"+i+"' class='col-sm-4 w200 h200 center'>"+
+							"	<h4 class='center'>"+auxPortao.pt_nome+"</h4>"+
+							"	<input type='image' class='botao btnPortao' name='portao' comando='"+comando+"' style='height:128px; width:128px;'"+
+							"	 	title='' >"+
+							"</div>";
+		}
 		
-//		for(var j = 0; j < aux.listaPortao.length; j++){
-//			var auxPortao = aux.listaPortao[j];
-//			var comando = 'PORTAO_' + auxPortao.pt_porta;
-//			dispositivos += "<div class='col-xs-12 col-md-4 text-center' name=''>"+
-//							"	<div class='btn-group'>"+
-//							"		<input type='button'class='btn btn-default button garagem' comando='"+comando+"'>"+				
-//							"	</div>"+
-//							"	<div>"+
-//							"		<h4>"+auxPortao.pt_nome+"</h4>"+
-//							"	</div>"+
-//							"</div>";
-//		}
-//		
-//		for(var j = 0; j < aux.listaTemperatura.length; j++){
-//			var auxTemperatura = aux.listaTemperatura[j];
-//			dispositivos += "<div class='col-xs-12 col-md-4 text-center' id='tp_"+auxTemperatura.tp_id+"' posicao_tp='"+j+"'>"+
-//							"	<div class='btn-group'>"+
-//							"		<input type='button'class='btn btn-default button temperatura' onClick='attTemp(this);'>"+				
-//							"	</div>"+
-//							"	<div>"+
-//							"		<h4>"+auxTemperatura.tp_nome+"</h4>"+
-//							"	</div>"+
-//							"</div>";
-//		}
+		
+		//LOOP PARA PREENCHER AS TEMPERATURAS
+		for(var j = 0; j < aux.listaTemperatura.length; j++){
+			var auxTemperatura = aux.listaTemperatura[j];
+			
+			dispositivos += "<div id='tp_"+auxTemperatura.tp_id+"' posicao_tp='"+j+"' class='col-sm-4 w200 h200 center'>"+
+			"	<h4 class='center'>"+auxTemperatura.tp_nome+"</h4>"+
+			"	<div class='valorTemp ' style='display: inline-flex; position: absolute; height:128px; width:128px'><label>"+auxTemperatura.tp_temp+" C</label></div>"+
+			"	<di class=''>"+
+			"		<input type='image' class='botao btnTemperatura' name='temperatura' comando='"+comando+"' style='height:128px; width:128px;position: relative;'"+
+			"	 		title=''>"+
+			" 	</div>"+
+			"</div>";
+		}
+		
+		
+
+		$(DIV_DISPOSITIVOS + " div[name=comodo_id_"+aux.cd_id+"]").append(dispositivos);
+		
+		
 
 		
+		//CAMERAS
+		var cameras = '';
 		
-		$(DIV_DISPOSITIVOS + " div[name=comodo_id_"+aux.cd_id+"]").append(dispositivos);
+		//LOOP PARA PREENCHER AS CAMERAS
+		for(var j = 0; j < aux.listaCamera.length; j++){
+			var auxCamera = aux.listaCamera[j];
+
+			var cm_user = auxCamera.cm_user;
+			var cm_pwd = auxCamera.cm_pwd;
+			var cm_addr = auxCamera.cm_addr;
+			var cm_port = auxCamera.cm_port;
+			
+			var src = "http://"+cm_addr+":"+cm_port+"/videostream.cgi?user="+cm_user+"&amp;pwd="+cm_pwd+"&amp;resolution=8&amp;rate=0";
+			
+			cameras +=  "<div name='camera_id_"+auxCamera.cm_id+"' posicao_cd='"+i+"' posicao_cm='"+j+"' class='w100c float-left'>"+
+						"	<h3>"+auxCamera.cm_nome+"</h3>"+
+						"	<div class='col-xs-12 col-md-4 text-center w320 h250'>"+
+						"		<img style='-webkit-user-select: none' src='"+src+"'>	"+
+						"	</div>"+
+						"	<div>"+
+						"		<input type='button' value='Esquerda' onmousedown='mov_camera(this,4);' onmouseup='mov_camera(this,5);' />"+
+						"		<input type='button' value='Cima' onmousedown='mov_camera(this,0);' onmouseup='mov_camera(this,1);'/>"+
+						"		<input type='button' value='Baixo' onmousedown='mov_camera(this,2);' onmouseup='mov_camera(this,3);' />"+
+						"		<input type='button' value='Direita' onmousedown='mov_camera(this,6);' onmouseup='mov_camera(this,7);' />"+
+						"	</div>	"+
+						"</div>";
+			}
+		
+		$(DIV_CAMERA).append(cameras);
 	}
-	
-	//BUSCA A IMAGEM DO COMODO
-	buscaImagem();
 }
 
 
@@ -182,19 +216,29 @@ function dimmer(dimmer){
 }
 
 
+
+
+
+
+
+
+
+
+
+
 //FUNCAO PARA ACIONAR UM DISPOSITIVO
-function acionarDispositivo(dispositivo){
-	//VEJO QUAL É O DIMER QUE FOI CLICADO PEGANDO A POSICAO DA LAMPADA
-	var posicao_lp = $(dispositivo).parent().parent().attr('posicao_lp');
+function acionarLampada(lampada){
+	//VEJO QUAL É A LAMPADA QUE FOI CLICADO PEGANDO A POSICAO
+	var posicao_lp = $(lampada).parent().attr('posicao_lp');
 	//VEJO QUAL É O COMODO DESSE DISPOSITIVO
-	var posicao_cd = $(dispositivo).parent().parent().parent().parent().attr('posicao_cd');
+	var posicao_cd = $(lampada).parent().attr('posicao_cd');
 	
 	var funcao = 'funcao=lampada'+
-				 '&comando=' + $(dispositivo).attr('comando')+
+				 '&comando=' + $(lampada).attr('comando')+
 				 '&lp_id=' + objTabelaComodo.lista[posicao_cd].listaLampada[posicao_lp].lp_id;
 	
 	
-	AJAX(SERVLET_DISPOSITIVO,funcao, function(retorno){
+	AJAX(SERVLET,funcao, function(retorno){
 		retorno = JSon(retorno);
 		console.log(retorno);
 		//CASO OCORRA ALGUM ERRO
@@ -207,6 +251,10 @@ function acionarDispositivo(dispositivo){
 				  "Erro: " + retorno.error);
 		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
 		}
+		
+		objTabelaComodo.lista[posicao_cd].listaLampada[posicao_lp].lp_status = retorno.status;
+		
+		$(lampada).removeClass("btnLampadaL").removeClass("btnLampadaD").addClass("btnLampada" + retorno.status);
 	});	
 
 }
@@ -214,18 +262,19 @@ function acionarDispositivo(dispositivo){
 
 
 
+
 //FUNCAO PARA ACIONAR UM DISPOSITIVO
-function attTemp(temp){
-	//VEJO QUAL É O DIMER QUE FOI CLICADO PEGANDO A POSICAO DA LAMPADA
-	var posicao_tp = $(temp).parent().parent().attr('posicao_tp');
+function acionarPortao(portao){
+	//VEJO QUAL É O PORTAO QUE FOI CLICADO PEGANDO A POSICAO
+	var posicao_pt = $(portao).parent().attr('posicao_pt');
 	//VEJO QUAL É O COMODO DESSE DISPOSITIVO
-	var posicao_cd = $(temp).parent().parent().parent().parent().attr('posicao_cd');
+	var posicao_cd = $(portao).parent().attr('posicao_cd');
 	
-	var funcao = 'funcao=temperatura'+
-				 '&tp_id=' + objTabelaComodo.lista[posicao_cd].listaTemperatura[posicao_tp].tp_id;
+	var funcao = 'funcao=portao'+
+				 '&comando=' + $(portao).attr('comando')+
+				 '&pt_id=' + objTabelaComodo.lista[posicao_cd].listaPortao[posicao_pt].pt_id;
 	
-	
-	AJAX(SERVLET_DISPOSITIVO,funcao, function(retorno){
+	AJAX(SERVLET,funcao, function(retorno){
 		retorno = JSon(retorno);
 		console.log(retorno);
 		//CASO OCORRA ALGUM ERRO
@@ -234,15 +283,12 @@ function attTemp(temp){
 		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
 		}
 		if (!empty(retorno.error)) {
-			alert("Ocorreu um erro ao buscar informação da temperatura\n"+
+			alert("Ocorreu um erro ao buscar dispositivos\n"+
 				  "Erro: " + retorno.error);
 		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
 		}
 		
-		
-		$("#valor_temp").html(retorno.lista[0].tp_temp + " C");
-		$("#div_temperatura").removeClass("hide");
-		
+		objTabelaComodo.lista[posicao_cd].listaPortao[posicao_pt].pt_status = retorno.status;
 	});	
 
 }
@@ -250,48 +296,61 @@ function attTemp(temp){
 
 
 
-//***********************************************************************
-//FUNCAO QUE BUSCA A IMAGEM
-//***********************************************************************
-function buscaImagem(){
-	var funcao = 'cd_id=1'; //LEMBRAR DE ARRUMAR
-	AJAX(SERVLET_IMAGEM, funcao, function(retorno){
-		
-		var baseString = retorno;
-		// data:image/png;base64
-		
-		if(empty(baseString)){
-			$("#imagem").prop('src',"");
-			return;
-		}
-		
-		if(baseString.substring(0,4) != "data"){
-			baseString = "data:image/png;base64," + baseString;
-		}
-		
-		$("#imagem").prop('src',baseString);	
-	});
-}
+
+////FUNCAO PARA ACIONAR UM DISPOSITIVO
+//function attTemp(temp){
+//	//VEJO QUAL É O DIMER QUE FOI CLICADO PEGANDO A POSICAO DA LAMPADA
+//	var posicao_tp = $(temp).parent().parent().attr('posicao_tp');
+//	//VEJO QUAL É O COMODO DESSE DISPOSITIVO
+//	var posicao_cd = $(temp).parent().parent().parent().parent().attr('posicao_cd');
+//	
+//	var funcao = 'funcao=temperatura'+
+//				 '&tp_id=' + objTabelaComodo.lista[posicao_cd].listaTemperatura[posicao_tp].tp_id;
+//		
+//	AJAX(SERVLET_DISPOSITIVO,funcao, function(retorno){
+//		retorno = JSon(retorno);
+//		console.log(retorno);
+//		//CASO OCORRA ALGUM ERRO
+//		if(!retorno){
+//			alert("Ocorreu um erro interno ao servidor");
+//		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
+//		}
+//		if (!empty(retorno.error)) {
+//			alert("Ocorreu um erro ao buscar informação da temperatura\n"+
+//				  "Erro: " + retorno.error);
+//		    return; //IMPEDE QUE CONTINUE EXECUTANDO O CODIGO EM CASO DE ERRO
+//		}
+//		
+//		
+//		$("#valor_temp").html(retorno.lista[0].tp_temp + " C");
+//		$("#div_temperatura").removeClass("hide");
+//		
+//	});	
+//
+//}
 
 
 
 
 
 
+//MOVIMENTOS DA CAMERA
+function mov_camera(botao, command){
+	var posicao_cd = $(botao).parent().parent().attr("posicao_cd");
+	var posicao_cm = $(botao).parent().parent().attr("posicao_cm");
+	var auxCamera = objTabelaComodo.lista[posicao_cd].listaCamera[posicao_cm];
 
-function mov_camera(command){
-	var funcao = 'decoder_control.cgi?user=admin&pwd=&command='+ command; //LEMBRAR DE ARRUMAR
-	AJAX_CAMERA(funcao, function(retorno){
+	var addr = auxCamera.cm_addr;
+	var port = auxCamera.cm_port;
+	var user = auxCamera.cm_user;
+	var pwd = auxCamera.cm_pwd;
+
+	var url = "decoder_control.cgi?user="+user+"&pwd="+pwd+"&command="+ command;
+	
+	AJAX_CAMERA(addr, port, url, function(retorno){
 		
 		var retorno = retorno;
 		console.log(retorno);
-		// data:image/png;base64
-		
-		if(empty(retorno)){
-			alert("retorno vazio")
-			return;
-		}
-
 	});
 
 }
@@ -310,15 +369,24 @@ function mov_camera(command){
 //***********************************************************************
 $(document).ready(function(){
 	//ACIONAR O DISPOSITIVO SELECIONADO
-	$(DIV_LISTA_COMODO).on('click', 'input[type=button][name=dispositivo]', function(){
-		acionarDispositivo($(this));
+	$(DIV_DISPOSITIVOS).on('click', 'input[name=lampada]', function(){
+		acionarLampada($(this));
 	});
 
-
+	//ACIONAR O DISPOSITIVO SELECIONADO
+	$(DIV_DISPOSITIVOS).on('click', 'input[name=portao]', function(){
+		acionarPortao($(this));
+	});
+	
 	//DIMER DAS LAMPADAS
-	$(DIV_LISTA_COMODO).on('click', 'input[name=dimmer]', function(){
-		dimmer($(this));
+	$(DIV_DISPOSITIVOS).on('change', 'input[type=range]', function(){
+		alert($(this).val());
+	
 	});
+	
+	
+	
+	
 	
 });
 //***********************************************************************

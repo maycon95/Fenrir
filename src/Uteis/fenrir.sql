@@ -15,7 +15,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `TB_COMODO` (
   `CD_ID` INT NOT NULL AUTO_INCREMENT,
   `CD_NOME` VARCHAR(20) UNIQUE NOT NULL,
-  `CD_PLANTA` BLOB NULL,
   `CD_TIPO` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`CD_ID`))
 ENGINE = InnoDB;
@@ -253,12 +252,12 @@ SELECT u.us_nome, c.cd_id, c.cd_nome, ifnull((SELECT ac_libera FROM tb_acesso WH
  FROM tb_usuario u, tb_comodo c WHERE us_nome like '%' order by u.us_nome, c.cd_nome;
  
  
+ SELECT cm_id, cm_nome, cm_addr, cm_port, cm_user, cm_pwd, cd_id from tb_camera where cd_id = 1;
+select * from tb_camera;
  
  
+select * from tb_lampada; 
  
- 
- 
- \
  
  
  SELECT lp_id, lp_status, lp_nome, lp_porta, cd_id, dm_valor, dm_porta 

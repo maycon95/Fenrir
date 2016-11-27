@@ -9,6 +9,7 @@ public class Comodo {
 	private ArrayList<Lampada> listaLampada;
 	private ArrayList<Portao> listaPortao;
 	private ArrayList<Temperatura> listaTemperatura;
+	private ArrayList<Camera> listaCamera;
 	//planta
 
 	public Comodo(){
@@ -17,6 +18,7 @@ public class Comodo {
 		listaLampada = new ArrayList<Lampada>();
 		listaPortao = new ArrayList<Portao>();
 		listaTemperatura = new ArrayList<Temperatura>();
+		listaCamera = new ArrayList<Camera>();
 	}
 	
 	public Comodo(int cd_id, String cd_nome){
@@ -25,6 +27,7 @@ public class Comodo {
 		listaLampada = new ArrayList<Lampada>();
 		listaPortao = new ArrayList<Portao>();
 		listaTemperatura = new ArrayList<Temperatura>();
+		listaCamera = new ArrayList<Camera>();
 	}
 	
 	//GETTER'S
@@ -99,5 +102,19 @@ public class Comodo {
 	}
 
 	
+	
+	//CAMERA
+	public void addCamera(Camera camera){
+		listaCamera.add(camera);
+	}
+	
+	public boolean removeCamera(Camera camera){
+		return(listaCamera.remove(camera));
+	}
+	
+	public ArrayList<Camera> getListaCamera(){
+		return listaCamera;
+	}
+
 
 }

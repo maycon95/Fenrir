@@ -1,10 +1,12 @@
 @CHARSET "UTF-8";
 
 /*****************   CUSTOM  *****************************/
-/*.hide_custom{display: none;}
+.hide_custom{display: none;}
 .uppercase{text-transform: uppercase !important;}
 .center{text-align: center;}
-*/
+.centerRange{margin: 0 auto;}
+
+
 /*****************  BOTOES  ******************************/
 /*.button{width: 128px; height: 128px;}
 .button.lampada{background-image: url(../../component/img/lampada.png);}
@@ -23,6 +25,30 @@
 							 margin: 0 5px 0 0; padding: 0 5px; width: 130px;}
 
 */
+.btnLampadaD{background-image: url(../../component/img/lampadaD.png);}
+.btnLampadaL{background-image: url(../../component/img/lampadaL.png);}
+.btnPortao{background-image: url(../../component/img/garagem.png);}
+.btnTemperatura{background-image: url(../../component/img/temperatura.png);}
+.valorTemp {
+    color: #fff;
+    background-color: rgba(189, 189, 189, 0.62);
+    padding: 40px 10px;
+    z-index: 712;
+    display: inline-flex;
+    position: absolute;
+}
+.valorTemp label {
+    width: 100%;
+    font-size: 1.7em;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
 
 /*botoes pequenos*/
 

@@ -13,15 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import com.google.gson.Gson;
 
 import Uteis.Retorno;
 import Uteis.Uteis;
 import dao.ComodoDAO;
 import dao.LampadaDAO;
+import dao.PortaoDAO;
 import dao.TemperaturaDAO;
 import to.ComodoTO;
 import to.TemperaturaTO;
@@ -46,69 +44,12 @@ public class DispositivoController extends HttpServlet {
 
 		switch(funcao){
 			case "lampada":
-				//pega o comando enviado pela pagina
-				String comando = request.getParameter("comando") + "\n";
-				int lp_id = Integer.parseInt(request.getParameter("lp_id"));
-				Retorno retorno = new Retorno();
-				String retornoArduino = "D";
-
-				System.out.println("Comando: " + comando);
-				System.out.println("id: " + lp_id);
-				
-				
-				
-				//CRIA O ARRAY DE JSON
-		        JSONArray jsonArray = new JSONArray();  
-		        //OBJ JSON 
-		        JSONObject statusDispositivo = new JSONObject();  
-				
-				//envia o comando para o arduino via rede
-
-				if (comando!=null){
-					//endereco ip do arduino na rede
-					byte[] addr = {(byte) 192,(byte) 168,1,(byte) 200};
-			        
-					try { 
-//						// Cria um Socket cliente passando como parâmetro o ip e a porta do servidor   
-//						Socket cliente = new Socket(InetAddress.getByAddress(addr),80); 
-//		
-//						// Cria um stream de saída 
-//						DataOutputStream saida = new DataOutputStream(cliente.getOutputStream());
-//						saida.flush(); 
-//		
-//						// Cria um buffer que armazenará as informações retornadas pelo servidor
-//						BufferedReader inFromServer = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
-//		
-//						//envia o comando para o arduino
-//						saida.write(comando.getBytes());
-//						
-//						//pega o retorno do arduino
-//						retornoArduino = inFromServer.readLine();
-//		
-//						// Fecha o Socket
-//						cliente.close();  
-
-						//ATUALIZA O STATUS DO DISPOSITIVO NO BANCO
-						try{
-							new LampadaDAO().updateStatus(lp_id, retornoArduino);
-							retorno.setStatus(retornoArduino);
-						}catch(Exception e){
-							retorno.setError(Uteis.addSlashes(Uteis.trataErro(e)));
-						}
-
-					} catch(Exception e) {
-						e.printStackTrace();
-						//VERIFICA SE OCORREU ALGUM ERRO E RETORNA PARA A TELA
-						retorno.setError(Uteis.trataErro("Ocorreu um Erro ao acionar o dispositivo!"));
-					} 
-				}
-
-		  		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
-		      	Gson gson = new Gson();
-		      	String resposta = gson.toJson(retorno);
-		      	
-		        response.getWriter().write(resposta); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
-			break;
+				response.getWriter().write(acionarLampada(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
+	        break;
+	        
+			case "portao":
+				response.getWriter().write(acionarPortao(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
+	        break;
 			
 			case "temperatura":
 				response.getWriter().write(attTemperatura(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
@@ -132,6 +73,118 @@ public class DispositivoController extends HttpServlet {
 	
 	
 	
+	
+	
+	//ENVIA COMADO AO ARDUINO
+	public String enviaComandoArduino(String comando) throws Exception{
+		//endereco ip do arduino na rede
+		byte[] addr = {(byte) 192,(byte) 168,1,(byte) 200};
+		String retornoArduino = "";
+        
+		try { 
+			// Cria um Socket cliente passando como parâmetro o ip e a porta do servidor   
+			Socket cliente = new Socket(InetAddress.getByAddress(addr),80); 
+
+			// Cria um stream de saída 
+			DataOutputStream saida = new DataOutputStream(cliente.getOutputStream());
+			saida.flush(); 
+
+			// Cria um buffer que armazenará as informações retornadas pelo servidor
+			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
+
+			//envia o comando para o arduino
+			saida.write(comando.getBytes());
+			
+			//pega o retorno do arduino
+			retornoArduino = inFromServer.readLine();
+
+			// Fecha o Socket
+			cliente.close();  
+			
+			return retornoArduino;
+			
+		}catch(Exception e){
+			throw e;
+		}
+	}
+	
+	
+	//ACIONAR LAMPDA
+	public String acionarLampada(HttpServletRequest request, HttpServletResponse response){
+		//pega o comando enviado pela pagina
+		String comando = request.getParameter("comando");
+		int lp_id = Integer.parseInt(request.getParameter("lp_id"));
+		Retorno retorno = new Retorno();
+		String retornoArduino = "D";				
+		
+		//envia o comando para o arduino via rede
+		if (comando != null){
+			try { 
+				retornoArduino = enviaComandoArduino(comando + "\n");
+				
+				//ATUALIZA O STATUS DO DISPOSITIVO NO BANCO
+				try{
+					new LampadaDAO().updateStatus(lp_id, retornoArduino);
+					retorno.setStatus(retornoArduino);
+				}catch(Exception e){
+					retorno.setError(Uteis.addSlashes(Uteis.trataErro(e)));
+				}
+
+			} catch(Exception e) {
+				e.printStackTrace();
+				//VERIFICA SE OCORREU ALGUM ERRO E RETORNA PARA A TELA
+				retorno.setError(Uteis.trataErro("Ocorreu um Erro ao acionar o dispositivo!"));
+			} 
+		}
+		else{
+			retorno.setError("comando não foi informado");
+		}
+
+  		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+      	Gson gson = new Gson();
+      	return gson.toJson(retorno);
+	}
+
+	
+	
+
+	
+	//ACIONAR PORTAO
+	public String acionarPortao(HttpServletRequest request, HttpServletResponse response){
+		//pega o comando enviado pela pagina
+		String comando = request.getParameter("comando");
+		int pt_id = Integer.parseInt(request.getParameter("pt_id"));
+		Retorno retorno = new Retorno();
+		String retornoArduino = "A";				
+		
+		//envia o comando para o arduino via rede
+		if (comando != null){
+			try { 
+				retornoArduino = enviaComandoArduino(comando + "\n");
+				
+				//ATUALIZA O STATUS DO DISPOSITIVO NO BANCO
+				try{
+					new PortaoDAO().updateStatus(pt_id, retornoArduino);
+					retorno.setStatus(retornoArduino);
+				}catch(Exception e){
+					retorno.setError(Uteis.addSlashes(Uteis.trataErro(e)));
+				}
+
+			} catch(Exception e) {
+				e.printStackTrace();
+				//VERIFICA SE OCORREU ALGUM ERRO E RETORNA PARA A TELA
+				retorno.setError(Uteis.trataErro("Ocorreu um Erro ao acionar o portão!"));
+			} 
+		}
+		else{
+			retorno.setError("comando não foi informado");
+		}
+
+  		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
+      	Gson gson = new Gson();
+      	return gson.toJson(retorno);
+	}
+
 	
 	
 	

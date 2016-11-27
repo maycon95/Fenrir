@@ -88,10 +88,6 @@ public class AdminController extends HttpServlet {
 					response.getWriter().write(excluiComodo(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
 					return;
 				}
-				if(comando.equals("upload_planta")){
-					response.getWriter().write(uploadPlanta(request,response)); //ENVIA DE VOLTA O ARRAY EM FORMATO DE STRING
-					return;
-				}								
 			break;
 			
 			case "lampada":
@@ -428,24 +424,7 @@ public class AdminController extends HttpServlet {
 		return retorno;
 	}
 
-	
-	//ALTERA DADOS DO COMODO
-	public String uploadPlanta(HttpServletRequest request, HttpServletResponse response){
-		int  cd_id = Integer.parseInt(request.getParameter("cd_id"));
-		String cd_planta = request.getParameter("cd_planta");
-
 		
-		String retorno = "";
-		try{
-			retorno = new ComodoDAO().uploadPlanta(cd_id, cd_planta);
-		}catch(Exception e){
-			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
-		}
-		
-		return retorno;
-	}
-	
-	
 	
 	//--------------------------------------------
 	//FIM FUNCOES DE COMODO

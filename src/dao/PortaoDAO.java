@@ -141,4 +141,40 @@ public class PortaoDAO {
 	       }
 	    }
 	}
+
+
+
+	//ATUALIZA O STATUS
+	public void updateStatus(int pt_id, String pt_status) throws Exception{
+		Connection conn = null;
+	    String sqlUpdate = "UPDATE tb_portao SET pt_status = ? WHERE pt_id= ?";
+	    PreparedStatement stm = null;
+	    
+	    try{
+	    	conn = Uteis.connection();
+			stm = conn.prepareStatement(sqlUpdate);
+			stm.setString(1, pt_status);
+			stm.setInt(2, pt_id);
+			stm.executeUpdate();
+	    }
+	    catch (Exception e){
+	    	throw e;
+	    }
+	    finally{
+	       if (stm != null){
+	          try{
+	             stm.close();
+	          }
+	          catch (SQLException e1){
+	             System.out.print(e1.getStackTrace());
+	          }
+	       }
+	    }
+	}
+
+
+
+
+
+
 }

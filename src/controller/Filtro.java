@@ -34,14 +34,14 @@ public class Filtro implements Filter {
 		
 		String controller = uri.substring(uri.lastIndexOf("/"), uri.length());
 		
-//		if(!controller.equals("/Login")){
-//			//VERIFICO SE O USUARIO ESTA LOGADO
-//			if(usuarioLogado == null){
-//				//SE NAO ESTIVER LOGADO RETORNA UM ERRO PARA VOLTAR A TELA DE LOGIN
-//				response.getWriter().write("connection_lost");
-//				return;
-//			}
-//		}
+		if(!controller.equals("/Login")){
+			//VERIFICO SE O USUARIO ESTA LOGADO
+			if(usuarioLogado == null){
+				//SE NAO ESTIVER LOGADO RETORNA UM ERRO PARA VOLTAR A TELA DE LOGIN
+				response.getWriter().write("connection_lost");
+				return;
+			}
+		}
 		
 		chain.doFilter(request, response);
 	}

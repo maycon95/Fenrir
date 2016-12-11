@@ -10,6 +10,7 @@ public class Lampada {
 	private int lp_porta;
 	private int dm_porta;
 	private int dm_valor;
+	public boolean dm_libera;
 	private int cd_id;
 
 	
@@ -64,7 +65,13 @@ public class Lampada {
 		return dm_valor;
 	}
 
+	public boolean isDm_libera() {
+		return dm_libera;
+	}
 
+	
+	
+	
 	//SETTER'S
 	public void setLp_id(int lp_id) {
 		this.lp_id = lp_id;
@@ -103,6 +110,10 @@ public class Lampada {
 
 	public void setDm_valor(int dm_valor) {
 		this.dm_valor = dm_valor;
+	}
+
+	public void setDm_libera(boolean dm_libera) {
+		this.dm_libera = dm_libera;
 	}
 
 

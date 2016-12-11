@@ -5,11 +5,20 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public abstract class Uteis{
+//	private static String usuario = "fenrirtc_maycon";
+//	private static String senha = "P@ssword2016";
+//	private static String url = "192.175.112.170:3306";
+//	private static String banco = "fenrirtc_fenrir";
+	
+	//DEBUG
 	private static String usuario = "maycon";
 	private static String senha = "1234";
+	private static String url = "localhost";
+	private static String banco = "fenrir";
+	
 	
 	private static String DRIVER = "com.mysql.jdbc.Driver";
-	private static String DBURL = "jdbc:mysql://localhost/fenrir?user="+usuario+"&password="+senha;
+	private static String DBURL = "jdbc:mysql://"+url+"/"+banco+"?user="+usuario+"&password="+senha;
 
 	
 	// --------------------------------------------------------------------------------------------------------------

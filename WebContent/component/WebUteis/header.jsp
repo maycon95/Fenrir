@@ -42,8 +42,8 @@
                 <div class="navi">
                     <ul>
                         <li class="#"><a href="#"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
-                        <li><a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Relatï¿½rios</span></a></li>
-                        <li><p class="text-muted small"><a href="#" class="" data-toggle="modal" data-target="#usuario"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Usuï¿½rio</span></a></li>
+                        <li><a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Relatórios</span></a></li>
+                        <li><p class="text-muted small"><a href="#" class="" data-toggle="modal" data-target="#usuario"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Usuário</span></a></li>
                     </ul>              
                 </div>
             </div>
@@ -61,8 +61,10 @@
                                     </button>
                                 </div>
                             </nav>
+<!--                            <div class="search hidden-xs hidden-sm">
                                 <input type="text" placeholder="Search" id="search">
                             </div>
+-->                        </div>
                         <div class="col-md-5">
                             <div class="header-rightside">
                                 <ul class="list-inline header-top pull-right" style="padding: 3% 5%">
@@ -72,15 +74,16 @@
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <div class="navbar-content">
-                                                    <p class="text-muted small"><a href="#" class="" data-toggle="modal" data-target="#comodo">Cï¿½modo</a></p>
-                                                    <p class="text-muted small"><a href="#" class="" data-toggle="modal" data-target="#lampada">Lï¿½mpada</a></p>
+                                                    <p class="text-muted small"><a href="#" class="" data-toggle="modal" data-target="#comodo">Cômodo</a></p>
+                                                    <p class="text-muted small"><a href="#" class="" data-toggle="modal" data-target="#lampada">Lâmpada</a></p>
                                                     <p class="text-muted small"><a href="#" class="" data-toggle="modal" data-target="#temperatura">Temperatura</a></p>
-                                                    <p class="text-muted small"><a href="#" class="" data-toggle="modal" data-target="#camera">Cï¿½mera</a></p>
-                                                    <p class="text-muted small"><a href="#" class="" data-toggle="modal" data-target="#portao">Portï¿½o</a></p>
+                                                    <p class="text-muted small"><a href="#" class="" data-toggle="modal" data-target="#camera">Câmera</a></p>
+                                                    <p class="text-muted small"><a href="#" class="" data-toggle="modal" data-target="#portao">Portão</a></p>
                                                     <div class="divider">
                                                     </div>
                                                         <br>
                                                     <p class="text-muted small"><a href="#" class="add-project" data-toggle="modal" data-target="#add_project">
+                                                        Sair
                                                     </a></p>   
                                                 </div>
                                             </li>
@@ -96,5 +99,6 @@
 
     <script src="bootstrap/js/jquery-2.2.0.min.js" type="text/javascript"></script>
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../../component/WebUteis/home.js" type="text/javascript"></script>
 
 </body>	

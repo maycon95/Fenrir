@@ -8,7 +8,7 @@
 		
 		<jsp:include page="../../component/WebUteis/header.jsp" /><!-- PEGA O HEADER PADRAO  -->
 		
-		<main>	
+  		<main>	
 			<div class='main'>
 				<div>
 					<h3 class="text-center"></h3>
@@ -102,13 +102,14 @@
 			<div id="divfundo" class="fundoescuro" >
 			
 				<div class="box-include">
-					<jsp:include page="../../app/admin/includeAdmin.jsp" /><!-- INCLUI AS TABELAS DE ADM  -->
-				</div>
+					<jsp:include page="../../app/admin/includeAdmin.jsp" />  
+					<!-- INCLUI AS TABELAS DE ADM  -->
+  				</div>
 					
 			</div>
 			
 			
-		</main>
+		</main> 
 		
 		<script src="../../component/bootstrap/js/jquery-2.2.0.min.js" type="text/javascript"></script>
 		<script src="../../component/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

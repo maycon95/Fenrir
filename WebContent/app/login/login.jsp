@@ -9,10 +9,11 @@
 		<meta name="viewport" content="width=device-width" /> -->
 		<style>
 			body{
-				background-color: #012345;
+				background-image: url('logo.png')/*, url('img/Fundo.jpg')*/;
+				background-color: #0e1a35;
 				background-repeat: no-repeat;
 				background-position: center center;
-				/*background-image: url('LOGO1.png'), url('img/Fundo.jpg')*/;
+
 				
 			}
 			

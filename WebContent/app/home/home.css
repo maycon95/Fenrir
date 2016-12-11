@@ -742,7 +742,19 @@ header {
 
 
 
+.lnr-magnifier {
+  color: #0F52BA;
+  font-size: 40px;
+  /* To get crisp results, use sizes that are
+  a multiple of 20; because Linearicons was
+  designed on a 20 by 20 grid. */
+}
 
+body {
+  font-size: 40px;
+  font-family: sans-serif;
+  color: #555;
+}
 
 
 

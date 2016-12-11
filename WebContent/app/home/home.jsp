@@ -2,116 +2,112 @@
 		<jsp:include page="../../component/WebUteis/imports.jsp" /><!-- PEGA OS IMPORT PADRAO  -->
 
 		<script src="home.js"></script> <!-- IMPORTA O JS DESSA TELA  -->
-		<link rel="stylesheet" type="text/css" href="../../component/WebUteis/home.css" />
+		<link rel="stylesheet" type="text/css" href="home.css" />
 
 	</head>
-		<body background="../../component/img/Fundo.jpg">
+		<body class="home">
 		
-		<jsp:include page="../../component/WebUteis/header.jsp" /><!-- PEGA O HEADER PADRAO  -->
-		
-  		<main>	
-			<div class='main'>
-				<div>
-					<h3 class="text-center"></h3>
-				</div>
-	
-				<div class="col-xs-12 col-md-3 text-center">
-					<div class="btn-group">
-						<input type="image" class="botao" name="" src="../../component/img/sala.png" style="height:128px, width:128px;"
-						 	title="Teste"; style="opacity: 50;" onclick="acionarComodos('sala');">
-					</div>
-					<div>
-						<h4>Sala</h4>
-					</div>
-				</div>
-				
-				<div class="col-xs-12 col-md-3 text-center">
-					<div class="btn-group">
-						<input type="image" class="botao" name="" src="../../component/img/quarto.png" style="height:128px, width:128px; " onclick="acionarComodos('quarto');">
-					</div>
-					<div>
-						<h4>Quarto</h4>
-					</div>
-				</div>
-				
-				<div class="col-xs-12 col-md-3 text-center">
-					<div class="btn-group">	
-						<input type="image" class="botao" name="" src="../../component/img/food1.png" style="height:128px, width:128px;" onclick="acionarComodos('cozinha');">
-					</div>
-					<div>
-						<h4>Cozinha</h4>
-					</div>
-				</div>
-			
-			</div>
-			
-			<div class='main'>
-				<div class="col-xs-12 col-md-3 text-center">
-					<h5></h5>
-						
-					<div class="btn-group">
-						<input type="image" class="botao" name="" src="../../component/img/wc.png" style="height:128px, width:128px; " onclick="acionarComodos('banheiro');">
-					</div>
-					<div>
-						<h4>Banheiro</h4>
-					</div>
-				</div>
-				
-				<div class="col-xs-12 col-md-3 text-center">
-					<h5></h5>					
-					<div class="btn-group">
-						<input type="image" class="botao" name="" src="../../component/img/areae.png" style="height:128px, width:128px; " 
-						onclick="acionarComodos('area externa');">
-					</div>
-					<div>
-						<h4>Área Externa</h4>
-					</div>
-				</div>
-				
-				<div class="col-xs-12 col-md-3 text-center">
-					<h5></h5>
-					<div class="btn-group">
-						<input type="image" class="botao" name="" src="../../component/img/lavanderia.png" style="height:128px, width:128px;" title="teste" onclick="acionarComodos('lavanderia');">
-					</div>
-					<div>
-						<h4>Lavanderia</h4>
-					</div>
-				</div>
-	
-				<div class="col-xs-12 col-md-3 text-center">
-					<h5></h5>
-					<div class="btn-group">
-						<input type="image" class="botao" name="" src="../../component/img/garage.png" style="height:128px, width:128px; " onclick="acionarComodos('garagem');">
-					</div>
-					<div>
-						<h4>Garagem</h4>
-					</div>
-				</div>
-	
-				<div class="col-xs-12 col-md-3 text-center">
-					<h5></h5>
-					<div class="btn-group">
-						<input type="image" class="botao" name="" src="../../component/img/relatorio.png" style="height:128px, width:128px; ">
-					</div>
-					<div>
-						<h4>Relatórios</h4>
-					</div>
-				</div>
-	
-			</div>
-			
-			<div id="divfundo" class="fundoescuro" >
-			
-				<div class="box-include">
-					<jsp:include page="../../app/admin/includeAdmin.jsp" />  
-					<!-- INCLUI AS TABELAS DE ADM  -->
-  				</div>
-					
-			</div>
-			
-			
-		</main> 
-		
+	    <jsp:include page="../../component/WebUteis/header.jsp" /><!-- PEGA O HEADER PADRAO  -->
+	    
+                <!-- coisas da tela aqui -->
+                <div class="user-dashboard">
+<!--                    <h1>Hello, JS</h1> -->
+                    <br>
+                    <br>
+                    <br>
+                    <div class="col-xs-12 col-md-3 text-center">
+                        <div class="btn-group">
+                            <input type="image" class="botao" name="" src="img/sala4.png" style="height:64px, width:64px; ">
+                        </div>
+                        <div>
+
+    <!--                            <h4>Quarto</h4> -->
+                        </div>
+                    </div>
+
+                        <div class="col-xs-12 col-md-3 text-center">
+                            <div class="btn-group">
+                                <input type="image" class="botao" name="" src="img/sala4.png" style="height:64px, width:64px; ">
+                            </div>
+                            <div>
+                            
+    <!--                            <h4>Sala</h4> -->
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-3 text-center">
+                            <div class="btn-group">
+                                <input type="image" class="botao" name="" src="img/sala4.png" style="height:64px, width:64px; ">
+                            </div>
+                            <div>
+<!--                            <h4>Cozinha</h4> -->
+                            </div>
+                        </div>
+
+
+                        <div class="col-xs-12 col-md-3 text-center">
+                            <div class="btn-group">
+                                <input type="image" class="botao" name="" src="img/sala4.png" style="height:64px, width:64px; ">
+                            </div>
+                            <div>
+                                <br>
+                                <br>                        
+                                <br>
+<!--                            <h4>WC</h4> -->
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-3 text-center">
+                            <div class="btn-group">
+                                <input type="image" class="botao" name="" src="img/sala4.png" style="height:64px, width:64px; ">
+                            </div>
+                            <div>
+
+<!--                            <h4>Lavanderia</h4> -->
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-3 text-center">
+                            <div class="btn-group">
+                                <input type="image" class="botao" name="" src="img/sala4.png" style="height:64px, width:64px; ">
+                            </div>
+                            <div>
+    <!--                            <h4>Área Externa</h4> -->
+                            </div>
+                        </div>
+
+
+                        <div class="col-xs-12 col-md-3 text-center">
+                            <div class="btn-group">
+                                <input type="image" class="botao" name="" src="img/sala4.png" style="height:64px, width:64px; ">
+                            </div>
+                            <div>
+    <!--                            <h4>Garagem</h4> -->
+                                <br>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+
+
+
+
+
+		<!-- TABELAS DE ADMIN -->
+	    <jsp:include page="../../app/admin/includeAdmin.jsp" /><!-- PEGA O HEADER PADRAO  -->
+
+
+
+	    <div class="footer text-right" style="padding-right: 2%; font-weight: bold;">
+	        Copyrigth ©&nbsp&nbsp&nbsp2016 by Fenrir Autmações
+	    </div>
+
+
+
 		<script src="../../component/bootstrap/js/jquery-2.2.0.min.js" type="text/javascript"></script>
 		<script src="../../component/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	</body>

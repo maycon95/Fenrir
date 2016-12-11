@@ -30,7 +30,9 @@
 		</header>
 -->	
 
-<body class="home">
+
+
+
     <div class="container-fluid display-table">
         <div class="row display-table-row">
             <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
@@ -42,7 +44,7 @@
                 <div class="navi">
                     <ul>
                         <li class="#"><a href="#"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
-                        <li><a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Relatórios</span></a></li>
+                        <li><a href="#"><i class="lnr lnr-chart-bars" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Relatórios</span></a></li>
                         <li><p class="text-muted small"><a href="#" class="" data-toggle="modal" data-target="#usuario"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Usuário</span></a></li>
                     </ul>              
                 </div>
@@ -63,12 +65,12 @@
                             </nav>
 <!--                            <div class="search hidden-xs hidden-sm">
                                 <input type="text" placeholder="Search" id="search">
-                            </div>
--->                        </div>
+                            </div> -->
+                        </div>
                         <div class="col-md-5">
                             <div class="header-rightside">
                                 <ul class="list-inline header-top pull-right" style="padding: 3% 5%">
-                                <li class="dropdown">
+                                    <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="glyphicon glyphicon-cog" aria-hidden="true"></i>   
                                         <ul class="dropdown-menu">
@@ -83,16 +85,14 @@
                                                     </div>
                                                         <br>
                                                     <p class="text-muted small"><a href="#" class="add-project" data-toggle="modal" data-target="#add_project">
-                                                        Sair
+                                                        Logout
                                                     </a></p>   
                                                 </div>
                                             </li>
                                         </ul>
-
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </header>
                 </div>
-</body>	

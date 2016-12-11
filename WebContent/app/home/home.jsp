@@ -2,6 +2,7 @@
 		<jsp:include page="../../component/WebUteis/imports.jsp" /><!-- PEGA OS IMPORT PADRAO  -->
 
 		<script src="home.js"></script> <!-- IMPORTA O JS DESSA TELA  -->
+		<link rel="stylesheet" type="text/css" href="../../component/WebUteis/home.css" />
 
 	</head>
 		<body background="../../component/img/Fundo.jpg">

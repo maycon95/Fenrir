@@ -95,10 +95,4 @@
                         </div>
                     </header>
                 </div>
-
-
-    <script src="bootstrap/js/jquery-2.2.0.min.js" type="text/javascript"></script>
-    <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="../../component/WebUteis/home.js" type="text/javascript"></script>
-
 </body>	

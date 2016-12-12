@@ -435,8 +435,8 @@
 	                        </div>
 	                    </div>
 	                    <div class="modal-footer">
-	                        <button type="button" class="cancel" data-dismiss="modal" onclick="cancela_acesso();">Close</button>
-	                        <button type="button" class="add-project" data-dismiss="modal" onclick="grava_acesso();">Save</button>
+	                        <button type="button" class="cancel" data-dismiss="modal" onclick="cancela_usuario();">Close</button>
+	                        <button type="button" class="add-project" data-dismiss="modal" onclick="grava_usuario();">Save</button>
 	                    </div>
 	                </div>
 	            </div>
@@ -506,8 +506,8 @@
 	                        </div>
 	                    </div>
 	                    <div class="modal-footer">
-	                        <button type="button" class="cancel" data-dismiss="modal" onclick="cancela_acesso();">Close</button>
-	                        <button type="button" class="add-project" data-dismiss="modal" onclick="grava_acesso();">Save</button>
+	                        <button type="button" class="cancel" data-dismiss="modal" onclick="cancela_usuario();">Close</button>
+	                        <button type="button" class="add-project" data-dismiss="modal" onclick="grava_usuario();">Save</button>
 	                    </div>
 	                </div>
 	            </div>

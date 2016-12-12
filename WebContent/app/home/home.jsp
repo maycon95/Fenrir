@@ -17,7 +17,7 @@
                     <br>
                     <div class="col-xs-12 col-md-3 text-center">
                         <div class="btn-group">
-                            <input type="image" class="botao" name="" src="img/sala4.png" style="height:64px, width:64px; ">
+                            <input type="image" class="botao" name="" src="../../component/img/sala4.png" style="height:64px, width:64px; ">
                         </div>
                         <div>
 
@@ -27,7 +27,7 @@
 
                         <div class="col-xs-12 col-md-3 text-center">
                             <div class="btn-group">
-                                <input type="image" class="botao" name="" src="img/sala4.png" style="height:64px, width:64px; ">
+                                <input type="image" class="botao" name="" src="../../component/img/sala4.png" style="height:64px, width:64px; ">
                             </div>
                             <div>
                             
@@ -37,7 +37,7 @@
 
                         <div class="col-xs-12 col-md-3 text-center">
                             <div class="btn-group">
-                                <input type="image" class="botao" name="" src="img/sala4.png" style="height:64px, width:64px; ">
+                                <input type="image" class="botao" name="" src="../../component/img/sala4.png" style="height:64px, width:64px; ">
                             </div>
                             <div>
 <!--                            <h4>Cozinha</h4> -->
@@ -47,7 +47,7 @@
 
                         <div class="col-xs-12 col-md-3 text-center">
                             <div class="btn-group">
-                                <input type="image" class="botao" name="" src="img/sala4.png" style="height:64px, width:64px; ">
+                                <input type="image" class="botao" name="" src="../../component/img/sala4.png" style="height:64px, width:64px; ">
                             </div>
                             <div>
                                 <br>
@@ -59,7 +59,7 @@
 
                         <div class="col-xs-12 col-md-3 text-center">
                             <div class="btn-group">
-                                <input type="image" class="botao" name="" src="img/sala4.png" style="height:64px, width:64px; ">
+                                <input type="image" class="botao" name="" src="../../component/img/sala4.png" style="height:64px, width:64px; ">
                             </div>
                             <div>
 
@@ -69,7 +69,7 @@
 
                         <div class="col-xs-12 col-md-3 text-center">
                             <div class="btn-group">
-                                <input type="image" class="botao" name="" src="img/sala4.png" style="height:64px, width:64px; ">
+                                <input type="image" class="botao" name="" src="../../component/img/sala4.png" style="height:64px, width:64px; ">
                             </div>
                             <div>
     <!--                            <h4>Área Externa</h4> -->
@@ -79,7 +79,7 @@
 
                         <div class="col-xs-12 col-md-3 text-center">
                             <div class="btn-group">
-                                <input type="image" class="botao" name="" src="img/sala4.png" style="height:64px, width:64px; ">
+                                <input type="image" class="botao" name="" src="../../component/img/sala4.png" style="height:64px, width:64px; ">
                             </div>
                             <div>
     <!--                            <h4>Garagem</h4> -->
@@ -101,10 +101,10 @@
 	    <jsp:include page="../../app/admin/includeAdmin.jsp" /><!-- PEGA O HEADER PADRAO  -->
 
 
-
+  
 	    <div class="footer text-right" style="padding-right: 2%; font-weight: bold;">
 	        Copyrigth ©&nbsp&nbsp&nbsp2016 by Fenrir Autmações
-	    </div>
+	    </div> 
 
 
 

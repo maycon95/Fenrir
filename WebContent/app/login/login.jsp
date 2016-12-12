@@ -9,14 +9,33 @@
 		<meta name="viewport" content="width=device-width" /> -->
 		<style>
 			body{
-				background-image: url('logo.png')/*, url('img/Fundo.jpg')*/;
-				background-color: #0e1a35;
+				background: #0e1a35 url("../../component/img/logo.png");
 				background-repeat: no-repeat;
-				background-position: center center;
-
-				
+				background-position: center bottom;
+				background-size: 80%;
+				background-attachment: fixed;
 			}
-			
+
+			@media only screen and (max-width: 415px) {
+				body{
+					background: #0e1a35 url("../../component/img/logo.png");
+					background-repeat: no-repeat;
+					background-position: center bottom;
+					background-size: 80%;
+					background-attachment: inherit;
+				}
+			}			
+
+			@media only screen and (max-width: 450px) {
+				body{
+					background: #0e1a35 url("../../component/img/logo.png");
+					background-repeat: no-repeat;
+					background-position: center bottom;
+					background-size: 100%;
+					background-attachment: inherit;
+				}
+			}
+						
 			div.flex-align {
 			  display: -webkit-flexbox;
 			  display: -ms-flexbox;
@@ -26,9 +45,8 @@
 			  -ms-flex-align: center center;
 			  -webkit-align-items: center center;
 			  align-items: center;
-			  width: 100%;
 			  padding-top: 10%;
-			  font-weight: bold;
+			  font-weight: bold;			
 			  color: black;
 			 }
 			
@@ -45,7 +63,6 @@
 				border-style: solid;
 				border-width: 2px;
 				border-radius: 5px;
-				border-color: 
 			}
 
 			.btn{
@@ -65,7 +82,7 @@
 			}
 			
 			.footer {
-				position:absolute;
+				position: absolute;
 				bottom:0;
 				width:100%;
 				color: #FFF;
@@ -78,7 +95,7 @@
 	
 		</style>
 	</head>
-	<body background="../../component/img/logo.png">
+	<body>
 	<div class="Fenrir" >	
 		<h3>Seja bem-vindo!</h3>
 		<h4>Para prosseguir informe o seu nome de usuário e senha.</h4>
@@ -108,7 +125,7 @@
 		</form>
     </div>
 	<div class="footer">
-		Copyrigth ©&nbsp&nbsp&nbsp2016 by Fenrir Autmações
+		Copyrigth ©&nbsp&nbsp&nbsp2016 by Fenrir Automações
 	</div>
 	</body>
 </html>

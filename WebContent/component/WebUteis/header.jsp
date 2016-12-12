@@ -43,9 +43,10 @@
                 </div>
                 <div class="navi">
                     <ul>
-                        <li class="#"><a href="#"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
-                        <li><a href="#"><i class="lnr lnr-chart-bars" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Relatórios</span></a></li>
-                        <li><p class="text-muted small"><a href="#" class="" data-toggle="modal" data-target="#usuario"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Usuário</span></a></li>
+                        <li class="#"><a href="#"><i class="glyphicon glyphicon-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
+                        <!-- <span class="glyphicon glyphicon-search" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span> -->
+                        <li><a href="#"><i class="glyphicon glyphicon-list-alt" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Relatórios</span></a></li>
+                        <li><p class="text-muted small"><a href="#" class="" data-toggle="modal" data-target="#usuario"><i class="glyphicon glyphicon-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Usuário</span></a></li>
                     </ul>              
                 </div>
             </div>

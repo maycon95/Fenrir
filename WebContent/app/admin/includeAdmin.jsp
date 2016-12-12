@@ -26,46 +26,46 @@
 	                            <span class="glyphicon glyphicon-minus" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
 
-<!--	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
+	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
 	                            <span class="glyphicon glyphicon-ok" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
 
 	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
 	                            <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
--->
+
 
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>    
                                     <tr>
-                                        <td>#</td>
-                                        <td>ID</td>
-                                        <td>Tipo</td>
-                                        <td>Cômodo</td>
+                                        <td align="center">#</td>
+                                        <td align="center">ID</td>
+                                        <td align="center">Tipo</td>
+                                        <td align="center">Cômodo</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>+</td>
-                                        <td>1</td>
-                                        <td>
+                                        <td align="center">+</td>
+                                        <td align="center">1</td>
+                                        <td align="center">
                                             <select>
                                                 <option>Sala</option>
                                                 <option>Quarto</option>
                                             </select>
                                         </td>
-                                        <td>Teste</td>
+                                        <td align="center">Teste</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-	                    <div class="modal-footer">
+<!--	                    <div class="modal-footer">
 	                        <button type="button" class="cancel" data-dismiss="modal" onclick="cancela_comodo();">Close</button>
 	                        <button type="button" class="add-project" data-dismiss="modal" onclick="grava_comodo();">Save</button>
 	                    </div>
-	            </div> <!-- Término do Add Project -->
+-->	            </div> <!-- Término do Add Project -->
 	        </div>
 	    </div>
 
@@ -94,56 +94,56 @@
 	                            <span class="glyphicon glyphicon-minus" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
 
-<!--	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
+	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
 	                            <span class="glyphicon glyphicon-ok" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
 
 	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
 	                            <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
--->
+
 
                         <div class="table-responsive">
             	            <table class="table table-hover">
                                 <thead>    
                                     <tr>
-                                        <td>#</td>
-                                        <td>ID</td>
-                                        <td>Lâmpada</td>
-                                        <td>Tensão</td>
-                                        <td>Consumo</td>
-                                        <td>Comodo</td>
-                                        <td style="border-right: 1px solid #ddd">Porta - Lâmpada</td>
-                                        <td>Dimmer</td>
-                                        <td>Porta - Dimmer</td>
+                                        <td align="center">#</td>
+                                        <td align="center">ID</td>
+                                        <td align="center">Lâmpada</td>
+                                        <td align="center">Tensão</td>
+                                        <td align="center">Consumo</td>
+                                        <td align="center">Comodo</td>
+                                        <td align="center" style="border-right: 1px solid #ddd">Porta - Lâmpada</td>
+                                        <td align="center">Dimmer</td>
+                                        <td align="center">Porta - Dimmer</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>+</td>
-                                        <td>1</td>
-                                        <td>Teste</td>
-                                        <td>110v</td>
-                                        <td>60w</td>
-                                        <td>
+                                        <td align="center">+</td>
+                                        <td align="center">1</td>
+                                        <td align="center">Teste</td>
+                                        <td align="center">110v</td>
+                                        <td align="center">60w</td>
+                                        <td align="center">
                                             <select>
                                                 <option>Sala</option>
                                             </select>
                                         </td>
                                         <td style="border-right: 1px solid #ddd">3</td>
-                                        <td align="center"><input type="checkbox"></td>
-                                        <td>4</td>
+                                        <td align="center" align="center"><input type="checkbox"></td>
+                                        <td align="center">4</td>
                                     </tr>
                                 </tbody>
                             </table>
     	                </div>
                     </div>
-	                    <div class="modal-footer">
+<!--	                    <div class="modal-footer">
 	                        <button type="button" class="cancel" data-dismiss="modal" onclick="cancela_lampada();">Close</button>
 	                        <button type="button" class="add-project" data-dismiss="modal" onclick="grava_lampada();">Save</button>
 	                    </div>
 	                </div>
-	            </div> <!-- Término do Add Project -->
+-->	            </div> <!-- Término do Add Project -->
 	        </div>
 	    </div>
 
@@ -172,54 +172,54 @@
 	                            <span class="glyphicon glyphicon-minus" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
 
-<!--	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
+	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
 	                            <span class="glyphicon glyphicon-ok" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
 
 	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
 	                            <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
--->
+
 
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>    
                                     <tr>
-                                        <td>#</td>
-                                        <td>ID</td>
-                                        <td>Sensor</td>
-                                        <td>MAX</td>
-                                        <td>MIN</td>
-                                        <td>Porta</td>
-                                        <td>Cômodo</td>
-                                        <td>Status</td>
+                                        <td align="center">#</td>
+                                        <td align="center">ID</td>
+                                        <td align="center">Sensor</td>
+                                        <td align="center">MAX</td>
+                                        <td align="center">MIN</td>
+                                        <td align="center">Porta</td>
+                                        <td align="center">Cômodo</td>
+                                        <td align="center">Status</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>+</td>
-                                        <td>1</td>
-                                        <td>Teste</td>
-                                        <td>25</td>
-                                        <td>16</td>
-                                        <td>3</td>
-                                        <td>
+                                        <td align="center">+</td>
+                                        <td align="center">1</td>
+                                        <td align="center">Teste</td>
+                                        <td align="center">25</td>
+                                        <td align="center">16</td>
+                                        <td align="center">3</td>
+                                        <td align="center">
                                             <select>
                                                 <option>Sala</option>
                                             </select>
                                         </td>
-                                        <td>L</td>
+                                        <td align="center">L</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-	                    <div class="modal-footer">
+<!--	                    <div class="modal-footer">
 	                        <button type="button" class="cancel" data-dismiss="modal" onclick="cancela_temperatura();">Close</button>
 	                        <button type="button" class="add-project" data-dismiss="modal" onclick="grava_temperatura();">Save</button>
 	                    </div>
 	                </div>
-	            </div> <!-- Término do Add Project -->
+-->	            </div> <!-- Término do Add Project -->
 	        </div>
 	    </div>
 
@@ -248,54 +248,54 @@
 	                            <span class="glyphicon glyphicon-minus" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
 
-<!--	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
+	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
 	                            <span class="glyphicon glyphicon-ok" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
 
 	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
 	                            <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
--->
+
 
                         <div class="table-responsive">
 	                        <table class="table table-hover">
 	                            <thead>    
 	                                <tr>
-	                                    <td>#</td>
-	                                    <td>ID</td>
-	                                    <td>Câmera</td>
-	                                    <td>IP</td>
-	                                    <td>Porta de Conexão</td>
-	                                    <td>Cômodo</td>
-	                                    <td>Usuário</td>
-										<td>Senha</td>
+	                                    <td align="center">#</td>
+	                                    <td align="center">ID</td>
+	                                    <td align="center">Câmera</td>
+	                                    <td align="center">IP</td>
+	                                    <td align="center">Porta de Conexão</td>
+	                                    <td align="center">Cômodo</td>
+	                                    <td align="center">Usuário</td>
+										<td align="center">Senha</td>
 	                                </tr>
 	                            </thead>
 	                            <tbody>
 	                                <tr>
-	                                    <td>+</td>
-	                                    <td>1</td>
-	                                    <td>Teste</td>
-	                                    <td>192.168.1.185</td>
-	                                    <td>80</td>
-	                                    <td>
+	                                    <td align="center">+</td>
+	                                    <td align="center">1</td>
+	                                    <td align="center">Teste</td>
+	                                    <td align="center">192.168.1.185</td>
+	                                    <td align="center">80</td>
+	                                    <td align="center">
 	                                        <select>
 	                                            <option>1</option>
 	                                        </select>
 	                                    </td>
-	                                    <td>Tester</td>
-	                                    <td>*****</td>
+	                                    <td align="center">Tester</td>
+	                                    <td align="center">*****</td>
 	                                </tr>
 	                            </tbody>
 	                        </table>
                         </div>
                     </div>
-	                    <div class="modal-footer">
+<!--	                    <div class="modal-footer">
 	                        <button type="button" class="cancel" data-dismiss="modal" onclick="cancela_camera();">Close</button>
 	                        <button type="button" class="add-project" data-dismiss="modal" onclick="grava_camera();">Save</button>
 	                    </div>
 	                </div>
-	            </div> <!-- Término do Add Project -->
+-->	            </div> <!-- Término do Add Project -->
 	        </div>
 	    </div>
 
@@ -325,48 +325,48 @@
 	                            <span class="glyphicon glyphicon-minus" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
 
-<!--	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
+	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
 	                            <span class="glyphicon glyphicon-ok" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
 
 	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
 	                            <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
--->
+
                         
                         <div class="table-responsive">
 	                        <table class="table table-hover">
 	                            <thead>    
 	                                <tr>
-	                                    <td>#</td>
-	                                    <td>ID</td>
-	                                    <td>Portão</td>
-	                                    <td>Cômodo</td>
-	                                    <td>Porta</td>
+	                                    <td align="center">#</td>
+	                                    <td align="center">ID</td>
+	                                    <td align="center">Portão</td>
+	                                    <td align="center">Cômodo</td>
+	                                    <td align="center">Porta</td>
 	                                </tr>
 	                            </thead>
 	                            <tbody>
 	                                <tr>
-	                                    <td>+</td>
-	                                    <td>1</td>
-	                                    <td>Teste</td>
-	                                    <td>
+	                                    <td align="center">+</td>
+	                                    <td align="center">1</td>
+	                                    <td align="center">Teste</td>
+	                                    <td align="center">
 	                                        <select>
 	                                            <option>1</option>
 	                                        </select>
 	                                    </td>
-	                                    <td>5</td>
+	                                    <td align="center">5</td>
 	                                </tr>
 	                            </tbody>
 	                        </table>
                         </div>
                     </div>
-	                    <div class="modal-footer">
+<!--	                    <div class="modal-footer">
 	                        <button type="button" class="cancel" data-dismiss="modal" onclick="cancela_portao();">Close</button>
 	                        <button type="button" class="add-project" data-dismiss="modal" onclick="grava_portao();">Save</button>
 	                    </div>
 	                </div>
-	            </div> <!-- Término do Add Project -->
+-->	            </div> <!-- Término do Add Project -->
 	        </div>
 	    </div>
 
@@ -397,14 +397,14 @@
 	                            <span class="glyphicon glyphicon-minus" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
 
-<!--	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
+	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
 	                            <span class="glyphicon glyphicon-ok" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
 
 	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
 	                            <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
 	                        </button>
--->
+
 
 	                        <div class="table-responsive">
 	                            <table class="table table-hover">
@@ -412,7 +412,7 @@
 	                                    <tr>
 	                                        <td style='text-align:center'>#</td>
 	                                        <td style='text-align:center'>ID</td>
-	                                        <td style='text-align:center'>Nome de Usuário</td>
+	                                        <td style='text-align:center'>Usuário</td>
 	                                        <td style='text-align:center'>Senha</td>
 	                                        <td style='text-align:center'>Nível</td>
 	                                    </tr>
@@ -434,11 +434,11 @@
 	                            </table>
 	                        </div>
 	                    </div>
-	                    <div class="modal-footer">
+<!--	                    <div class="modal-footer">
 	                        <button type="button" class="cancel" data-dismiss="modal" onclick="cancela_usuario();">Close</button>
 	                        <button type="button" class="add-project" data-dismiss="modal" onclick="grava_usuario();">Save</button>
 	                    </div>
-	                </div>
+-->	                </div>
 	            </div>
 	        </div>
 
@@ -505,11 +505,11 @@
 	                            </table>
 	                        </div>
 	                    </div>
-	                    <div class="modal-footer">
+<!--	                    <div class="modal-footer">
 	                        <button type="button" class="cancel" data-dismiss="modal" onclick="cancela_usuario();">Close</button>
 	                        <button type="button" class="add-project" data-dismiss="modal" onclick="grava_usuario();">Save</button>
 	                    </div>
-	                </div>
+-->	                </div>
 	            </div>
 	        </div>
 

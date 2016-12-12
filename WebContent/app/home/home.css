@@ -234,7 +234,6 @@ li,ul{
     background: #5584ff none repeat scroll 0 0;
     border-radius: 100px;
     color: #ffffff;
-    color: #000;
     font-size: 14px;
     font-weight: 600;
     padding: 10px 27px 10px 45px;
@@ -312,7 +311,7 @@ li,ul{
     margin-top: 10px;
     padding: 10px 15px;
 }
-/*
+
 .navbar-content > span {
     font-size: 5px;
     font-weight: 700;
@@ -327,7 +326,7 @@ li,ul{
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
 }
-/*
+
 .search input {
     border: none;
     font-size: 15px;
@@ -336,7 +335,7 @@ li,ul{
     background: rgba(0, 0, 0, 0) url("../images/search.png") no-repeat scroll 99% 12px;
     color: #8492af;
 }
-*/
+
 header {
     background: #ffffff none repeat scroll 0 0;
     box-shadow: 0 1px 12px rgba(0, 0, 0, 0.04);
@@ -504,7 +503,7 @@ header {
     font-weight: 300;
     margin: 5px 0;
     padding: 14px 10px;
-    width: 72%;
+    width: 56%;
     color: #8492af;
 }
 

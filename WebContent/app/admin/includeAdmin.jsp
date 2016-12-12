@@ -407,29 +407,75 @@
 
 
 	                        <div class="table-responsive">
-	                            <table class="table table-hover">
+	                            <table class="table table-hover" style="width: 568px;">
 	                                <thead>    
 	                                    <tr>
-	                                        <td style='text-align:center'>#</td>
-	                                        <td style='text-align:center'>ID</td>
-	                                        <td style='text-align:center'>Usuário</td>
-	                                        <td style='text-align:center'>Senha</td>
-	                                        <td style='text-align:center'>Nível</td>
+	                                        <td style='text-align:center; width: 30px'>#</td>
+	                                        <td style='text-align:center; width: 50px'>ID</td>
+	                                        <td style='text-align:center; width: 190px'>Usuário</td>
+	                                        <td style='text-align:center; width: 190px'>Senha</td>
+	                                        <td style='text-align:center; width: 80px'>Nível</td>
 	                                    </tr>
 	                                </thead>
 	                                <tbody id="dados_usuario">
-	                                      <tr>
-	                                        <td style='text-align:center'>+</td>
-	                                        <td style='text-align:center'>1</td>
-	                                        <td style='text-align:center'>Teste</td>
-	                                        <td style='text-align:center'>*****</td>
-	                                        <td style='text-align:center'>
-	                                            <select>
-	                                                <option>Adm</option>
-	                                                <option>User</option>
-	                                            </select>
-	                                        </td>
+	                                    <tr>
+	                                        <td width="30"><input type="text" class="center"/></td>
+	                                        <td width="50"><input type="text" class="number"/></td>
+	                                        <td width="190"><input type="text" class=""/></td>
+	                                        <td width="190"><input type="password" class=""/></td>
+	                                        <td width="80"><select><option>huehue</option></select></td>
 	                                    </tr>
+	                                    <tr>
+	                                        <td width="30"><input type="text" class="center"/></td>
+	                                        <td width="50"><input type="text" class="number"/></td>
+	                                        <td width="190"><input type="text" class=""/></td>
+	                                        <td width="190"><input type="password" class=""/></td>
+	                                        <td width="80"><select><option>huehue</option></select></td>
+	                                    </tr>
+	                                    <tr>
+	                                        <td width="30"><input type="text" class="center"/></td>
+	                                        <td width="50"><input type="text" class="number"/></td>
+	                                        <td width="190"><input type="text" class=""/></td>
+	                                        <td width="190"><input type="password" class=""/></td>
+	                                        <td width="80"><select><option>huehue</option></select></td>
+	                                    </tr>
+	                                    <tr>
+	                                        <td width="30"><input type="text" class="center"/></td>
+	                                        <td width="50"><input type="text" class="number"/></td>
+	                                        <td width="190"><input type="text" class=""/></td>
+	                                        <td width="190"><input type="password" class=""/></td>
+	                                        <td width="80"><select><option>huehue</option></select></td>
+	                                    </tr>
+	                                    <tr>
+	                                        <td width="30"><input type="text" class="center"/></td>
+	                                        <td width="50"><input type="text" class="number"/></td>
+	                                        <td width="190"><input type="text" class=""/></td>
+	                                        <td width="190"><input type="password" class=""/></td>
+	                                        <td width="80"><select><option>huehue</option></select></td>
+	                                    </tr>
+	                                    <tr>
+	                                        <td width="30"><input type="text" class="center"/></td>
+	                                        <td width="50"><input type="text" class="number"/></td>
+	                                        <td width="190"><input type="text" class=""/></td>
+	                                        <td width="190"><input type="password" class=""/></td>
+	                                        <td width="80"><select><option>huehue</option></select></td>
+	                                    </tr>
+	                                    <tr>
+	                                        <td width="30"><input type="text" class="center"/></td>
+	                                        <td width="50"><input type="text" class="number"/></td>
+	                                        <td width="190"><input type="text" class=""/></td>
+	                                        <td width="190"><input type="password" class=""/></td>
+	                                        <td width="80"><select><option>huehue</option></select></td>
+	                                    </tr>
+	                                    <tr>
+	                                        <td width="30"><input type="text" class="center"/></td>
+	                                        <td width="50"><input type="text" class="number"/></td>
+	                                        <td width="190"><input type="text" class=""/></td>
+	                                        <td width="190"><input type="password" class=""/></td>
+	                                        <td width="80"><select><option>huehue</option></select></td>
+	                                    </tr>
+
+
 	                                </tbody>
 	                            </table>
 	                        </div>

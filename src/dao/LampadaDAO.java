@@ -13,7 +13,7 @@ public class LampadaDAO {
 	//BUSCA UMA LAMPADA NO BANCO - TELA DE ADMIN
 	public LampadaTO busca(String lp_nome) throws Exception{ 
 		Connection conn = null;
-	    String sqlSelect = "SELECT lp_id, lp_nome, lp_tensao, lp_consumo, lp_constotal, lp_porta, dm_porta, cd_id FROM tb_lampada WHERE lp_nome like ? ";
+	    String sqlSelect = "SELECT lp_id, lp_nome, lp_tensao, lp_consumo, lp_constotal, lp_porta, dm_porta, dm_libera, cd_id FROM tb_lampada WHERE lp_nome like ? ";
 	    PreparedStatement stm = null;
 	    ResultSet rs = null;
 	    LampadaTO lampadaTO = new LampadaTO();
@@ -33,7 +33,8 @@ public class LampadaDAO {
 				lampada.setLp_porta(rs.getInt("lp_porta"));
 				lampada.setLp_constotal(rs.getDouble("lp_constotal"));
 				lampada.setLp_porta(rs.getInt("lp_porta"));
-				lampada.setCd_id(rs.getInt("cd_id"));
+				lampada.setDm_porta(rs.getInt("Dm_porta"));
+				lampada.setDm_libera(rs.getBoolean("dm_libera"));
 				lampadaTO.add(lampada);
 			}
 			return lampadaTO;

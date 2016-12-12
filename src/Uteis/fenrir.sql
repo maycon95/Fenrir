@@ -107,6 +107,7 @@ CREATE TABLE IF NOT EXISTS `TB_LAMPADA` (
   `LP_PORTA` INT NOT NULL,
   `DM_PORTA` INT NOT NULL DEFAULT 0,
   `DM_VALOR` DOUBLE NULL DEFAULT 0,
+  `DM_LIBERA` BOOLEAN NULL DEFAULT 0,
 PRIMARY KEY (`LP_ID`, `CD_ID`),
   INDEX `fk_TB_LAMPADA_TB_COMODO1_idx` (`CD_ID` ASC),
   CONSTRAINT `fk_TB_LAMPADA_TB_COMODO1`
@@ -115,7 +116,6 @@ PRIMARY KEY (`LP_ID`, `CD_ID`),
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 
 
@@ -136,8 +136,10 @@ INSERT INTO tb_comodo(cd_nome,cd_tipo) VALUES('QUARTO 1','QUARTO');
 
 
 -- LAMPADA
-INSERT INTO tb_lampada(lp_nome,lp_tensao, lp_consumo, cd_id) 
-				VALUES('LED_1', 20, 5, 3);
+INSERT INTO `fenrir`.`tb_lampada` (`LP_NOME`, `LP_STATUS`, `LP_TENSAO`, `LP_CONSUMO`, `CD_ID`, `LP_PORTA`) 
+								VALUES ('LED_3', 'L', 20, 30, 1, 1);
+
+select * from tb_lampada;
 
 -- DIMMER
 INSERT INTO tb_dimmer(lp_id) values(11);

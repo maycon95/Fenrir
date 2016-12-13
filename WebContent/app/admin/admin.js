@@ -191,8 +191,10 @@ function montaTabela_usuario(fCustom){
 //*******************************************************
 function montaLinha_usuario(i){
 	var aux = objTabelaUsuario.lista[i];
-	var linha = "<td class='w60 center' ><input value='' readonly></td>"+
-				"<td class='w240'><input class='uppercase' value='"+aux.us_nome+"' name='us_nome' us_nome='"+aux.us_nome+"'  maxlength='20'></td>";
+	var linha = "<td width='30'><input type='text' class='center' value='' readonly/></td>"+	
+                "<td width='220'><input type='text' class='uppercase' value='"+aux.us_nome+"' name='us_nome' us_nome='"+aux.us_nome+"'  maxlength='20'/></td>"+
+                "<td width='220'><input type='password' value='"+aux.us_senha+"' name='us_senha'  maxlength='20'/></td>"+
+                "<td width='90'><input type='text' /></td>";
 
 	return linha;
 }
@@ -572,7 +574,6 @@ function montaTabela_acesso(fCustom){
 	$(DIV_TABELA_ACESSO).append(tabela);
 
 	if(objTabelaAcesso.total > 0 && empty(fCustom)){
-		selecionaLinha(DIV_TABELA_ACESSO,0,1);
 		$(DIV_TABELA_ACESSO).animate({ scrollTop: "=0" }, "fast"); //VOLTA O SCROLL PRA CIMA
 	}
 	$("#record_acesso").val(objTabelaAcesso.total);
@@ -588,12 +589,10 @@ function montaTabela_acesso(fCustom){
 //*******************************************************
 function montaLinha_acesso(i){
 	var aux = objTabelaAcesso.lista[i];
-	var linha = "<td class='w60 center' ><input value='' readonly></td>"+
-				"<td class='w180'><input class='uppercase' value='"+aux.cd_nome+"' name='cd_nome' cd_nome='"+aux.cd_nome+"' readonly></td>"+
-				"<td class='w60 number'>"+
-					"<input value='"+aux.ac_libera+"' name='ac_libera'/>"+
-					"<select name='ac_libera'></select>"+
-				"</td>";
+
+	var linha = "<td width='190'><input class='uppercase' value='"+aux.cd_nome+"' name='cd_nome' cd_nome='"+aux.cd_nome+"' readonly /></td>"+
+                "<td width='70'><input type='checkbox' name='ac_libera' "+(aux.ac_libera == "B" ? '' : 'checked')+" /></td>";
+	                                    
 	return linha;
 }
 
@@ -862,12 +861,12 @@ function montaTabela_comodo(fCustom){
 function montaLinha_comodo(i){
 	var aux = objTabelaComodo.lista[i];
 	
-	var linha = "<td class='w60 center' ><input value='' readonly></td>"+
-				"<td class='w70'><input value='"+aux.cd_id+"' name='cd_id' readonly></td>"+
-				"<td class='w200'><input class='uppercase' value='"+aux.cd_nome+"' name='cd_nome' cd_nome='"+aux.cd_nome+"' maxlength='20'></td>" +
-				"<td class='w260'>"+
+	var linha = "<td width='30'><input value='' readonly></td>"+
+				"<td width='70'><input value='"+aux.cd_id+"' name='cd_id' readonly></td>"+
+				"<td width='200'><input class='uppercase' value='"+aux.cd_nome+"' name='cd_nome' cd_nome='"+aux.cd_nome+"' maxlength='20'></td>" +
+				"<td width='260'>"+
 					"<input	value='"+aux.cd_tipo+"' name='cd_tipo'/>"+
-					"<select name='cd_tipo'></select>"+
+					"<select style='display: none;' name='cd_tipo'></select>"+
 				"</td>";
 	return linha;
 }
@@ -1169,89 +1168,6 @@ function exclui_comodo(){
 	// 	}
 	// );
 }
-
-
-//*******************************************************
-//				ENVIAR IMAGEM DO COMODO
-//*******************************************************
-function upload_planta(){
-    var file = document.querySelector('input[type=file]').files[0];
-    var actpos = $("#position_comodo").val();
-
-    var img = $("#cd_planta");
-    var reader = new FileReader();
-
-
-    reader.onloadend = function(){
-        img.attr('src', reader.result);
-        $.ajax({
-            url: "/Fenrir/Controller/"+ SERVLET_ADMIN,
-            type: 'POST',
-            data: {'funcao' : 'comodo', 'comando': 'upload_planta', 'cd_id': objTabelaComodo.lista[actpos].cd_id, 'cd_planta': reader.result},
-        })
-        .done(function(retorno) {
-			retorno = JSon(retorno);
-			if(!retorno){
-				var erro = "Houve um erro interno de servidor.\nEntre em contato com o suporte";
-				alert('Houve um erro interno de servidor.\nEntre em contato com o suporte');
-//				swal('Erro ao Alterar Imagem',erro,'error');
-				img.attr('src', "");
-				return;
-			}
-			if(!empty(retorno.error)){
-				//ERRO
-				alert('erro: ' + retorno.error);
-				selecionaLinha(DIV_TABELA_COMODO,actpos,1);
-
-				// swal({
-				// 		title:'Erro ao Alterar Imagem',
-				// 		text: retorno.error,
-				// 		type: 'error'
-				// 	},
-				// 	function(){
-				// 		selecionaLinha(DIV_TABELA_COMODO,actpos,1);
-				// 	}
-				// );
-				img.attr('src', "");
-				return;
-			}
-        });
-    };
-
-    if(file){
-        reader.readAsDataURL(file);
-    } else {
-		img.attr('src', "");
-    }
-}
-
-
-//***********************************************************************
-//FUNCAO QUE BUSCA A IMAGEM
-//***********************************************************************
-function buscaImagem(){
-//	actpos = $('#position_comodo').val()
-//	cd_id = $(DIV_TABELA_COMODO + " tr[posicao="+actpos+"] input[name=cd_id]").val();
-//	var funcao = 'cd_id='+ cd_id;
-//	AJAX(SERVLET_ADMIN_IMAGEM, funcao, function(retorno){
-//		
-//		var baseString = retorno;
-//		// data:image/png;base64
-//		
-//		if(empty(baseString)) {
-//			$("#cd_planta").prop('src','');	
-//			return;
-//		}
-//		
-//		if(baseString.substring(0,4) != "data"){
-//			baseString = "data:image/png;base64," + baseString;
-//		}
-//		
-//		$("#cd_planta").prop('src',baseString);	
-//	});
-}
-
-
 
 
 //*******************************************************
@@ -1862,19 +1778,19 @@ function montaTabela_temperatura(fCustom){
 //*******************************************************
 function montaLinha_temperatura(i){
 	var aux = objTabelaTemperatura.lista[i];
-	var linha = "<td class='w60 center' ><input value='' readonly></td>"+
-				"<td class='w70'><input value='"+aux.tp_id+"' name='tp_id' readonly></td>"+
-				"<td class='w190'><input class='uppercase' value='"+aux.tp_nome+"' name='tp_nome' tp_nome='"+aux.tp_nome+"' maxlength='20'></td>"+
-				"<td class='w70 number'><input value='"+number_format(aux.tp_tempmax,2,',','.')+"' name='tp_tempmax'></td>"+
-				"<td class='w80 number'><input value='"+number_format(aux.tp_tempmin,3,',','.')+"' name='tp_tempmin'></td>"+
-				"<td class='w70 number'><input value='"+aux.tp_porta+"' name='tp_porta'></td>"+
-				"<td class='w120 number'>"+
+	var linha = "<td width='30 center' ><input value='' readonly></td>"+
+				"<td width='70'><input value='"+aux.tp_id+"' name='tp_id' readonly></td>"+
+				"<td width='100'><input class='uppercase' value='"+aux.tp_nome+"' name='tp_nome' tp_nome='"+aux.tp_nome+"' maxlength='20'></td>"+
+				"<td width='60 number'><input value='"+number_format(aux.tp_tempmax,2,',','.')+"' name='tp_tempmax'></td>"+
+				"<td width='60 number'><input value='"+number_format(aux.tp_tempmin,3,',','.')+"' name='tp_tempmin'></td>"+
+				"<td width='60 number'><input value='"+aux.tp_porta+"' name='tp_porta'></td>"+
+				"<td width='120 number'>"+
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
-					"<select name='cd_id'></select>"+
+					"<select style='display: none;' name='cd_id'></select>"+
 				"</td>"+
-				"<td class='w50 center'>"+
+				"<td width='50 center'>"+
 					"<input value='"+aux.tp_status+"' name='tp_status'/>"+
-					"<select name='tp_status'></select>"+
+					"<select style='display: none;' name='tp_status'></select>"+
 				"</td>";
 				
 	return linha;
@@ -2318,16 +2234,16 @@ function montaTabela_camera(fCustom){
 //*******************************************************
 function montaLinha_camera(i){
 	var aux = objTabelaCamera.lista[i];
-	var linha = "<td class='w60 center' ><input value='' readonly></td>"+
-				"<td class='w70'><input value='"+aux.cm_id+"' name='cm_id' readonly></td>"+
-				"<td class='w190'><input class='uppercase' value='"+aux.cm_nome+"' name='cm_nome' cm_nome='"+aux.cm_nome+"' maxlength='20'></td>"+
-				"<td class='w180'><input value='"+aux.cm_addr+"' name='cm_addr'></td>"+
-				"<td class='w80 number'><input value='"+aux.cm_port+"' name='cm_port'></td>"+
-				"<td class='w120'><input value='"+aux.cm_user+"' name='cm_user'></td>"+
-				"<td class='w120'><input type='password' value='"+aux.cm_pwd+"' name='cm_pwd'></td>"+
-				"<td class='w120 center'>"+
+	var linha = "<td width='30 center' ><input value='' readonly></td>"+
+				"<td width='70'><input value='"+aux.cm_id+"' name='cm_id' readonly></td>"+
+				"<td width='120'><input class='uppercase' value='"+aux.cm_nome+"' name='cm_nome' cm_nome='"+aux.cm_nome+"' maxlength='20'></td>"+
+				"<td width='150'><input value='"+aux.cm_addr+"' name='cm_addr'></td>"+
+				"<td width='50 number'><input value='"+aux.cm_port+"' name='cm_port'></td>"+
+				"<td width='120'><input value='"+aux.cm_user+"' name='cm_user'></td>"+
+				"<td width='120'><input type='password' value='"+aux.cm_pwd+"' name='cm_pwd'></td>"+
+				"<td width='150 center'>"+
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
-					"<select name='cd_id'></select>"+
+					"<select style='display: none;' name='cd_id'></select>"+
 				"</td>";
 				
 	return linha;
@@ -2778,14 +2694,14 @@ function montaTabela_portao(fCustom){
 //*******************************************************
 function montaLinha_portao(i){
 	var aux = objTabelaPortao.lista[i];
-	var linha = "<td class='w60 center' ><input value='' readonly></td>"+
-				"<td class='w70'><input value='"+aux.pt_id+"' name='pt_id' readonly></td>"+
-				"<td class='w190'><input class='uppercase' value='"+aux.pt_nome+"' name='pt_nome' pt_nome='"+aux.pt_nome+"' maxlength='20'></td>"+
-				"<td class='w80 number'><input value='"+aux.pt_porta+"' name='pt_porta' ></td>"+
-				"<td class='w100 center'>"+
+	var linha = "<td width='30 center' ><input value='' readonly></td>"+
+				"<td width='70'><input value='"+aux.pt_id+"' name='pt_id' readonly></td>"+
+				"<td width='200'><input class='uppercase' value='"+aux.pt_nome+"' name='pt_nome' pt_nome='"+aux.pt_nome+"' maxlength='20'></td>"+
+				"<td width='190 center'>"+
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
-					"<select name='cd_id'></select>"+
-				"</td>";
+					"<select style='display: none;' name='cd_id'></select>"+
+				"</td>"+
+				"<td width='70 number'><input value='"+aux.pt_porta+"' name='pt_porta' ></td>";
 				
 	return linha;
 }

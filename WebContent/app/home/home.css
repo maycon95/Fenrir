@@ -1,4 +1,8 @@
 /*CSS DO MAYCON*/
+table td input[type=checkbox]{
+    margin-top: 10px !important;
+}
+
 table td input{
     width: 100% !important;
     height: 15px;
@@ -13,7 +17,9 @@ table td select{
 }
 
 
+
 table td{
+    border: none !important;
     padding: 0 !important;
     padding-left: 5px !important;
     padding-right: 5px !important;
@@ -33,6 +39,7 @@ table thead{
     overflow-y: hidden;
     overflow-x: hidden;
     display: block;
+    border-bottom: 1px solid #d4d9e3;
 }
 
 td input.center{
@@ -48,6 +55,7 @@ td input.number{
 
 
 
+.uppercase{text-transform: uppercase !important;}
 
 
 

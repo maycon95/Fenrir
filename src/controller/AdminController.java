@@ -241,11 +241,13 @@ public class AdminController extends HttpServlet {
 	//GRAVA NOVO USUARIO
 	public String insereUsuario(HttpServletRequest request, HttpServletResponse response){
 		String us_nome = request.getParameter("us_nome");
+		String us_senha = request.getParameter("us_senha");
+		String us_nivel = request.getParameter("us_nivel");
 		
 		//PEGA O UsuarioTO
 		UsuarioTO userTO = null;
 		try{
-			userTO = new UsuarioDAO().insere(us_nome);
+			userTO = new UsuarioDAO().insere(us_nome, us_senha, us_nivel);
 		}catch(Exception e){
 			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
@@ -261,10 +263,13 @@ public class AdminController extends HttpServlet {
 	public String alteraUsuario(HttpServletRequest request, HttpServletResponse response){
 		String us_nome = request.getParameter("us_nome");
 		String us_nome_old = request.getParameter("us_nome_old");
+		String us_senha = request.getParameter("us_senha");
+		String us_nivel = request.getParameter("us_nivel");
+		
 		//PEGA O UsuarioTO
 		UsuarioTO userTO = null;
 		try{
-			userTO = new UsuarioDAO().altera(us_nome, us_nome_old);
+			userTO = new UsuarioDAO().altera(us_nome, us_nome_old, us_senha, us_nivel);
 		}catch(Exception e){
 			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}

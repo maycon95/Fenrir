@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class Usuario {
-	private String us_nome, us_senha;
+	private String us_nome, us_senha, us_nivel;
 	private ArrayList<Acesso> acessos;
 	
 	public Usuario(){	
@@ -28,7 +28,10 @@ public class Usuario {
 	public ArrayList<Acesso> getAcessos(){
 		return acessos;
 	}
-	
+	public String getUs_nivel() {
+		return us_nivel;
+	}
+
 	
 	//SETTER'S
 	public void setUsuario(String usuario) {
@@ -39,6 +42,9 @@ public class Usuario {
 	}
 	public void setAcessos(ArrayList<Acesso> acessos){
 		this.acessos = acessos;
+	}
+	public void setUs_nivel(String us_nivel) {
+		this.us_nivel = us_nivel;
 	}
 	
 }

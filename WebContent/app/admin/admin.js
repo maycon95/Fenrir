@@ -193,8 +193,11 @@ function montaLinha_usuario(i){
 	var aux = objTabelaUsuario.lista[i];
 	var linha = "<td width='30'><input type='text' class='center' value='' readonly/></td>"+	
                 "<td width='220'><input type='text' class='uppercase' value='"+aux.us_nome+"' name='us_nome' us_nome='"+aux.us_nome+"'  maxlength='20'/></td>"+
-                "<td width='220'><input type='password' value='"+aux.us_senha+"' name='us_senha'  maxlength='20'/></td>"+
-                "<td width='90'><input type='text' /></td>";
+                "<td width='220'><input type='password' value='"+aux.us_senha+"' name='us_senha' us_senha='"+aux.us_senha+"' maxlength='20'/></td>"+
+				"<td width='90px'>"+
+					"<input value='"+aux.us_nivel+"' name='us_nivel'/>"+
+					"<select style='display: none;' name='us_nivel'></select>"+
+				"</td>";
 
 	return linha;
 }
@@ -217,6 +220,8 @@ function insere_usuario(){
 
 	var novaPosicao = {};
 	novaPosicao.us_nome= "";
+	novaPosicao.us_senha= "";
+	novaPosicao.us_nivel= "";
 	
 	
 	objTabelaUsuario.lista.push(novaPosicao);
@@ -318,15 +323,23 @@ function grava_usuario(cell, fcustom_grava){
 	if(empty($(linha+"[name=us_nome]").val()))
 		mensagem +='Nome do usuário é obrigatório';
 
+	if(empty($(linha+"[name=us_senha]").val()))
+		mensagem +='Senha do usuário é obrigatório';
+
 	if(!empty(mensagem)){
 		alert(mensagem);
 		//swal("N�o foi Poss�vel Cadastrar o Usuario\n Verifique os Campos a baixo",mensagem,'error');
 		return;
 	}
 
+
+	var us_senha  = $(linha+"[name=us_senha]").val();
+
 	var funcao = "funcao=usuario&comando="+(status=='+' ? 'insert' : 'update') +
 				"&us_nome=" + $(linha+"[name=us_nome]").val().toUpperCase()+
-				"&us_nome_old=" + $(linha+"[name=us_nome]").attr("us_nome").toUpperCase();
+				"&us_nome_old=" + $(linha+"[name=us_nome]").attr("us_nome").toUpperCase()+
+				"&us_senha=" + (us_senha == $(linha+"[name=us_senha]").attr('us_senha') ? us_senha : md5(us_senha)) +
+				"&us_nivel=" + $(linha+"[name=us_nivel]").val().toUpperCase();
 
 	//swal.loading();
 	AJAX(SERVLET_ADMIN, funcao, function(retorno){
@@ -655,7 +668,7 @@ function cancela_acesso(cell){
 //*******************************************************
 //GRAVA OS DADOS EDITADOS DA TABELA - ACESSO
 //*******************************************************
-function grava_acesso(cell, fcustom_grava){
+function grava_acesso(check, fcustom_grava){
 	if(!Verifica_Alteracao(DIV_TABELA_USUARIO)){
 		alert("grave as alterações do usuario antes de proseguir");
 		return;
@@ -668,19 +681,8 @@ function grava_acesso(cell, fcustom_grava){
 		return;
 	}
 
-	if(empty(cell)){
-		cell = 1;
-	}
-
-	var status = getStatus(actpos, DIV_TABELA_ACESSO);
-
-	if(empty(status)){
-		selecionaLinha(DIV_TABELA_ACESSO, actpos, cell);
-		return;
-	}
-
 	var linha = DIV_TABELA_ACESSO + " tr[posicao="+actpos+"] input";
-	var comando = ($(linha+"[name=ac_libera]").val() == 'A' ? 'liberaAcesso' : 'bloqueiaAcesso');
+	var comando = ($(check).prop("checked") ? 'liberaAcesso' : 'bloqueiaAcesso');
 
 	var funcao = "funcao=acesso&comando="+comando+
 				"&us_nome=" + objTabelaUsuario.lista[actpos_usuario].us_nome+
@@ -707,7 +709,7 @@ function grava_acesso(cell, fcustom_grava){
 //				text: retorno.error,
 //				type: 'error'
 //			}, function(){
-//					selecionaLinha(DIV_TABELA_ACESSO, actpos, cell);
+//					selecionaLinha(DIV_TABELA_ACESSO, actpos, );
 //				}
 //			);
 			
@@ -722,7 +724,7 @@ function grava_acesso(cell, fcustom_grava){
 		if(status === '+'){
           setStatus(actpos, 'a', DIV_TABELA_ACESSO);
 		}
-		cancela_acesso(cell);
+		cancela_acesso(0);
 
 		if(!empty(fcustom_grava)){
 			fcustom_grava();
@@ -1310,17 +1312,18 @@ function montaTabela_lampada(fCustom){
 //*******************************************************
 function montaLinha_lampada(i){
 	var aux = objTabelaLampada.lista[i];
-	var linha = "<td class='w60 center' ><input value='' readonly></td>"+
-				"<td class='w70'><input value='"+aux.lp_id+"' name='lp_id' readonly></td>"+
-				"<td class='w190'><input class='uppercase' value='"+aux.lp_nome+"' name='lp_nome' lp_nome='"+aux.lp_nome+"' maxlength='20'></td>"+
-				"<td class='w70 number'><input value='"+aux.lp_tensao+"' name='lp_tensao'></td>"+
-				"<td class='w80 number'><input value='"+number_format(aux.lp_consumo,3,',','.')+"' name='lp_consumo'></td>"+
-				"<td class='w70 number'><input value='"+aux.lp_porta+"' name='lp_porta'></td>"+
-				"<td class='w110 number'><input value='"+aux.dm_porta+"' name='dm_porta'></td>"+
-				"<td class='w100 number'>"+
+	var linha = "<td width='30px center' ><input value='' readonly></td>"+
+				"<td width='70px'><input value='"+aux.lp_id+"' name='lp_id' readonly></td>"+
+				"<td width='200px'><input class='uppercase' value='"+aux.lp_nome+"' name='lp_nome' lp_nome='"+aux.lp_nome+"' maxlength='20'></td>"+
+				"<td width='100px number'><input value='"+aux.lp_tensao+"' name='lp_tensao'></td>"+
+				"<td width='100px number'><input value='"+number_format(aux.lp_consumo,3,',','.')+"' name='lp_consumo'></td>"+
+				"<td width='50px number'><input value='"+aux.lp_porta+"' name='lp_porta'></td>"+
+				"<td width='150px number'>"+
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
-					"<select name='cd_id'></select>"+
-				"</td>";
+					"<select style='display: none;' name='cd_id'></select>"+
+				"</td>"+
+				"<td width='50px number'><input value='"+aux.dm_porta+"' name='dm_porta'></td>"+
+				"<td width='50px number'><input value='"+aux.dm_porta+"' name='dm_porta'></td>";
 				
 	return linha;
 }
@@ -1780,11 +1783,11 @@ function montaLinha_temperatura(i){
 	var aux = objTabelaTemperatura.lista[i];
 	var linha = "<td width='30 center' ><input value='' readonly></td>"+
 				"<td width='70'><input value='"+aux.tp_id+"' name='tp_id' readonly></td>"+
-				"<td width='100'><input class='uppercase' value='"+aux.tp_nome+"' name='tp_nome' tp_nome='"+aux.tp_nome+"' maxlength='20'></td>"+
-				"<td width='60 number'><input value='"+number_format(aux.tp_tempmax,2,',','.')+"' name='tp_tempmax'></td>"+
-				"<td width='60 number'><input value='"+number_format(aux.tp_tempmin,3,',','.')+"' name='tp_tempmin'></td>"+
+				"<td width='200'><input class='uppercase' value='"+aux.tp_nome+"' name='tp_nome' tp_nome='"+aux.tp_nome+"' maxlength='20'></td>"+
+				"<td width='100 number'><input value='"+number_format(aux.tp_tempmax,2,',','.')+"' name='tp_tempmax'></td>"+
+				"<td width='100 number'><input value='"+number_format(aux.tp_tempmin,3,',','.')+"' name='tp_tempmin'></td>"+
 				"<td width='60 number'><input value='"+aux.tp_porta+"' name='tp_porta'></td>"+
-				"<td width='120 number'>"+
+				"<td width='160 number'>"+
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
 					"<select style='display: none;' name='cd_id'></select>"+
 				"</td>"+
@@ -2236,11 +2239,11 @@ function montaLinha_camera(i){
 	var aux = objTabelaCamera.lista[i];
 	var linha = "<td width='30 center' ><input value='' readonly></td>"+
 				"<td width='70'><input value='"+aux.cm_id+"' name='cm_id' readonly></td>"+
-				"<td width='120'><input class='uppercase' value='"+aux.cm_nome+"' name='cm_nome' cm_nome='"+aux.cm_nome+"' maxlength='20'></td>"+
+				"<td width='200'><input class='uppercase' value='"+aux.cm_nome+"' name='cm_nome' cm_nome='"+aux.cm_nome+"' maxlength='20'></td>"+
 				"<td width='150'><input value='"+aux.cm_addr+"' name='cm_addr'></td>"+
 				"<td width='50 number'><input value='"+aux.cm_port+"' name='cm_port'></td>"+
-				"<td width='120'><input value='"+aux.cm_user+"' name='cm_user'></td>"+
-				"<td width='120'><input type='password' value='"+aux.cm_pwd+"' name='cm_pwd'></td>"+
+				"<td width='150'><input value='"+aux.cm_user+"' name='cm_user'></td>"+
+				"<td width='150'><input type='password' value='"+aux.cm_pwd+"' name='cm_pwd'></td>"+
 				"<td width='150 center'>"+
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
 					"<select style='display: none;' name='cd_id'></select>"+
@@ -3133,6 +3136,10 @@ function ComboLinha(campo, actpos, div){
 				$(comboMor).append('<option value="A">ATIVADO</option>'+
 								   '<option value="B">BLOQUEADO</option>');	
 			break;
+			case "us_nivel":
+				$(comboMor).append('<option value="USER">USER</option>'+
+								   '<option value="ADMIN">ADMIN</option>');	
+			break;
 			case "lp_nome":
 				$.each(objComboLampada, function (key, lampada){
 					$(comboMor).append($('<option>', {value: lampada.lp_id, text : lampada.lp_nome }));
@@ -3256,6 +3263,24 @@ $(document).ready(function(){
 	//***********************************************************************
 	$(DIV_TABELA_USUARIO).on("focus","input",function(){
 		pintaLinha_usuario($(this).parent().parent());
+
+		if(!$(this).parent().hasClass("inativo")){
+			switch ($(this).attr("name")) {
+				case "us_nivel": 
+					ComboLinha($(this), $("#position_user").val(), DIV_TABELA_USUARIO);
+				break;
+			}
+		}
+	});
+	
+
+
+	//***********************************************************************
+	//MUDA O COMBO PARA INPUT AO PERDER O FOCO DO COMBO
+	//***********************************************************************
+	$(DIV_TABELA_USUARIO).on('blur', 'select[name=us_nivel]', function(){
+		TiraComboLinha($(this), $("#position_user").val(), DIV_TABELA_USUARIO);
+		edicao_usuario($(this));
 	});
 	
 	//***********************************************************************
@@ -3302,16 +3327,6 @@ $(document).ready(function(){
 					selecionaLinha(DIV_TABELA_ACESSO,++actpos,cell);
 				}
 			break;
-
-			case 27://ESC
-				$(this).blur();
-				cancela_acesso(cell);
-			break;;
-
-			case 13://ENTER
-				$(this).blur();
-				grava_acesso(cell);
-			break;
 		}
 	});
 
@@ -3320,25 +3335,8 @@ $(document).ready(function(){
 	//***********************************************************************
 	$(DIV_TABELA_ACESSO).on("focus","input",function(){
 		pintaLinha_acesso($(this).parent().parent());
-
-		if(!$(this).parent().hasClass("inativo")){
-			switch ($(this).attr("name")) {
-				case "ac_libera": 
-					ComboLinha($(this), $("#position_acesso").val(), DIV_TABELA_ACESSO);
-				break;
-			}
-		}
 	});
 
-
-
-	//***********************************************************************
-	//MUDA O COMBO PARA INPUT AO PERDER O FOCO DO COMBO
-	//***********************************************************************
-	$(DIV_TABELA_ACESSO).on('blur', 'select[name=ac_libera]', function(){
-		TiraComboLinha($(this), $("#position_acesso").val(), DIV_TABELA_ACESSO);
-		edicao_acesso($(this));
-	});
 	
 	//***********************************************************************
 	//SELECIONA O TEXTO INTEIRO NO CLICK TABELA
@@ -3351,7 +3349,7 @@ $(document).ready(function(){
 	//EDICAO DOS DADOS - ACESSO
 	//*******************************************************
 	$(DIV_TABELA_ACESSO).on('change', 'input', function(){
-		edicao_acesso($(this));
+		grava_acesso($(this));
 	});
 	
 

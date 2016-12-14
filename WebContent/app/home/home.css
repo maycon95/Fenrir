@@ -14,6 +14,7 @@ table td input{
 
 table td select{
     margin-top: 10px !important;
+    width: 100% !important;
 }
 
 

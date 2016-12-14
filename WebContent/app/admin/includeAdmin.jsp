@@ -68,7 +68,7 @@
 
 	        <!-- Lâmpada -->
 	    <div id="lampada" class="modal fade" role="dialog">
-	        <div class="modal-dialog">
+	        <div class="modal-dialog" style="width: 835px;">
 
 	            <!-- Modal content-->
 	            <div class="modal-content">
@@ -77,63 +77,53 @@
 	                    <h4 class="modal-title">Lâmpada</h4>
 	                </div>
 	                <div class="modal-body">
-	                        <input  type="search uppercase" placeholder="Search" name="name" id="us_busca" autofocus>
-	                        
-	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;" onclick='montaQuery_lampada();'>
-	                            <span class="glyphicon glyphicon-search" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
-	                        </button>
-	                        
-	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;" onclick='insere_lampada();'>
-	                            <span class="glyphicon glyphicon-plus" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
-	                        </button>
-	                        
-	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;" onclick='exclui_lampada();'>
-	                            <span class="glyphicon glyphicon-minus" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
-	                        </button>
+                        <input  type="search uppercase" placeholder="Search" name="name" id="lp_busca" autofocus>
+                        
+                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;" onclick='montaQuery_lampada();'>
+                            <span class="glyphicon glyphicon-search" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
+                        </button>
+                        
+                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;" onclick='insere_lampada();'>
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
+                        </button>
+                        
+                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;" onclick='exclui_lampada();'>
+                            <span class="glyphicon glyphicon-minus" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
+                        </button>
 
-	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
-	                            <span class="glyphicon glyphicon-ok" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
-	                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
+                        </button>
 
-	                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
-	                            <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
-	                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
+                        </button>
 
-
-                        <div class="table-responsive">
-            	            <table class="table table-hover">
+						<div class="table-responsive">
+                            <table class="table table-hover" style="width: 800px;">
                                 <thead>    
                                     <tr>
-                                        <td align="center">#</td>
-                                        <td align="center">ID</td>
-                                        <td align="center">Lâmpada</td>
-                                        <td align="center">Tensão</td>
-                                        <td align="center">Consumo</td>
-                                        <td align="center">Comodo</td>
-                                        <td align="center" style="border-right: 1px solid #ddd">Porta - Lâmpada</td>
-                                        <td align="center">Dimmer</td>
-                                        <td align="center">Porta - Dimmer</td>
+                                        <td style='text-align:center; width: 30px'>#</td>
+                                        <td style='text-align:center; width: 70px'>ID</td>
+                                        <td style='text-align:center; width: 200px'>Lâmpada</td>
+                                        <td style='text-align:center; width: 100px'>Tensão</td>
+                                        <td style='text-align:center; width: 100px'>Consumo</td>
+                                        <td style='text-align:center; width: 50px; border-right: 1px solid #ddd;'>Porta</td>
+                                        <td style='text-align:center; width: 150px'>Cômodo</td>
+                                        <td style='text-align:center; width: 50px'>Dimmer</td>
+                                        <td style='text-align:center; width: 50px'>Porta</td>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td align="center">+</td>
-                                        <td align="center">1</td>
-                                        <td align="center">Teste</td>
-                                        <td align="center">110v</td>
-                                        <td align="center">60w</td>
-                                        <td align="center">
-                                            <select>
-                                                <option>Sala</option>
-                                            </select>
-                                        </td>
-                                        <td style="border-right: 1px solid #ddd">3</td>
-                                        <td align="center" align="center"><input type="checkbox"></td>
-                                        <td align="center">4</td>
-                                    </tr>
+                                <tbody id="dados_lampada">
+                                    
                                 </tbody>
                             </table>
-    	                </div>
+                        </div>
+						<div class='hide'>
+							<input width="40px" type='text' class='w40' id='position_lampada' value="null" readonly />
+							<input width="40px" type="text" class='w40' id="record_lampada" value="0" readonly />				
+						</div>
+
                     </div>
 <!--	                    <div class="modal-footer">
 	                        <button type="button" class="cancel" data-dismiss="modal" onclick="cancela_lampada();">Close</button>
@@ -146,7 +136,7 @@
 
 	        <!-- Temperatura -->
 	    <div id="temperatura" class="modal fade" role="dialog">
-	        <div class="modal-dialog">
+	        <div class="modal-dialog" style="width: 770px;">
 
 	            <!-- Modal content-->
 	            <div class="modal-content">
@@ -178,16 +168,16 @@
                         </button>
 
 						<div class="table-responsive">
-                            <table class="table table-hover" style="width: 568px;">
+                            <table class="table table-hover" style="width: 735px;">
                                 <thead>    
                                     <tr>
                                         <td style='text-align:center; width: 30px'>#</td>
                                         <td style='text-align:center; width: 70px'>ID</td>
-                                        <td style='text-align:center; width: 100px'>Sensor</td>
-                                        <td style='text-align:center; width: 60px'>MAX</td>
-                                        <td style='text-align:center; width: 60px'>MIN</td>
+                                        <td style='text-align:center; width: 200px'>Sensor</td>
+                                        <td style='text-align:center; width: 100px'>MAX</td>
+                                        <td style='text-align:center; width: 100px'>MIN</td>
                                         <td style='text-align:center; width: 60px'>Porta</td>
-                                        <td style='text-align:center; width: 120px'>Cômodo</td>
+                                        <td style='text-align:center; width: 160px'>Cômodo</td>
                                         <td style='text-align:center; width: 50px'>Status</td>
                                     </tr>
                                 </thead>
@@ -214,7 +204,7 @@
 
 	        <!-- Câmera -->
 	    <div id="camera" class="modal fade" role="dialog">
-	        <div class="modal-dialog">
+	        <div class="modal-dialog" style="width: 985px">
 
 	            <!-- Modal content-->
 	            <div class="modal-content">
@@ -246,16 +236,16 @@
                         </button>
 
 						<div class="table-responsive">
-                            <table class="table table-hover" style="width: 568px;">
+                            <table class="table table-hover" style="width: 950px;">
                                 <thead>    
                                     <tr>
                                         <td style='text-align:center; width: 30px'>#</td>
                                         <td style='text-align:center; width: 70px'>ID</td>
-                                        <td style='text-align:center; width: 120px'>Câmera</td>
+                                        <td style='text-align:center; width: 200px'>Câmera</td>
                                         <td style='text-align:center; width: 150px'>IP</td>
                                         <td style='text-align:center; width: 50px'>Porta</td>
-                                        <td style='text-align:center; width: 120px'>Usuario</td>
-                                        <td style='text-align:center; width: 120px'>Senha</td>
+                                        <td style='text-align:center; width: 150px'>Usuario</td>
+                                        <td style='text-align:center; width: 150px'>Senha</td>
                                         <td style='text-align:center; width: 150px'>Cômodo</td>
                                     </tr>
                                 </thead>

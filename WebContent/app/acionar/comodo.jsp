@@ -5,7 +5,7 @@
 		<link rel="stylesheet" type="text/css" href="../home/home.css" />
 
 	</head>
-		<body class="home">
+		<body class="home" onload="buscaComodos('${param.categoria}');">
 		
 	    <jsp:include page="../../component/WebUteis/header.jsp" /><!-- PEGA O HEADER PADRAO  -->
 	    
@@ -18,14 +18,14 @@
 
 
 								<!-- DIV DOS DISPOSITIVOS -->
-			<div id="div_dispositivos" class="float-left w50c">
+			<div id="div_dispositivos" style="float: left; width: 50%; min-width: 300px;">
 			
 			</div>
 
 
 
 			<!-- DIV DAS CAMERAS -->
-			<div id="div_camera" class="float-right w50c">			
+			<div id="div_camera" style="float: right; width: 50%; min-width: 300px;">			
 			
 			</div>
 
@@ -36,13 +36,6 @@
 
 			</div>
 			
-			<div id="divfundo" class="fundoescuro" >
-			
-				<div class="box-include">
-					<jsp:include page="../../app/admin/includeAdmin.jsp" /><!-- INCLUI AS TABELAS DE ADM  -->
-				</div>
-					
-			</div>
 
 	                </div>
 	            </div>
@@ -59,7 +52,7 @@
 
   
 	    <div class="footer text-right" style="padding-right: 2%; font-weight: bold;">
-	        Copyrigth ©&nbsp&nbsp&nbsp2016 by Fenrir Autmações
+	        Copyrigth ©&nbsp&nbsp&nbsp2016 by Fenrir Automações
 	    </div> 
 
 

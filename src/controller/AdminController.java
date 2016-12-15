@@ -193,16 +193,14 @@ public class AdminController extends HttpServlet {
 	public String montaCombo(HttpServletRequest request, HttpServletResponse response){
         //PEGA O ComodoTO
 		ComodoTO comodoTO = null;
-		LampadaTO lampadaTO = null;
 		
 		try{
 			comodoTO = new ComodoDAO().busca("");
-			lampadaTO = new LampadaDAO().busca("");
 		}catch(Exception e){
 			return new Gson().toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}
         
-		Object[] combo = {comodoTO, lampadaTO};
+		Object[] combo = {comodoTO};
 		    
         //CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
     	Gson gson = new Gson();
@@ -470,6 +468,7 @@ public class AdminController extends HttpServlet {
 		int lp_porta = Integer.parseInt(request.getParameter("lp_porta"));
 		int dm_porta = Integer.parseInt(request.getParameter("dm_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
+		boolean dm_libera = request.getParameter("dm_libera").equals("true");
 		
 		
 		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
@@ -478,7 +477,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O LampadaTO
 		LampadaTO lampadaTO = null;
 		try{
-			lampadaTO = new LampadaDAO().insere(lp_nome, lp_tensao, lp_consumo, lp_porta, dm_porta, cd_id);
+			lampadaTO = new LampadaDAO().insere(lp_nome, lp_tensao, lp_consumo, lp_porta, dm_porta, cd_id, dm_libera);
 		}catch(Exception e){
 			return gson.toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		
@@ -496,6 +495,7 @@ public class AdminController extends HttpServlet {
 		int lp_porta = Integer.parseInt(request.getParameter("lp_porta"));
 		int dm_porta = Integer.parseInt(request.getParameter("dm_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
+		boolean dm_libera = request.getParameter("dm_libera").equals("true");
 		
 		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
 		Gson gson = new Gson();
@@ -504,7 +504,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O ComodoTO
 		LampadaTO lampadaTO = null;
 		try{
-			lampadaTO = new LampadaDAO().altera(lp_id, lp_nome, lp_tensao, lp_consumo, lp_porta, dm_porta, cd_id);
+			lampadaTO = new LampadaDAO().altera(lp_id, lp_nome, lp_tensao, lp_consumo, lp_porta, dm_porta, cd_id, dm_libera);
 		}catch(Exception e){
 			return gson.toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}

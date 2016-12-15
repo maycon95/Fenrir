@@ -25,7 +25,6 @@ var DIV_TABELA_ACESSO = "#dados_acesso";
 
 //COMBO DE COMODOS
 var objComboComodo = {}; //OBJETO DO COMBO DE COMODOS
-var objComboLampada = {}; //OBJETO DO COMBO DE LAMPADAS
 var buscaComodo = true; //VARIAVEL PRA VERIFICA SE PRECISA BUSCAR OS COMBOS
 //***********************************************************************
 
@@ -33,31 +32,6 @@ var buscaComodo = true; //VARIAVEL PRA VERIFICA SE PRECISA BUSCAR OS COMBOS
 //***********************************************************************
 //					FIM CONSTANTES SEMPMRE USADAS
 //***********************************************************************
-
-
-
-
-
-
-
-//***********************************************************************
-//ABRE A TABELA SELECIONADA
-//***********************************************************************
-function admin(tabela){
-	$("#divfundo").css("visibility","visible");
-	$("#tabela_" + tabela).removeClass('hide');
-	
-	if(buscaComodo){
-		monta_combo();
-	}
-	
-}
-
-function fecha_admin(tabela){
-	$("#divfundo").css("visibility","hidden");
-	$("#tabela_" + tabela).addClass('hide');
-	
-}
 
 
 
@@ -102,7 +76,6 @@ function monta_combo(){
 		//[0] - COMODOS
 		//[1] - LAMPADAS
 		objComboComodo = retorno[0].lista;
-		objComboLampada = retorno[1].lista;
 		
 		buscaComodo = false;
 	});	
@@ -1322,7 +1295,8 @@ function montaLinha_lampada(i){
 					"<input value='"+aux.cd_id+"' name='cd_id'/>"+
 					"<select style='display: none;' name='cd_id'></select>"+
 				"</td>"+
-				"<td width='50px number'><input value='"+aux.dm_porta+"' name='dm_porta'></td>"+
+                "<td width='50px'><input type='checkbox' name='dm_libera' "+(aux.dm_libera == 0 ? '' : 'checked')+" /></td>"+
+				// "<td width='50px number'><input name='dm_libera' "+(aux.dm_libera == 1 ? 'checked' : '')+"></td>"+
 				"<td width='50px number'><input value='"+aux.dm_porta+"' name='dm_porta'></td>";
 				
 	return linha;
@@ -1351,6 +1325,7 @@ function insere_lampada(){
 	novaPosicao.lp_consumo = 0;
 	novaPosicao.lp_porta = 0;
 	novaPosicao.dm_porta = 0;
+	novaPosicao.dm_libera = 0;
 	novaPosicao.cd_id = "";
 	
 	
@@ -1478,6 +1453,7 @@ function grava_lampada(cell, fcustom_grava){
 				"&lp_consumo=" + $(linha+"[name=lp_consumo]").val().replace(/\./g,'').replace(',','.')+
 				"&lp_porta=" + $(linha+"[name=lp_porta]").val()	+
 				"&dm_porta=" + $(linha+"[name=dm_porta]").val()	+
+				"&dm_libera=" + $(linha+"[name=dm_libera]").prop('checked')	+
 				"&cd_id=" + $(linha+"[name=cd_id]").val();
 				
 	//swal.loading();
@@ -3140,11 +3116,6 @@ function ComboLinha(campo, actpos, div){
 				$(comboMor).append('<option value="USER">USER</option>'+
 								   '<option value="ADMIN">ADMIN</option>');	
 			break;
-			case "lp_nome":
-				$.each(objComboLampada, function (key, lampada){
-					$(comboMor).append($('<option>', {value: lampada.lp_id, text : lampada.lp_nome }));
-				});
-			break;
 	
 		}
 	}
@@ -3201,7 +3172,7 @@ function TiraComboLinha(campo, actpos, div){
 
 //***********************************************************************
 $(document).ready(function(){
-	
+	monta_combo();
 	//***********************************************************************
 	//				EVENTOS DA TABELA DE USUARIO
 	//***********************************************************************

@@ -91,11 +91,11 @@
                             <span class="glyphicon glyphicon-minus" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
                         </button>
 
-                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
+                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;" onclick='grava_lampada();'>
                             <span class="glyphicon glyphicon-ok" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
                         </button>
 
-                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;">
+                        <button type="button" class="btn btn-default" data-dismiss="" style="border: none;" onclick='cancela_lampada();'>
                             <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 20px; color: #0e1a35"></span>
                         </button>
 

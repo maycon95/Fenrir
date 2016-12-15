@@ -67,7 +67,6 @@ function buscaComodos(categoria){
 		objTabelaComodo.total = objTabelaComodo.lista.length;
 
 		montaComodo();
-
 	});	
 	
 }
@@ -82,7 +81,7 @@ function montaComodo(){
 		var aux = objTabelaComodo.lista[i];
 		
 		
-		var lista = "<div name='comodo_id_"+aux.cd_id+"' class='w100c float-left'> "+
+		var lista = "<div name='comodo_id_"+aux.cd_id+"' style='float: left; width: 100%;' > "+
 					"	<h3>"+aux.cd_nome+"</h3>"+
 					"</div>";
 		
@@ -96,13 +95,13 @@ function montaComodo(){
 			var auxLampada = aux.listaLampada[j];
 			var comando = 'LAMPADA_' + auxLampada.lp_porta;
 
-			dispositivos += "<div id='lp_"+auxLampada.lp_id+"' posicao_lp='"+j+"' posicao_cd='"+i+"'  class='col-sm-4 w200 h200 center'>"+
+			dispositivos += "<div id='lp_"+auxLampada.lp_id+"' posicao_lp='"+j+"' posicao_cd='"+i+"' style='width: 200px; height: 200px; text-align: center;' class='col-sm-4 w200 h200 center'>"+
 							"	<h4 class='center'>"+auxLampada.lp_nome+"</h4>"+
 							"	<input type='image' class='botao btnLampada"+auxLampada.lp_status+"' name='lampada' comando='"+comando+"' style='height:128px; width:128px;'"+
 							"	 	title='' >";
 			
-			if(auxLampada.dm_porta != "0"){
-				dispositivos += "<input type='range' min='0' max='100' value='"+auxLampada.dm_valor+"' step='10' onchange='' class='centerRange w130'/>";				
+			if(auxLampada.dm_libera){
+				dispositivos += "<input type='range' min='0' max='100' value='"+auxLampada.dm_valor+"' step='10' onchange='' style='margin: 0 auto; width: 130px' class='centerRange w130'/>";				
 			}
 			dispositivos += "</div>";
 		}
@@ -112,8 +111,8 @@ function montaComodo(){
 			var auxPortao = aux.listaPortao[j];
 			var comando = 'PORTAO_' + auxPortao.pt_porta;
 			
-			dispositivos += "<div id='pt_"+auxPortao.pt_id+"' posicao_pt='"+j+"' posicao_cd='"+i+"' class='col-sm-4 w200 h200 center'>"+
-							"	<h4 class='center'>"+auxPortao.pt_nome+"</h4>"+
+			dispositivos += "<div id='pt_"+auxPortao.pt_id+"' posicao_pt='"+j+"' posicao_cd='"+i+"' class='col-sm-4' style='width: 200px; height: 200px; text-align: center;'>"+
+							"	<h4 style='text-align: center;'>"+auxPortao.pt_nome+"</h4>"+
 							"	<input type='image' class='botao btnPortao' name='portao' comando='"+comando+"' style='height:128px; width:128px;'"+
 							"	 	title='' >"+
 							"</div>";
@@ -124,8 +123,8 @@ function montaComodo(){
 		for(var j = 0; j < aux.listaTemperatura.length; j++){
 			var auxTemperatura = aux.listaTemperatura[j];
 			
-			dispositivos += "<div id='tp_"+auxTemperatura.tp_id+"' posicao_tp='"+j+"' class='col-sm-4 w200 h200 center'>"+
-			"	<h4 class='center'>"+auxTemperatura.tp_nome+"</h4>"+
+			dispositivos += "<div id='tp_"+auxTemperatura.tp_id+"' posicao_tp='"+j+"' class='col-sm-4' style='width: 200px; height: 200px; text-align: center;'>"+
+			"	<h4 style='text-align: center;'>"+auxTemperatura.tp_nome+"</h4>"+
 			"	<div class='valorTemp ' style='display: inline-flex; position: absolute; height:128px; width:128px'><label>"+auxTemperatura.tp_temp+" C</label></div>"+
 			"	<di class=''>"+
 			"		<input type='image' class='botao btnTemperatura' name='temperatura' comando='"+comando+"' style='height:128px; width:128px;position: relative;'"+
@@ -155,9 +154,9 @@ function montaComodo(){
 			
 			var src = "http://"+cm_addr+":"+cm_port+"/videostream.cgi?user="+cm_user+"&amp;pwd="+cm_pwd+"&amp;resolution=8&amp;rate=0";
 			
-			cameras +=  "<div name='camera_id_"+auxCamera.cm_id+"' posicao_cd='"+i+"' posicao_cm='"+j+"' class='w100c float-left'>"+
+			cameras +=  "<div name='camera_id_"+auxCamera.cm_id+"' posicao_cd='"+i+"' posicao_cm='"+j+"' style='width: 100%; ; float: left;' >"+
 						"	<h3>"+auxCamera.cm_nome+"</h3>"+
-						"	<div class='col-xs-12 col-md-4 text-center w320 h250'>"+
+						"	<div class='col-xs-12 col-md-4' style='width: 320px; height: 250px; text-align: center;'>"+
 						"		<img style='-webkit-user-select: none' src='"+src+"'>	"+
 						"	</div>"+
 						"	<div>"+

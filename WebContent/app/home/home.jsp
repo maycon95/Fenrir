@@ -110,7 +110,7 @@
 
   
 	    <div class="footer text-right" style="padding-right: 2%; font-weight: bold;">
-	        Copyrigth ©&nbsp&nbsp&nbsp2016 by Fenrir Autmações
+	        Copyrigth ©&nbsp&nbsp&nbsp2016 by Fenrir Automações
 	    </div> 
 
 

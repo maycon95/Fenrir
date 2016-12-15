@@ -233,12 +233,12 @@ public class ComodoDAO {
 		    	stm.setInt(1, comodoTO.getLista().get(i).getCd_id());	    	
 		    	rs = stm.executeQuery();	
 		    	
-				if(rs.next()) {
+				while(rs.next()) {
 					Temperatura temp= new Temperatura();
 					temp.setCd_id(rs.getInt("cd_id"));
 					temp.setTp_id(rs.getInt("tp_id"));
 					temp.setTp_nome(rs.getString("tp_nome"));
-					temp.setTp_temp(Double.parseDouble(rs.getString("tp_temp")));
+					temp.setTp_temp(rs.getDouble("tp_temp"));
 					comodoTO.getLista().get(i).addTemperatura(temp); // INSERE O SENSOR NA LISTA
 				}
 				stm.close();

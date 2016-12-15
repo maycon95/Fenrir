@@ -35,6 +35,7 @@ public class LampadaDAO {
 				lampada.setLp_porta(rs.getInt("lp_porta"));
 				lampada.setDm_porta(rs.getInt("Dm_porta"));
 				lampada.setDm_libera(rs.getBoolean("dm_libera"));
+				lampada.setCd_id(rs.getInt("cd_id"));
 				lampadaTO.add(lampada);
 			}
 			return lampadaTO;
@@ -56,9 +57,9 @@ public class LampadaDAO {
 	
 	
 	//INSERE NOVA LAMPADA
-	public LampadaTO insere(String lp_nome, int lp_tensao, double lp_consumo, int lp_porta, int dm_porta, int cd_id) throws Exception{
+	public LampadaTO insere(String lp_nome, int lp_tensao, double lp_consumo, int lp_porta, int dm_porta, int cd_id, boolean dm_libera) throws Exception{
 		Connection conn = null;
-	    String sqlInsert = "INSERT INTO tb_lampada(lp_nome, lp_tensao, lp_consumo, lp_porta, dm_porta, cd_id) VALUES(?, ?, ?, ?, ?, ?) ";
+	    String sqlInsert = "INSERT INTO tb_lampada(lp_nome, lp_tensao, lp_consumo, lp_porta, dm_porta, cd_id, dm_libera) VALUES(?, ?, ?, ?, ?, ?, ?) ";
 	    PreparedStatement stm = null;
 
 	    try{
@@ -70,6 +71,7 @@ public class LampadaDAO {
 			stm.setInt(4, lp_porta);
 			stm.setInt(5, dm_porta);
 			stm.setInt(6, cd_id);
+			stm.setBoolean(7, dm_libera);
 			stm.executeUpdate();
 	
 			return busca(lp_nome);//CHAMA A BUSCA DE USUARIO PARA RETORNAR OS DADOS INSERIDO
@@ -90,9 +92,9 @@ public class LampadaDAO {
 	}
 
 	//ALTERA DADOS DO LAMPADA
-	public LampadaTO altera(int lp_id, String lp_nome, int lp_tensao, double lp_consumo, int lp_porta, int dm_porta, int cd_id) throws Exception{
+	public LampadaTO altera(int lp_id, String lp_nome, int lp_tensao, double lp_consumo, int lp_porta, int dm_porta, int cd_id, boolean dm_libera) throws Exception{
 		Connection conn = null;
-	    String sqlUpdate = "UPDATE tb_lampada SET lp_nome = ?, lp_tensao = ?, lp_consumo = ?, lp_porta = ?, dm_porta = ?, cd_id = ? WHERE lp_id= ?";
+	    String sqlUpdate = "UPDATE tb_lampada SET lp_nome = ?, lp_tensao = ?, lp_consumo = ?, lp_porta = ?, dm_porta = ?, cd_id = ?, dm_libera = ? WHERE lp_id= ?";
 	    PreparedStatement stm = null;
 	    
 	    try{
@@ -104,7 +106,8 @@ public class LampadaDAO {
 			stm.setInt(4, lp_porta);
 			stm.setInt(5, dm_porta);
 			stm.setInt(6, cd_id);
-			stm.setInt(7, lp_id);
+			stm.setBoolean(7, dm_libera);
+			stm.setInt(8, lp_id);
 			stm.executeUpdate();
 	
 			return busca(lp_nome);//CHAMA A BUSCA DE COMODO PARA RETORNAR OS DADOS ALTERADO

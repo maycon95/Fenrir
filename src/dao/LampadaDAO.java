@@ -13,7 +13,7 @@ public class LampadaDAO {
 	//BUSCA UMA LAMPADA NO BANCO - TELA DE ADMIN
 	public LampadaTO busca(String lp_nome) throws Exception{ 
 		Connection conn = null;
-	    String sqlSelect = "SELECT lp_id, lp_nome, lp_tensao, lp_consumo, lp_constotal, lp_porta, dm_porta, dm_libera, cd_id FROM tb_lampada WHERE lp_nome like ? ";
+	    String sqlSelect = "SELECT lp_id, lp_nome, lp_tensao, lp_consumo, lp_constotal, lp_porta, dm_porta, dm_libera, lp_sensor, lp_portasen, cd_id FROM tb_lampada WHERE lp_nome like ? ";
 	    PreparedStatement stm = null;
 	    ResultSet rs = null;
 	    LampadaTO lampadaTO = new LampadaTO();
@@ -33,8 +33,10 @@ public class LampadaDAO {
 				lampada.setLp_porta(rs.getInt("lp_porta"));
 				lampada.setLp_constotal(rs.getDouble("lp_constotal"));
 				lampada.setLp_porta(rs.getInt("lp_porta"));
-				lampada.setDm_porta(rs.getInt("Dm_porta"));
+				lampada.setDm_porta(rs.getInt("dm_porta"));
 				lampada.setDm_libera(rs.getBoolean("dm_libera"));
+				lampada.setLp_portasen(rs.getInt("lp_portasen"));
+				lampada.setLp_sensor(rs.getBoolean("lp_sensor"));
 				lampada.setCd_id(rs.getInt("cd_id"));
 				lampadaTO.add(lampada);
 			}
@@ -57,9 +59,9 @@ public class LampadaDAO {
 	
 	
 	//INSERE NOVA LAMPADA
-	public LampadaTO insere(String lp_nome, int lp_tensao, double lp_consumo, int lp_porta, int dm_porta, int cd_id, boolean dm_libera) throws Exception{
+	public LampadaTO insere(String lp_nome, int lp_tensao, double lp_consumo, int lp_porta, int dm_porta, int cd_id, boolean dm_libera, boolean lp_sensor, int lp_portasen) throws Exception{
 		Connection conn = null;
-	    String sqlInsert = "INSERT INTO tb_lampada(lp_nome, lp_tensao, lp_consumo, lp_porta, dm_porta, cd_id, dm_libera) VALUES(?, ?, ?, ?, ?, ?, ?) ";
+	    String sqlInsert = "INSERT INTO tb_lampada(lp_nome, lp_tensao, lp_consumo, lp_porta, dm_porta, cd_id, dm_libera, lp_sensor, lp_portasen) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 	    PreparedStatement stm = null;
 
 	    try{
@@ -72,6 +74,8 @@ public class LampadaDAO {
 			stm.setInt(5, dm_porta);
 			stm.setInt(6, cd_id);
 			stm.setBoolean(7, dm_libera);
+			stm.setBoolean(7, lp_sensor);
+			stm.setInt(7, lp_portasen);
 			stm.executeUpdate();
 	
 			return busca(lp_nome);//CHAMA A BUSCA DE USUARIO PARA RETORNAR OS DADOS INSERIDO
@@ -92,9 +96,9 @@ public class LampadaDAO {
 	}
 
 	//ALTERA DADOS DO LAMPADA
-	public LampadaTO altera(int lp_id, String lp_nome, int lp_tensao, double lp_consumo, int lp_porta, int dm_porta, int cd_id, boolean dm_libera) throws Exception{
+	public LampadaTO altera(int lp_id, String lp_nome, int lp_tensao, double lp_consumo, int lp_porta, int dm_porta, int cd_id, boolean dm_libera, boolean lp_sensor, int lp_portasen) throws Exception{
 		Connection conn = null;
-	    String sqlUpdate = "UPDATE tb_lampada SET lp_nome = ?, lp_tensao = ?, lp_consumo = ?, lp_porta = ?, dm_porta = ?, cd_id = ?, dm_libera = ? WHERE lp_id= ?";
+	    String sqlUpdate = "UPDATE tb_lampada SET lp_nome = ?, lp_tensao = ?, lp_consumo = ?, lp_porta = ?, dm_porta = ?, cd_id = ?, dm_libera = ?, lp_sensor = ?, lp_portasen = ? WHERE lp_id= ?";
 	    PreparedStatement stm = null;
 	    
 	    try{
@@ -107,7 +111,9 @@ public class LampadaDAO {
 			stm.setInt(5, dm_porta);
 			stm.setInt(6, cd_id);
 			stm.setBoolean(7, dm_libera);
-			stm.setInt(8, lp_id);
+			stm.setBoolean(8, lp_sensor);
+			stm.setInt(9, lp_portasen);
+			stm.setInt(10, lp_id);
 			stm.executeUpdate();
 	
 			return busca(lp_nome);//CHAMA A BUSCA DE COMODO PARA RETORNAR OS DADOS ALTERADO
@@ -184,4 +190,45 @@ public class LampadaDAO {
 	       }
 	    }
 	}
+	
+	
+	
+
+	//BUSCA LAMPADAS QUE ESTA COM SENSOR ATIVO
+	public LampadaTO buscaLampadaComSensor() throws Exception{ 
+		Connection conn = null;
+	    String sqlSelect = "SELECT lp_porta, lp_portasen FROM tb_lampada WHERE lp_sensor = 1";
+	    PreparedStatement stm = null;
+	    ResultSet rs = null;
+	    LampadaTO lampadaTO = new LampadaTO();
+
+	    try{
+	    	conn = Uteis.connection();
+			stm = conn.prepareStatement(sqlSelect);
+			rs = stm.executeQuery();
+		
+			while(rs.next()) {
+				Lampada lampada = new Lampada();
+				lampada.setLp_id(rs.getInt("lp_id"));
+				lampada.setLp_portasen(rs.getInt("lp_portasen"));
+				lampadaTO.add(lampada);
+			}
+			return lampadaTO;
+	    }
+	    catch (Exception e){
+	    	throw e;
+	    }
+	    finally{
+	       if (stm != null){
+	          try{
+	             stm.close();
+	          }
+	          catch (SQLException e1){
+	             System.out.print(e1.getStackTrace());
+	          }
+	       }
+	    }
+	}
+	
+
 }

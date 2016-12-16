@@ -112,6 +112,8 @@
                                         <td style='text-align:center; width: 150px'>Cômodo</td>
                                         <td style='text-align:center; width: 50px'>Dimmer</td>
                                         <td style='text-align:center; width: 50px'>Porta</td>
+                                        <td style='text-align:center; width: 50px'>Sensor</td>
+                                        <td style='text-align:center; width: 50px'>Porta</td>
                                     </tr>
                                 </thead>
                                 <tbody id="dados_lampada">

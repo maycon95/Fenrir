@@ -1296,8 +1296,9 @@ function montaLinha_lampada(i){
 					"<select style='display: none;' name='cd_id'></select>"+
 				"</td>"+
                 "<td width='50px'><input type='checkbox' name='dm_libera' "+(aux.dm_libera == 0 ? '' : 'checked')+" /></td>"+
-				// "<td width='50px number'><input name='dm_libera' "+(aux.dm_libera == 1 ? 'checked' : '')+"></td>"+
-				"<td width='50px number'><input value='"+aux.dm_porta+"' name='dm_porta'></td>";
+				"<td width='50px number'><input value='"+aux.dm_porta+"' name='dm_porta'></td>"+
+				"<td width='50px'><input type='checkbox' name='lp_sensor' "+(aux.lp_sensor == 0 ? '' : 'checked')+" /></td>"+
+				"<td width='50px number'><input value='"+aux.lp_portasen+"' name='lp_portasen'></td>";
 				
 	return linha;
 }
@@ -1326,6 +1327,8 @@ function insere_lampada(){
 	novaPosicao.lp_porta = 0;
 	novaPosicao.dm_porta = 0;
 	novaPosicao.dm_libera = 0;
+	novaPosicao.lp_sensor = 0;
+	novaPosicao.lp_portasen = 0;
 	novaPosicao.cd_id = "";
 	
 	
@@ -1454,6 +1457,8 @@ function grava_lampada(cell, fcustom_grava){
 				"&lp_porta=" + $(linha+"[name=lp_porta]").val()	+
 				"&dm_porta=" + $(linha+"[name=dm_porta]").val()	+
 				"&dm_libera=" + $(linha+"[name=dm_libera]").prop('checked')	+
+				"&lp_portasen=" + $(linha+"[name=lp_portasen]").val()	+
+				"&lp_sensor=" + $(linha+"[name=lp_sensor]").prop('checked')	+
 				"&cd_id=" + $(linha+"[name=cd_id]").val();
 				
 	//swal.loading();

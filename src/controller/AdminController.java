@@ -466,18 +466,19 @@ public class AdminController extends HttpServlet {
 		int lp_tensao = Integer.parseInt(request.getParameter("lp_tensao"));
 		double lp_consumo = Double.parseDouble(request.getParameter("lp_consumo"));
 		int lp_porta = Integer.parseInt(request.getParameter("lp_porta"));
-		int dm_porta = Integer.parseInt(request.getParameter("dm_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		boolean dm_libera = request.getParameter("dm_libera").equals("true");
-		
-		
+		int dm_porta = Integer.parseInt(request.getParameter("dm_porta"));
+		boolean lp_sensor = request.getParameter("lp_sensor").equals("true");
+		int lp_portasen = Integer.parseInt(request.getParameter("lp_portasen"));
+				
 		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
     	Gson gson = new Gson();
     	
 		//PEGA O LampadaTO
 		LampadaTO lampadaTO = null;
 		try{
-			lampadaTO = new LampadaDAO().insere(lp_nome, lp_tensao, lp_consumo, lp_porta, dm_porta, cd_id, dm_libera);
+			lampadaTO = new LampadaDAO().insere(lp_nome, lp_tensao, lp_consumo, lp_porta, dm_porta, cd_id, dm_libera, lp_sensor, lp_portasen);
 		}catch(Exception e){
 			return gson.toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		
@@ -496,7 +497,9 @@ public class AdminController extends HttpServlet {
 		int dm_porta = Integer.parseInt(request.getParameter("dm_porta"));
 		int cd_id = Integer.parseInt(request.getParameter("cd_id"));
 		boolean dm_libera = request.getParameter("dm_libera").equals("true");
-		
+		boolean lp_sensor = request.getParameter("lp_sensor").equals("true");
+		int lp_portasen = Integer.parseInt(request.getParameter("lp_portasen"));
+
 		//CRIA O OBJETO GSON PARA TRASNFORMAR O OBJETO EM JSON
 		Gson gson = new Gson();
 
@@ -504,7 +507,7 @@ public class AdminController extends HttpServlet {
 		//PEGA O ComodoTO
 		LampadaTO lampadaTO = null;
 		try{
-			lampadaTO = new LampadaDAO().altera(lp_id, lp_nome, lp_tensao, lp_consumo, lp_porta, dm_porta, cd_id, dm_libera);
+			lampadaTO = new LampadaDAO().altera(lp_id, lp_nome, lp_tensao, lp_consumo, lp_porta, dm_porta, cd_id, dm_libera, lp_sensor, lp_portasen);
 		}catch(Exception e){
 			return gson.toJson(new Retorno("",Uteis.addSlashes(Uteis.trataErro(e))));
 		}

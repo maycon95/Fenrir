@@ -13,6 +13,9 @@ public class Lampada {
 	public boolean dm_libera;
 	private int cd_id;
 
+	private int lp_portasen;
+	private boolean lp_sensor;
+
 	
 	public Lampada(){
 		this.setLp_id(0);
@@ -23,6 +26,10 @@ public class Lampada {
 		this.setLp_id(lp_id);
 		this.setLp_nome(lp_nome);
 	}
+	
+
+	
+	
 	
 	//GETTER'S
 	public int getLp_id() {
@@ -68,7 +75,14 @@ public class Lampada {
 	public boolean isDm_libera() {
 		return dm_libera;
 	}
+	
+	public int getLp_portasen() {
+		return lp_portasen;
+	}
 
+	public boolean isLp_sensor() {
+		return lp_sensor;
+	}
 	
 	
 	
@@ -114,6 +128,14 @@ public class Lampada {
 
 	public void setDm_libera(boolean dm_libera) {
 		this.dm_libera = dm_libera;
+	}
+
+	public void setLp_portasen(int lp_portasen) {
+		this.lp_portasen = lp_portasen;
+	}
+
+	public void setLp_sensor(boolean lp_sensor) {
+		this.lp_sensor = lp_sensor;
 	}
 
 

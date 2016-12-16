@@ -17,7 +17,7 @@
                     <br>
                     <div class="col-xs-12 col-md-3 text-center">
                         <div class="btn-group">
-                            <input type="image" class="botao" name="" src="../../component/img/sala4.png" style="height:64px, width:64px;" 
+                            <input type="image" class="botao" name="" src="../../component/img/sala.png" style="height:64px, width:64px;" 
                             	onclick="acionarComodos('sala');">
                         </div>
                         <div>
@@ -28,7 +28,7 @@
 
                         <div class="col-xs-12 col-md-3 text-center">
                             <div class="btn-group">
-                                <input type="image" class="botao" name="" src="../../component/img/sala4.png" style="height:64px, width:64px;" 
+                                <input type="image" class="botao" name="" src="../../component/img/quarto.png" style="height:64px, width:64px;" 
                                 	onclick="acionarComodos('quarto');">
                             </div>
                             <div>
@@ -39,7 +39,7 @@
 
                         <div class="col-xs-12 col-md-3 text-center">
                             <div class="btn-group">
-                                <input type="image" class="botao" name="" src="../../component/img/sala4.png" style="height:64px, width:64px;" 
+                                <input type="image" class="botao" name="" src="../../component/img/wc.png" style="height:64px, width:64px;" 
                                 	onclick="acionarComodos('cozinha');">
                             </div>
                             <div>
@@ -50,7 +50,7 @@
 
                         <div class="col-xs-12 col-md-3 text-center">
                             <div class="btn-group">
-                                <input type="image" class="botao" name="" src="../../component/img/sala4.png" style="height:64px, width:64px;" 
+                                <input type="image" class="botao" name="" src="../../component/img/cozinha.png" style="height:64px, width:64px;" 
                                 	onclick="acionarComodos('banheiro');">
                             </div>
                             <div>
@@ -63,7 +63,7 @@
 
                         <div class="col-xs-12 col-md-3 text-center">
                             <div class="btn-group">
-                                <input type="image" class="botao" name="" src="../../component/img/sala4.png" style="height:64px, width:64px;" 
+                                <input type="image" class="botao" name="" src="../../component/img/areae.png" style="height:64px, width:64px;" 
                                 	onclick="acionarComodos('lavanderia');">
                             </div>
                             <div>
@@ -74,7 +74,7 @@
 
                         <div class="col-xs-12 col-md-3 text-center">
                             <div class="btn-group">
-                                <input type="image" class="botao" name="" src="../../component/img/sala4.png" style="height:64px, width:64px;" 
+                                <input type="image" class="botao" name="" src="../../component/img/lavanderia.png" style="height:64px, width:64px;" 
                                 	onclick="acionarComodos('sala');">
                             </div>
                             <div>
@@ -85,7 +85,7 @@
 
                         <div class="col-xs-12 col-md-3 text-center">
                             <div class="btn-group">
-                                <input type="image" class="botao" name="" src="../../component/img/sala4.png" style="height:64px, width:64px;" 
+                                <input type="image" class="botao" name="" src="../../component/img/garagem.png" style="height:64px, width:64px;" 
                                 	onclick="acionarComodos('garagem');">
                             </div>
                             <div>

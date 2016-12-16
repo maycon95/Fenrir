@@ -160,10 +160,16 @@ function montaComodo(){
 						"		<img style='-webkit-user-select: none' src='"+src+"'>	"+
 						"	</div>"+
 						"	<div>"+
-						"		<input type='button' value='Esquerda' onmousedown='mov_camera(this,4);' onmouseup='mov_camera(this,5);' />"+
+/*						"		<input type='button' value='Esquerda' onmousedown='mov_camera(this,4);' onmouseup='mov_camera(this,5);' />"+
 						"		<input type='button' value='Cima' onmousedown='mov_camera(this,0);' onmouseup='mov_camera(this,1);'/>"+
 						"		<input type='button' value='Baixo' onmousedown='mov_camera(this,2);' onmouseup='mov_camera(this,3);' />"+
 						"		<input type='button' value='Direita' onmousedown='mov_camera(this,6);' onmouseup='mov_camera(this,7);' />"+
+*/
+						"		<input type='image' value='Esquerda' onmousedown='mov_camera(this,4);' onmouseup='mov_camera(this,5);' src='../../component/img/esquerda.png' style='border-style: none; ' />"+
+						"		<input type='image' value='Cima' onmousedown='mov_camera(this,0);' onmouseup='mov_camera(this,1);' src='../../component/img/cima.png' style='border-style: none; '/>"+
+						"		<input type='image' value='Baixo' onmousedown='mov_camera(this,2);' onmouseup='mov_camera(this,3);' src='../../component/img/baixo.png' style='border-style: none; ' />"+
+						"		<input type='image' value='Direita' onmousedown='mov_camera(this,6);' onmouseup='mov_camera(this,7);' src='../../component/img/direita.png' style='border-style: none;  ' />"+
+
 						"	</div>	"+
 						"</div>";
 			}
